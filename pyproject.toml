@@ -1,0 +1,25 @@
+[project]
+name = "mean-idea"
+version = "0.1.0"
+description = "Interpolate text in a diffusion language model's token-embedding space"
+readme = "README.md"
+requires-python = ">=3.11,<3.14"
+dependencies = [
+    "accelerate>=1.10",
+    "torch>=2.8",
+    "transformers>=5.11",
+]
+
+[project.scripts]
+mean-idea = "mean_idea.cli:main"
+
+[dependency-groups]
+dev = ["pytest>=8.4"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.pytest.ini_options]
+addopts = "-q"
+testpaths = ["tests"]
