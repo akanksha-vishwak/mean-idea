@@ -1,0 +1,1 @@
+Use numpy with a small integer dtype (uint16) to reduce memory footprint and improve cache efficiency during sort.

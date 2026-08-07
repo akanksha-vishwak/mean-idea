@@ -1,0 +1,1 @@
+Return the sorted result as a list using tolist() to avoid any downstream type incompatibility with the int list signature.

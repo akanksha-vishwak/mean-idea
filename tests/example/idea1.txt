@@ -1,0 +1,1 @@
+Use numpy.sort() to leverage C-implemented introsort instead of Python-level bubble sort.

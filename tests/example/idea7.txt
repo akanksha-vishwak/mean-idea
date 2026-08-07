@@ -1,0 +1,1 @@
+Pre-import numpy at module level (outside my_sort) to eliminate import overhead from the timed region.

@@ -1,0 +1,1 @@
+Implement counting sort to exploit the bounded integer range (0-9999) for O(n+k) linear-time sorting.
