@@ -36,11 +36,8 @@ uv run mean-idea first.py second.py --output result.py
 ```
 
 Use `HF_TOKEN` if Hugging Face requires authentication. To install through the
-Microsoft package feed proxy when public PyPI is blocked:
-
-```console
-uv sync --default-index https://packagefeedproxy.microsoft.io/pypi/simple/
-```
+Microsoft package feed proxy when public PyPI is blocked, use the normal
+commands above; the proxy is configured as the project's default uv index.
 
 The backend is configurable:
 

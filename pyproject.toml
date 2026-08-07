@@ -7,7 +7,7 @@ requires-python = ">=3.11,<3.14"
 dependencies = [
     "accelerate>=1.10",
     "torch>=2.8",
-    "transformers>=5.11",
+    "transformers[vision]>=5.11",
 ]
 
 [project.scripts]
@@ -15,6 +15,11 @@ mean-idea = "mean_idea.cli:main"
 
 [dependency-groups]
 dev = ["pytest>=8.4"]
+
+[[tool.uv.index]]
+name = "corpnet"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple/"
+default = true
 
 [build-system]
 requires = ["hatchling"]
