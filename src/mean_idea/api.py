@@ -8,7 +8,7 @@ import torch
 
 @dataclass(frozen=True, slots=True)
 class TextEmbedding:
-    """A fixed-length sequence of continuous token embeddings."""
+    """A configured-length sequence of continuous token embeddings."""
 
     values: torch.Tensor
 

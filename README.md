@@ -35,6 +35,32 @@ uv run mean-idea first.py second.py
 uv run mean-idea first.py second.py --output result.py
 ```
 
+DiffusionGemma's trained canvas remains fixed at 256 tokens. Process longer
+documents as sequential canvases by selecting a fixed input length shared by
+both files:
+
+```console
+uv run mean-idea first.py second.py --max-input-tokens 4096
+```
+
+The value must be a multiple of 256. Each canvas is conditioned on the
+preceding chunks, and the resulting hidden-state matrices are concatenated
+before interpolation. The upper bound is the model's 262,144-token context
+minus the instruction prompt, rounded down to a whole canvas. Large values
+require one model pass per input canvas and one diffusion decode per output
+canvas, so CPU execution time grows substantially.
+
+On Linux x86-64, the lock file selects the official PyTorch CUDA 12.8 wheels
+instead of whichever PyTorch build is newest on the default package index.
+Those wheels bundle the CUDA runtime; the host only needs a compatible NVIDIA
+driver. Confirm that the environment can see the GPU before downloading a
+large model:
+
+```console
+uv run python -c \
+  "import torch; print(torch.__version__, torch.version.cuda, torch.cuda.is_available(), torch.cuda.get_device_name(0) if torch.cuda.is_available() else None)"
+```
+
 Select the useful 25.2B BF16 reference model explicitly. Its weights need about
 51 GB, plus runtime memory:
 
@@ -69,6 +95,7 @@ over the network.
 ```console
 uv sync --extra server
 MEAN_IDEA_MODEL_ID=google/diffusiongemma-26B-A4B-it \
+MEAN_IDEA_MAX_INPUT_TOKENS=4096 \
   uv run --extra server uvicorn mean_idea.server:app --host 0.0.0.0 --port 8000
 ```
 

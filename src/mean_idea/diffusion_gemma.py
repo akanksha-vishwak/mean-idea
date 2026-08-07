@@ -25,6 +25,7 @@ class DiffusionGemmaSettings:
     model_id: str = DEFAULT_MODEL_ID
     prompt: str = DEFAULT_PROMPT
     max_denoising_steps: int = 48
+    max_input_tokens: int = 256
     quantization_chunk_size: int = 8192
     dtype: str = "auto"
     device_map: str = "auto"
@@ -45,46 +46,84 @@ class DiffusionGemma:
         )
         self.model.eval()
         self.canvas_length = int(self.model.config.canvas_length)
+        self.prompt_inputs = self._base_prompt_inputs()
+        self.max_input_tokens = _validate_max_input_tokens(
+            self.settings.max_input_tokens,
+            canvas_length=self.canvas_length,
+            context_length=int(self.model.config.text_config.max_position_embeddings),
+            prompt_length=self.prompt_inputs["input_ids"].shape[-1],
+        )
 
     @torch.inference_mode()
     def text_to_embedding(self, text: str) -> TextEmbedding:
-        """Return the denoiser hidden states for one fixed-length text canvas."""
+        """Return denoiser hidden states for sequential fixed-length canvases."""
 
-        token_ids = self.processor.tokenizer(
+        encoded = self.processor.tokenizer(
             text,
             add_special_tokens=True,
-            max_length=self.canvas_length,
+            max_length=self.max_input_tokens,
             padding="max_length",
             truncation=True,
             return_tensors="pt",
-        ).input_ids
-        outputs = self.model.model(
-            **self._prompt_inputs(),
-            decoder_input_ids=token_ids.to(self.model.device),
         )
-        values = outputs.last_hidden_state[0]
+        token_ids = encoded.input_ids.to(self.model.device)
+        token_mask = encoded.attention_mask.to(self.model.device)
+        chunks = []
+        for start in range(0, self.max_input_tokens, self.canvas_length):
+            inputs = self._prompt_inputs(
+                token_ids[:, :start],
+                token_mask[:, :start],
+            )
+            outputs = self.model.model(
+                **inputs,
+                decoder_input_ids=token_ids[:, start : start + self.canvas_length],
+            )
+            chunks.append(outputs.last_hidden_state[0].detach().float().cpu())
+
+        values = torch.cat(chunks, dim=0)
         return TextEmbedding(values.detach().float().cpu())
 
     @torch.inference_mode()
     def embedding_to_text(self, embedding: TextEmbedding) -> str:
-        """Quantize an embedding canvas, then refine it with diffusion."""
+        """Quantize and refine sequential embedding canvases."""
 
         self._validate_shape(embedding)
-        decoder_input_ids = self._project_to_tokens(embedding.values).unsqueeze(0)
+        generated_chunks = []
+        for start in range(0, self.max_input_tokens, self.canvas_length):
+            chunk = embedding.values[start : start + self.canvas_length]
+            decoder_input_ids = self._project_to_tokens(chunk).unsqueeze(0)
+            generated_context = (
+                torch.cat(generated_chunks, dim=-1)
+                if generated_chunks
+                else torch.empty(
+                    (1, 0), dtype=torch.long, device=self.model.device
+                )
+            )
+            inputs = self._prompt_inputs(
+                generated_context,
+                torch.ones_like(generated_context),
+            )
+            prompt_length = inputs["input_ids"].shape[-1]
+            output = self.model.generate(
+                **inputs,
+                decoder_input_ids=decoder_input_ids.to(self.model.device),
+                max_new_tokens=self.canvas_length,
+                max_denoising_steps=self.settings.max_denoising_steps,
+            )
+            sequences = output.sequences if hasattr(output, "sequences") else output
+            generated = sequences[
+                :, prompt_length : prompt_length + self.canvas_length
+            ]
+            generated_chunks.append(generated)
+            if self._contains_eos(generated):
+                break
 
-        inputs = self._prompt_inputs()
-        prompt_length = inputs["input_ids"].shape[-1]
-        output = self.model.generate(
-            **inputs,
-            decoder_input_ids=decoder_input_ids.to(self.model.device),
-            max_new_tokens=self.canvas_length,
-            max_denoising_steps=self.settings.max_denoising_steps,
-        )
-        sequences = output.sequences if hasattr(output, "sequences") else output
-        generated = sequences[0, prompt_length : prompt_length + self.canvas_length]
-        return self.processor.decode(generated, skip_special_tokens=True).strip()
+        all_generated = torch.cat(generated_chunks, dim=-1)[0]
+        return self.processor.decode(
+            all_generated, skip_special_tokens=True
+        ).strip()
 
-    def _prompt_inputs(self):
+    def _base_prompt_inputs(self):
         return self.processor.apply_chat_template(
             [{"role": "user", "content": self.settings.prompt}],
             tokenize=True,
@@ -93,9 +132,31 @@ class DiffusionGemma:
             return_tensors="pt",
         ).to(self.model.device)
 
+    def _prompt_inputs(
+        self,
+        context_ids: torch.Tensor,
+        context_mask: torch.Tensor,
+    ) -> dict[str, torch.Tensor]:
+        return {
+            "input_ids": torch.cat(
+                [self.prompt_inputs["input_ids"], context_ids], dim=-1
+            ),
+            "attention_mask": torch.cat(
+                [self.prompt_inputs["attention_mask"], context_mask], dim=-1
+            ),
+        }
+
+    def _contains_eos(self, token_ids: torch.Tensor) -> bool:
+        eos_token_ids = self.model.generation_config.eos_token_id
+        if eos_token_ids is None:
+            return False
+        if isinstance(eos_token_ids, int):
+            eos_token_ids = [eos_token_ids]
+        return any((token_ids == token_id).any().item() for token_id in eos_token_ids)
+
     def _validate_shape(self, embedding: TextEmbedding) -> None:
         expected = (
-            self.canvas_length,
+            self.max_input_tokens,
             int(self.model.config.text_config.hidden_size),
         )
         if tuple(embedding.values.shape) != expected:
@@ -141,3 +202,24 @@ def _highest_score_token_ids(
         best_ids = torch.where(improved, chunk_ids + start, best_ids)
 
     return best_ids
+
+
+def _validate_max_input_tokens(
+    max_input_tokens: int,
+    *,
+    canvas_length: int,
+    context_length: int,
+    prompt_length: int,
+) -> int:
+    if max_input_tokens <= 0:
+        raise ValueError("max_input_tokens must be positive")
+    if max_input_tokens % canvas_length:
+        raise ValueError(
+            f"max_input_tokens must be a multiple of the {canvas_length}-token canvas"
+        )
+    if prompt_length + max_input_tokens > context_length:
+        maximum = ((context_length - prompt_length) // canvas_length) * canvas_length
+        raise ValueError(
+            f"max_input_tokens exceeds the model context; maximum is {maximum}"
+        )
+    return max_input_tokens

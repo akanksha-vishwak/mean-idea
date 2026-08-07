@@ -17,6 +17,7 @@ model = DiffusionGemma(
         model_id=MODEL_ID,
         prompt=os.environ.get("MEAN_IDEA_PROMPT", DEFAULT_PROMPT),
         max_denoising_steps=int(os.environ.get("MEAN_IDEA_STEPS", "48")),
+        max_input_tokens=int(os.environ.get("MEAN_IDEA_MAX_INPUT_TOKENS", "256")),
         dtype=os.environ.get("MEAN_IDEA_DTYPE", "auto"),
         device_map=os.environ.get("MEAN_IDEA_DEVICE_MAP", "auto"),
     )

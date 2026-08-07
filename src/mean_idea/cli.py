@@ -44,6 +44,12 @@ def build_parser() -> argparse.ArgumentParser:
         help="Hugging Face DiffusionGemma model ID",
     )
     parser.add_argument("--steps", type=int, default=48)
+    parser.add_argument(
+        "--max-input-tokens",
+        type=int,
+        default=256,
+        help="fixed input length, in multiples of the model's 256-token canvas",
+    )
     parser.add_argument("--prompt", default=DEFAULT_PROMPT)
     return parser
 
@@ -65,6 +71,7 @@ def build_model(args: argparse.Namespace) -> LatentTextModel:
             model_id=args.model_id,
             prompt=args.prompt,
             max_denoising_steps=args.steps,
+            max_input_tokens=args.max_input_tokens,
         )
     )
 
