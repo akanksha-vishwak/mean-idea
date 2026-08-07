@@ -10,6 +10,9 @@ dependencies = [
     "transformers[vision]>=5.11",
 ]
 
+[project.optional-dependencies]
+server = ["fastapi>=0.116", "uvicorn[standard]>=0.35"]
+
 [project.scripts]
 mean-idea = "mean_idea.cli:main"
 

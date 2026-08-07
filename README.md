@@ -26,14 +26,27 @@ Those limitations are part of the experiment rather than hidden by the API.
 
 ## Run
 
-DiffusionGemma has 25.2B total parameters and needs a capable accelerator. The
-first run downloads its weights from Hugging Face.
+The default is a 4.27M-parameter random DiffusionGemma fixture for local plumbing
+tests. It exercises the compatible model API but does not produce useful text.
 
 ```console
 uv sync
 uv run mean-idea first.py second.py
 uv run mean-idea first.py second.py --output result.py
 ```
+
+Select the useful 25.2B BF16 reference model explicitly. Its weights need about
+51 GB, plus runtime memory:
+
+```console
+uv run mean-idea first.py second.py \
+  --model-id google/diffusiongemma-26B-A4B-it
+```
+
+There is currently no useful 2-4 GB DiffusionGemma checkpoint compatible with
+this Transformers adapter. For a GPU with 32 GB RAM, the 16.8 GB
+`unsloth/diffusiongemma-26B-A4B-it-GGUF` Q4_K_M checkpoint fits, but it requires
+llama.cpp's dedicated diffusion runner and cannot be passed to `--model-id`.
 
 Use `HF_TOKEN` if Hugging Face requires authentication. To install through the
 Microsoft package feed proxy when public PyPI is blocked, use the normal
@@ -45,6 +58,33 @@ The backend is configurable:
 uv run mean-idea first.py second.py --steps 24 \
   --prompt "Refine this canvas into one complete Python sorting program."
 ```
+
+## Remote model
+
+Run the model on a GPU host while keeping interpolation on that host. The
+server exposes `/encode` and `/decode` for diagnostics and `/interpolate` for
+normal use. The latter avoids transferring the contextual embedding matrices
+over the network.
+
+```console
+uv sync --extra server
+MEAN_IDEA_MODEL_ID=google/diffusiongemma-26B-A4B-it \
+  uv run --extra server uvicorn mean_idea.server:app --host 0.0.0.0 --port 8000
+```
+
+Point the CLI at the service. Set `MEAN_IDEA_API_TOKEN` when the hosting
+platform expects bearer authentication:
+
+```console
+uv run mean-idea first.py second.py \
+  --backend remote \
+  --endpoint-url https://example.endpoints.huggingface.cloud \
+  --model-id google/diffusiongemma-26B-A4B-it
+```
+
+The client and server reject mismatched protocol versions and model IDs before
+processing embeddings. The remote service currently relies on the hosting
+platform for authentication and TLS termination.
 
 ## Test
 

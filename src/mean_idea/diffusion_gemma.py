@@ -6,7 +6,14 @@ import torch
 
 from mean_idea.api import TextEmbedding
 
-DEFAULT_MODEL_ID = "google/diffusiongemma-26B-A4B-it"
+# Random 4.27M-parameter fixture for local plumbing tests; not useful for quality.
+LOCAL_TEST_MODEL_ID = "trl-internal-testing/tiny-DiffusionGemmaForBlockDiffusion"
+# BF16 reference model: about 51 GB of weights and requires a larger accelerator.
+REFERENCE_MODEL_ID = "google/diffusiongemma-26B-A4B-it"
+# A useful sub-32-GB option is unsloth/diffusiongemma-26B-A4B-it-GGUF Q4_K_M
+# (16.8 GB), but it requires llama.cpp's diffusion runner, not this adapter.
+# No useful 2-4 GB DiffusionGemma checkpoint is currently published.
+DEFAULT_MODEL_ID = LOCAL_TEST_MODEL_ID
 DEFAULT_PROMPT = (
     "Refine the supplied token canvas into one coherent Python program. "
     "Return only the program, without Markdown fences or explanation."
