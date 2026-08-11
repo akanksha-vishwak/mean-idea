@@ -11,8 +11,8 @@ right = model.text_to_embedding(text_b)
 result = model.embedding_to_text(mean_embeddings(left, right))
 ```
 
-An optional prompt can be prepended to every text before its embedding is
-computed:
+An optional prompt can be added to the model context while leaving every token
+in the configured canvas available to the source text:
 
 ```python
 result = interpolate_texts(

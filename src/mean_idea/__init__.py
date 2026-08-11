@@ -3,7 +3,6 @@ from mean_idea.api import (
     TextEmbedding,
     interpolate_texts,
     mean_embeddings,
-    prepend_prompt,
 )
 
 __all__ = [
@@ -11,5 +10,4 @@ __all__ = [
     "TextEmbedding",
     "interpolate_texts",
     "mean_embeddings",
-    "prepend_prompt",
 ]

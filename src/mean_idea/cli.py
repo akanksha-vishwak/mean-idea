@@ -59,7 +59,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--prompt",
         type=Path,
-        help="UTF-8 file to prepend to each text before computing its embedding",
+        help="UTF-8 file added to model context outside the token canvas",
     )
     parser.add_argument(
         "--generation-prompt",

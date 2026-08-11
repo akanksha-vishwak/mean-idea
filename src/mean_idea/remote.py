@@ -9,7 +9,7 @@ import torch
 
 from mean_idea.api import TextEmbedding
 
-PROTOCOL_VERSION = 4
+PROTOCOL_VERSION = 5
 
 
 @dataclass(frozen=True, slots=True)
@@ -58,12 +58,15 @@ class RemoteLatentTextModel:
         self,
         embedding: TextEmbedding,
         *,
+        prompt: str | None = None,
         canvas_length: int | None = None,
         multi_canvas: int | None = None,
     ) -> str:
         payload: dict[str, Any] = {
             "values": embedding.values.detach().float().cpu().tolist()
         }
+        if prompt is not None:
+            payload["prompt"] = prompt
         if canvas_length is not None:
             payload["canvas_length"] = canvas_length
         if multi_canvas is not None:

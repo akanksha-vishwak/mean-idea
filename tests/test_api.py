@@ -5,7 +5,6 @@ from mean_idea.api import (
     TextEmbedding,
     interpolate_texts,
     mean_embeddings,
-    prepend_prompt,
 )
 
 
@@ -14,6 +13,7 @@ class FakeModel:
         self,
         text: str,
         *,
+        prompt: str | None = None,
         canvas_length: int | None = None,
         multi_canvas: int | None = None,
     ) -> TextEmbedding:
@@ -23,6 +23,7 @@ class FakeModel:
         self,
         embedding: TextEmbedding,
         *,
+        prompt: str | None = None,
         canvas_length: int | None = None,
         multi_canvas: int | None = None,
     ) -> str:
@@ -50,15 +51,39 @@ def test_interpolate_texts_uses_two_call_api() -> None:
     assert interpolate_texts(FakeModel(), "a", "abc") == "[[2.0, 1.0]]"
 
 
-def test_interpolate_texts_prepends_prompt_to_each_text() -> None:
+def test_interpolate_texts_passes_prompt_without_changing_text() -> None:
+    class PromptModel(FakeModel):
+        def text_to_embedding(
+            self,
+            text: str,
+            *,
+            prompt: str | None = None,
+            canvas_length: int | None = None,
+            multi_canvas: int | None = None,
+        ) -> TextEmbedding:
+            assert prompt == "prompt: "
+            return super().text_to_embedding(text)
+
+        def embedding_to_text(
+            self,
+            embedding: TextEmbedding,
+            *,
+            prompt: str | None = None,
+            canvas_length: int | None = None,
+            multi_canvas: int | None = None,
+        ) -> str:
+            assert prompt == "prompt: "
+            return super().embedding_to_text(embedding)
+
     assert (
-        interpolate_texts(FakeModel(), "a", "abc", prompt="prompt: ")
-        == "[[10.0, 1.0]]"
+        interpolate_texts(
+            PromptModel(),
+            "a",
+            "abc",
+            prompt="prompt: ",
+        )
+        == "[[2.0, 1.0]]"
     )
-
-
-def test_prepend_prompt_preserves_text_without_prompt() -> None:
-    assert prepend_prompt("source") == "source"
 
 
 def test_interpolate_texts_passes_canvas_length() -> None:
@@ -67,6 +92,7 @@ def test_interpolate_texts_passes_canvas_length() -> None:
             self,
             text: str,
             *,
+            prompt: str | None = None,
             canvas_length: int | None = None,
             multi_canvas: int | None = None,
         ) -> TextEmbedding:
@@ -82,6 +108,7 @@ def test_interpolate_texts_passes_canvas_length() -> None:
             self,
             embedding: TextEmbedding,
             *,
+            prompt: str | None = None,
             canvas_length: int | None = None,
             multi_canvas: int | None = None,
         ) -> str:

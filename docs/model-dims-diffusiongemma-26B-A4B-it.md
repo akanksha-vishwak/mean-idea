@@ -295,9 +295,11 @@ extract the static token lookup vectors directly.
 For each input text and each canvas, `mean-idea`:
 
 1. Tokenizes and pads/truncates the text to `L = C * M` token IDs.
-2. Sends earlier input canvases through the encoder as context.
-3. Sends the current input canvas as `decoder_input_ids`.
-4. Extracts the diffusion decoder's final contextual hidden state.
+2. Places the optional prompt-file text in the encoder/chat context, outside
+   the source canvas.
+3. Sends earlier input canvases through the encoder as additional context.
+4. Sends the current input canvas as `decoder_input_ids`.
+5. Extracts the diffusion decoder's final contextual hidden state.
 
 For one canvas the model returns:
 

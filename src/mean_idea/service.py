@@ -9,7 +9,6 @@ from mean_idea.api import (
     LatentTextModel,
     TextEmbedding,
     interpolate_texts,
-    prepend_prompt,
 )
 from mean_idea.remote import PROTOCOL_VERSION
 
@@ -30,7 +29,8 @@ class LatentModelService:
             prompt = self._prompt(payload)
             result = {
                 "values": self.model.text_to_embedding(
-                    prepend_prompt(text, prompt),
+                    text,
+                    prompt=prompt,
                     canvas_length=self._canvas_length(payload),
                     multi_canvas=self._multi_canvas(payload),
                 ).values.float().tolist()
@@ -45,6 +45,7 @@ class LatentModelService:
             result = {
                 "text": self.model.embedding_to_text(
                     embedding,
+                    prompt=self._prompt(payload),
                     canvas_length=self._canvas_length(payload),
                     multi_canvas=self._multi_canvas(payload),
                 )

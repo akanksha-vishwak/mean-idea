@@ -11,17 +11,27 @@ class FakeModel:
         self,
         text: str,
         *,
+        prompt: str | None = None,
         canvas_length: int | None = None,
         multi_canvas: int | None = None,
     ) -> TextEmbedding:
         return TextEmbedding(
-            torch.tensor([[float(len(text)), float(canvas_length or 1)]])
+            torch.tensor(
+                [
+                    [
+                        float(len(text)),
+                        float(len(prompt or "")),
+                        float(canvas_length or 1),
+                    ]
+                ]
+            )
         )
 
     def embedding_to_text(
         self,
         embedding: TextEmbedding,
         *,
+        prompt: str | None = None,
         canvas_length: int | None = None,
         multi_canvas: int | None = None,
     ) -> str:
@@ -48,7 +58,10 @@ def test_service_executes_latent_operations() -> None:
             multi_canvas=2,
         ),
     )
-    decoded = service.handle("decode", request(values=[[2.0, 1.0]]))
+    decoded = service.handle(
+        "decode",
+        request(values=[[2.0, 1.0]], prompt="prompt: "),
+    )
     interpolated = service.handle(
         "interpolate",
         request(
@@ -63,9 +76,12 @@ def test_service_executes_latent_operations() -> None:
         "protocol_version": PROTOCOL_VERSION,
         "model_id": "example/model",
     }
-    assert encoded == {**metadata, "values": [[11.0, 512.0]]}
+    assert encoded == {**metadata, "values": [[3.0, 8.0, 512.0]]}
     assert decoded == {**metadata, "text": "[[2.0, 1.0]]"}
-    assert interpolated == {**metadata, "text": "[[10.0, 512.0]]"}
+    assert interpolated == {
+        **metadata,
+        "text": "[[2.0, 8.0, 512.0]]",
+    }
 
 
 @pytest.mark.parametrize(

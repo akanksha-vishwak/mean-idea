@@ -66,7 +66,7 @@ class DiffusionGemma:
         )
         self.model.eval()
         self._canvas_lock = RLock()
-        self.prompt_inputs = self._base_prompt_inputs()
+        self.prompt_inputs = self._base_prompt_inputs(None)
         _input_length(
             canvas_length=self.settings.canvas_length,
             multi_canvas=self.settings.multi_canvas,
@@ -79,14 +79,17 @@ class DiffusionGemma:
         self,
         text: str,
         *,
+        prompt: str | None = None,
         canvas_length: int | None = None,
         multi_canvas: int | None = None,
     ) -> TextEmbedding:
         """Return denoiser hidden states for sequential fixed-length canvases."""
 
+        prompt_inputs = self._base_prompt_inputs(prompt)
         with self._using_canvas_settings(
             canvas_length,
             multi_canvas,
+            prompt_length=prompt_inputs["input_ids"].shape[-1],
         ) as (active_canvas_length, input_length):
             encoded = self.processor.tokenizer(
                 text,
@@ -101,6 +104,7 @@ class DiffusionGemma:
             chunks = []
             for start in range(0, input_length, active_canvas_length):
                 inputs = self._prompt_inputs(
+                    prompt_inputs,
                     token_ids[:, :start],
                     token_mask[:, :start],
                 )
@@ -120,14 +124,17 @@ class DiffusionGemma:
         self,
         embedding: TextEmbedding,
         *,
+        prompt: str | None = None,
         canvas_length: int | None = None,
         multi_canvas: int | None = None,
     ) -> str:
         """Quantize and refine sequential embedding canvases."""
 
+        prompt_inputs = self._base_prompt_inputs(prompt)
         with self._using_canvas_settings(
             canvas_length,
             multi_canvas,
+            prompt_length=prompt_inputs["input_ids"].shape[-1],
         ) as (active_canvas_length, input_length):
             self._validate_shape(embedding, input_length)
             generated_chunks = []
@@ -142,6 +149,7 @@ class DiffusionGemma:
                     )
                 )
                 inputs = self._prompt_inputs(
+                    prompt_inputs,
                     generated_context,
                     torch.ones_like(generated_context),
                 )
@@ -172,6 +180,8 @@ class DiffusionGemma:
         self,
         canvas_length: int | None,
         multi_canvas: int | None,
+        *,
+        prompt_length: int,
     ) -> Iterator[tuple[int, int]]:
         active_canvas_length = (
             self.settings.canvas_length
@@ -187,7 +197,7 @@ class DiffusionGemma:
             canvas_length=active_canvas_length,
             multi_canvas=active_multi_canvas,
             context_length=int(self.model.config.text_config.max_position_embeddings),
-            prompt_length=self.prompt_inputs["input_ids"].shape[-1],
+            prompt_length=prompt_length,
         )
         with self._canvas_lock:
             previous_canvas_length = self.model.config.canvas_length
@@ -197,9 +207,12 @@ class DiffusionGemma:
             finally:
                 self.model.config.canvas_length = previous_canvas_length
 
-    def _base_prompt_inputs(self):
+    def _base_prompt_inputs(self, prompt: str | None):
+        content = self.settings.prompt
+        if prompt is not None:
+            content = f"{prompt}\n\n{content}"
         return self.processor.apply_chat_template(
-            [{"role": "user", "content": self.settings.prompt}],
+            [{"role": "user", "content": content}],
             tokenize=True,
             add_generation_prompt=True,
             return_dict=True,
@@ -208,15 +221,16 @@ class DiffusionGemma:
 
     def _prompt_inputs(
         self,
+        prompt_inputs,
         context_ids: torch.Tensor,
         context_mask: torch.Tensor,
     ) -> dict[str, torch.Tensor]:
         return {
             "input_ids": torch.cat(
-                [self.prompt_inputs["input_ids"], context_ids], dim=-1
+                [prompt_inputs["input_ids"], context_ids], dim=-1
             ),
             "attention_mask": torch.cat(
-                [self.prompt_inputs["attention_mask"], context_mask], dim=-1
+                [prompt_inputs["attention_mask"], context_mask], dim=-1
             ),
         }
 

@@ -34,7 +34,10 @@ def test_remote_model_encodes_and_decodes() -> None:
         "source", prompt="prompt: ", canvas_length=512, multi_canvas=2
     )
     result = model.embedding_to_text(
-        embedding, canvas_length=512, multi_canvas=2
+        embedding,
+        prompt="prompt: ",
+        canvas_length=512,
+        multi_canvas=2,
     )
     interpolated = model.interpolate_texts(
         "left",
@@ -65,6 +68,7 @@ def test_remote_model_encodes_and_decodes() -> None:
                 "protocol_version": PROTOCOL_VERSION,
                 "model_id": "example/model",
                 "values": [[1.0, 2.0]],
+                "prompt": "prompt: ",
                 "canvas_length": 512,
                 "multi_canvas": 2,
             },
