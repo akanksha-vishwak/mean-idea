@@ -11,9 +11,23 @@ right = model.text_to_embedding(text_b)
 result = model.embedding_to_text(mean_embeddings(left, right))
 ```
 
+An optional prompt can be prepended to every text before its embedding is
+computed:
+
+```python
+result = interpolate_texts(
+    model,
+    text_a,
+    text_b,
+    prompt=prompt_text,
+    canvas_length=4096,
+    multi_canvas=1,
+)
+```
+
 `DiffusionGemma` implements those calls with
 `google/diffusiongemma-26B-A4B-it`. Each input is independently tokenized to
-the model's 256-token canvas and run through its prompt-conditioned,
+the configured canvas and run through its prompt-conditioned,
 bidirectional diffusion decoder. Decoding projects the mean contextual hidden
 states through the model's tied language-model head, then passes the resulting
 token canvas as `decoder_input_ids` to DiffusionGemma's documented iterative
@@ -33,22 +47,24 @@ tests. It exercises the compatible model API but does not produce useful text.
 uv sync
 uv run mean-idea first.py second.py
 uv run mean-idea first.py second.py --output result.py
+uv run mean-idea first.py second.py --prompt prompt.txt
 ```
 
-DiffusionGemma's trained canvas remains fixed at 256 tokens. Process longer
-documents as sequential canvases by selecting a fixed input length shared by
-both files:
+The canvas defaults to 256 tokens. Transformers also supports overriding the
+DiffusionGemma canvas size, which lets a longer input be processed as one
+canvas instead of a sequence of independently denoised canvases:
 
 ```console
-uv run mean-idea first.py second.py --max-input-tokens 4096
+uv run mean-idea first.py second.py \
+  --canvas-length 4096
 ```
 
-The value must be a multiple of 256. Each canvas is conditioned on the
-preceding chunks, and the resulting hidden-state matrices are concatenated
-before interpolation. The upper bound is the model's 262,144-token context
-minus the instruction prompt, rounded down to a whole canvas. Large values
-require one model pass per input canvas and one diffusion decode per output
-canvas, so CPU execution time grows substantially.
+By default, one canvas is used. Enable sequential multi-canvas processing
+explicitly with `--multi-canvas N`; each later canvas is conditioned on the
+preceding chunks. The input length is `canvas length * N`. Large canvases
+substantially increase memory use and decoding cost. Sampling and entropy
+calculations are chunked along the canvas to avoid materializing a full
+float32 canvas-by-vocabulary probability matrix.
 
 On Linux x86-64, the lock file selects the official PyTorch CUDA 12.8 wheels
 instead of whichever PyTorch build is newest on the default package index.
@@ -82,7 +98,7 @@ The backend is configurable:
 
 ```console
 uv run mean-idea first.py second.py --steps 24 \
-  --prompt "Refine this canvas into one complete Python sorting program."
+  --generation-prompt "Refine this canvas into one complete Python sorting program."
 ```
 
 ## Remote model
@@ -95,7 +111,8 @@ over the network.
 ```console
 uv sync --extra server
 MEAN_IDEA_MODEL_ID=google/diffusiongemma-26B-A4B-it \
-MEAN_IDEA_MAX_INPUT_TOKENS=4096 \
+MEAN_IDEA_CANVAS_LENGTH=256 \
+MEAN_IDEA_MULTI_CANVAS=1 \
   uv run --extra server uvicorn mean_idea.server:app --host 0.0.0.0 --port 8000
 ```
 
@@ -106,12 +123,15 @@ platform expects bearer authentication:
 uv run mean-idea first.py second.py \
   --backend remote \
   --endpoint-url https://example.endpoints.huggingface.cloud \
-  --model-id google/diffusiongemma-26B-A4B-it
+  --model-id google/diffusiongemma-26B-A4B-it \
+  --canvas-length 4096 \
+  --prompt prompt.txt
 ```
 
 The client and server reject mismatched protocol versions and model IDs before
-processing embeddings. The remote service currently relies on the hosting
-platform for authentication and TLS termination.
+processing embeddings. The requested canvas length and multi-canvas count
+determine the embedding length. The remote service currently relies on the
+hosting platform for authentication and TLS termination.
 
 ## Test
 

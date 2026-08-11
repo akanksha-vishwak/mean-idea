@@ -45,12 +45,27 @@ def build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument("--steps", type=int, default=48)
     parser.add_argument(
-        "--max-input-tokens",
+        "--canvas-length",
         type=int,
         default=256,
-        help="fixed input length, in multiples of the model's 256-token canvas",
+        help="DiffusionGemma canvas size",
     )
-    parser.add_argument("--prompt", default=DEFAULT_PROMPT)
+    parser.add_argument(
+        "--multi-canvas",
+        type=int,
+        default=1,
+        help="number of sequential canvases to process",
+    )
+    parser.add_argument(
+        "--prompt",
+        type=Path,
+        help="UTF-8 file to prepend to each text before computing its embedding",
+    )
+    parser.add_argument(
+        "--generation-prompt",
+        default=DEFAULT_PROMPT,
+        help="instruction used by the local DiffusionGemma decoder",
+    )
     return parser
 
 
@@ -69,9 +84,10 @@ def build_model(args: argparse.Namespace) -> LatentTextModel:
     return DiffusionGemma(
         DiffusionGemmaSettings(
             model_id=args.model_id,
-            prompt=args.prompt,
+            prompt=args.generation_prompt,
             max_denoising_steps=args.steps,
-            max_input_tokens=args.max_input_tokens,
+            canvas_length=args.canvas_length,
+            multi_canvas=args.multi_canvas,
         )
     )
 
@@ -87,10 +103,22 @@ def main() -> None:
         args.first.read_text(encoding="utf-8"),
         args.second.read_text(encoding="utf-8"),
     )
+    prompt = args.prompt.read_text(encoding="utf-8") if args.prompt else None
     if isinstance(model, RemoteLatentTextModel):
-        result = model.interpolate_texts(*texts)
+        result = model.interpolate_texts(
+            *texts,
+            prompt=prompt,
+            canvas_length=args.canvas_length,
+            multi_canvas=args.multi_canvas,
+        )
     else:
-        result = interpolate_texts(model, *texts)
+        result = interpolate_texts(
+            model,
+            *texts,
+            prompt=prompt,
+            canvas_length=args.canvas_length,
+            multi_canvas=args.multi_canvas,
+        )
 
     if args.output:
         args.output.write_text(f"{result}\n", encoding="utf-8")

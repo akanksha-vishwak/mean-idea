@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import pytest
 
 from mean_idea.cli import build_model, build_parser
@@ -9,8 +11,18 @@ def test_cli_defaults_are_strings() -> None:
     args = build_parser().parse_args(["left.py", "right.py"])
 
     assert args.model_id == DEFAULT_MODEL_ID
-    assert args.prompt == DEFAULT_PROMPT
-    assert args.max_input_tokens == 256
+    assert args.prompt is None
+    assert args.generation_prompt == DEFAULT_PROMPT
+    assert args.canvas_length == 256
+    assert args.multi_canvas == 1
+
+
+def test_cli_accepts_prompt_file() -> None:
+    args = build_parser().parse_args(
+        ["left.py", "right.py", "--prompt", "prompt.txt"]
+    )
+
+    assert args.prompt == Path("prompt.txt")
 
 
 @pytest.mark.parametrize("option", ["--model-id", "--model"])
@@ -22,12 +34,20 @@ def test_cli_accepts_model_id(option: str) -> None:
     assert args.model_id == "example/model"
 
 
-def test_cli_accepts_max_input_tokens() -> None:
+def test_cli_accepts_multi_canvas() -> None:
     args = build_parser().parse_args(
-        ["left.py", "right.py", "--max-input-tokens", "1024"]
+        ["left.py", "right.py", "--multi-canvas", "4"]
     )
 
-    assert args.max_input_tokens == 1024
+    assert args.multi_canvas == 4
+
+
+def test_cli_accepts_canvas_length() -> None:
+    args = build_parser().parse_args(
+        ["left.py", "right.py", "--canvas-length", "1024"]
+    )
+
+    assert args.canvas_length == 1024
 
 
 def test_cli_builds_remote_model(monkeypatch: pytest.MonkeyPatch) -> None:

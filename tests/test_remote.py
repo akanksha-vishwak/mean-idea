@@ -30,9 +30,19 @@ def test_remote_model_encodes_and_decodes() -> None:
         transport=transport,
     )
 
-    embedding = model.text_to_embedding("source")
-    result = model.embedding_to_text(embedding)
-    interpolated = model.interpolate_texts("left", "right")
+    embedding = model.text_to_embedding(
+        "source", prompt="prompt: ", canvas_length=512, multi_canvas=2
+    )
+    result = model.embedding_to_text(
+        embedding, canvas_length=512, multi_canvas=2
+    )
+    interpolated = model.interpolate_texts(
+        "left",
+        "right",
+        prompt="prompt: ",
+        canvas_length=512,
+        multi_canvas=2,
+    )
 
     assert torch.equal(embedding.values, torch.tensor([[1.0, 2.0]]))
     assert result == "decoded"
@@ -44,6 +54,9 @@ def test_remote_model_encodes_and_decodes() -> None:
                 "protocol_version": PROTOCOL_VERSION,
                 "model_id": "example/model",
                 "text": "source",
+                "prompt": "prompt: ",
+                "canvas_length": 512,
+                "multi_canvas": 2,
             },
         ),
         (
@@ -52,6 +65,8 @@ def test_remote_model_encodes_and_decodes() -> None:
                 "protocol_version": PROTOCOL_VERSION,
                 "model_id": "example/model",
                 "values": [[1.0, 2.0]],
+                "canvas_length": 512,
+                "multi_canvas": 2,
             },
         ),
         (
@@ -60,6 +75,9 @@ def test_remote_model_encodes_and_decodes() -> None:
                 "protocol_version": PROTOCOL_VERSION,
                 "model_id": "example/model",
                 "texts": ["left", "right"],
+                "prompt": "prompt: ",
+                "canvas_length": 512,
+                "multi_canvas": 2,
             },
         ),
     ]
@@ -68,7 +86,7 @@ def test_remote_model_encodes_and_decodes() -> None:
 @pytest.mark.parametrize(
     ("field", "value", "message"),
     [
-        ("protocol_version", 2, "protocol version"),
+        ("protocol_version", PROTOCOL_VERSION + 1, "protocol version"),
         ("model_id", "other/model", "model ID"),
     ],
 )

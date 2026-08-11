@@ -9,7 +9,7 @@ import torch
 
 from mean_idea.api import TextEmbedding
 
-PROTOCOL_VERSION = 1
+PROTOCOL_VERSION = 4
 
 
 @dataclass(frozen=True, slots=True)
@@ -32,26 +32,66 @@ class RemoteLatentTextModel:
         self.settings = settings
         self._transport = transport or self._post
 
-    def text_to_embedding(self, text: str) -> TextEmbedding:
-        response = self._request("encode", {"text": text})
+    def text_to_embedding(
+        self,
+        text: str,
+        *,
+        prompt: str | None = None,
+        canvas_length: int | None = None,
+        multi_canvas: int | None = None,
+    ) -> TextEmbedding:
+        payload = {"text": text}
+        if prompt is not None:
+            payload["prompt"] = prompt
+        if canvas_length is not None:
+            payload["canvas_length"] = canvas_length
+        if multi_canvas is not None:
+            payload["multi_canvas"] = multi_canvas
+        response = self._request("encode", payload)
         try:
             values = torch.tensor(response["values"], dtype=torch.float32)
         except (KeyError, TypeError, ValueError) as error:
             raise ValueError("remote encode response has invalid embedding values") from error
         return TextEmbedding(values)
 
-    def embedding_to_text(self, embedding: TextEmbedding) -> str:
+    def embedding_to_text(
+        self,
+        embedding: TextEmbedding,
+        *,
+        canvas_length: int | None = None,
+        multi_canvas: int | None = None,
+    ) -> str:
+        payload: dict[str, Any] = {
+            "values": embedding.values.detach().float().cpu().tolist()
+        }
+        if canvas_length is not None:
+            payload["canvas_length"] = canvas_length
+        if multi_canvas is not None:
+            payload["multi_canvas"] = multi_canvas
         response = self._request(
             "decode",
-            {"values": embedding.values.detach().float().cpu().tolist()},
+            payload,
         )
         text = response.get("text")
         if not isinstance(text, str):
             raise ValueError("remote decode response has invalid text")
         return text
 
-    def interpolate_texts(self, *texts: str) -> str:
-        response = self._request("interpolate", {"texts": list(texts)})
+    def interpolate_texts(
+        self,
+        *texts: str,
+        prompt: str | None = None,
+        canvas_length: int | None = None,
+        multi_canvas: int | None = None,
+    ) -> str:
+        payload: dict[str, Any] = {"texts": list(texts)}
+        if prompt is not None:
+            payload["prompt"] = prompt
+        if canvas_length is not None:
+            payload["canvas_length"] = canvas_length
+        if multi_canvas is not None:
+            payload["multi_canvas"] = multi_canvas
+        response = self._request("interpolate", payload)
         text = response.get("text")
         if not isinstance(text, str):
             raise ValueError("remote interpolate response has invalid text")
