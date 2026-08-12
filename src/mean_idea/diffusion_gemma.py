@@ -51,6 +51,7 @@ class DiffusionGemma:
             canvas_length=self.settings.canvas_length,
             multi_canvas=self.settings.multi_canvas,
         )
+        _validate_max_iterations(self.settings.max_denoising_steps)
         self.processor = AutoProcessor.from_pretrained(self.settings.model_id)
         config = DiffusionGemmaConfig.from_pretrained(self.settings.model_id)
         config.canvas_length = self.settings.canvas_length
@@ -127,9 +128,16 @@ class DiffusionGemma:
         prompt: str | None = None,
         canvas_length: int | None = None,
         multi_canvas: int | None = None,
+        max_iterations: int | None = None,
     ) -> str:
         """Quantize and refine sequential embedding canvases."""
 
+        active_max_iterations = (
+            self.settings.max_denoising_steps
+            if max_iterations is None
+            else max_iterations
+        )
+        _validate_max_iterations(active_max_iterations)
         prompt_inputs = self._base_prompt_inputs(prompt)
         with self._using_canvas_settings(
             canvas_length,
@@ -153,19 +161,13 @@ class DiffusionGemma:
                     generated_context,
                     torch.ones_like(generated_context),
                 )
-                prompt_length = inputs["input_ids"].shape[-1]
-                output = self.model.generate(
-                    **inputs,
+                generated = _generate_canvas(
+                    self.model,
+                    inputs=inputs,
                     decoder_input_ids=decoder_input_ids.to(self.model.device),
-                    max_new_tokens=active_canvas_length,
-                    max_denoising_steps=self.settings.max_denoising_steps,
+                    canvas_length=active_canvas_length,
+                    max_iterations=active_max_iterations,
                 )
-                sequences = (
-                    output.sequences if hasattr(output, "sequences") else output
-                )
-                generated = sequences[
-                    :, prompt_length : prompt_length + active_canvas_length
-                ]
                 generated_chunks.append(generated)
                 if self._contains_eos(generated):
                     break
@@ -294,6 +296,29 @@ def _highest_score_token_ids(
         best_ids = torch.where(improved, chunk_ids + start, best_ids)
 
     return best_ids
+
+
+def _generate_canvas(
+    model,
+    *,
+    inputs,
+    decoder_input_ids: torch.Tensor,
+    canvas_length: int,
+    max_iterations: int,
+) -> torch.Tensor:
+    _validate_max_iterations(max_iterations)
+    if max_iterations == 0:
+        return decoder_input_ids
+
+    prompt_length = inputs["input_ids"].shape[-1]
+    output = model.generate(
+        **inputs,
+        decoder_input_ids=decoder_input_ids,
+        max_new_tokens=canvas_length,
+        max_denoising_steps=max_iterations,
+    )
+    sequences = output.sequences if hasattr(output, "sequences") else output
+    return sequences[:, prompt_length : prompt_length + canvas_length]
 
 
 def _sample_tokens_and_entropy(
@@ -452,6 +477,15 @@ def _validate_canvas_settings(
         raise ValueError("multi_canvas must be a positive integer")
     if multi_canvas <= 0:
         raise ValueError("multi_canvas must be a positive integer")
+
+
+def _validate_max_iterations(max_iterations: int) -> None:
+    if (
+        not isinstance(max_iterations, int)
+        or isinstance(max_iterations, bool)
+        or max_iterations < 0
+    ):
+        raise ValueError("max_iterations must be a non-negative integer")
 
 
 def _input_length(

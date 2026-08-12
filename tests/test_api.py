@@ -26,6 +26,7 @@ class FakeModel:
         prompt: str | None = None,
         canvas_length: int | None = None,
         multi_canvas: int | None = None,
+        max_iterations: int | None = None,
     ) -> str:
         return str(embedding.values.tolist())
 
@@ -71,8 +72,10 @@ def test_interpolate_texts_passes_prompt_without_changing_text() -> None:
             prompt: str | None = None,
             canvas_length: int | None = None,
             multi_canvas: int | None = None,
+            max_iterations: int | None = None,
         ) -> str:
             assert prompt == "prompt: "
+            assert max_iterations is None
             return super().embedding_to_text(embedding)
 
     assert (
@@ -111,9 +114,11 @@ def test_interpolate_texts_passes_canvas_length() -> None:
             prompt: str | None = None,
             canvas_length: int | None = None,
             multi_canvas: int | None = None,
+            max_iterations: int | None = None,
         ) -> str:
             assert canvas_length == 512
             assert multi_canvas == 2
+            assert max_iterations == 0
             return super().embedding_to_text(
                 embedding,
                 canvas_length=canvas_length,
@@ -126,4 +131,5 @@ def test_interpolate_texts_passes_canvas_length() -> None:
         "b",
         canvas_length=512,
         multi_canvas=2,
+        max_iterations=0,
     )

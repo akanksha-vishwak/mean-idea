@@ -101,6 +101,10 @@ uv run mean-idea first.py second.py --steps 24 \
   --generation-prompt "Refine this canvas into one complete Python sorting program."
 ```
 
+The default maximum is 48 denoising iterations. Adaptive stopping may finish
+earlier. Use `--steps 0` to skip diffusion generation and decode the token IDs
+obtained directly from the mean embedding projection.
+
 ## Remote model
 
 Run the model on a GPU host while keeping interpolation on that host. The

@@ -9,7 +9,7 @@ import torch
 
 from mean_idea.api import TextEmbedding
 
-PROTOCOL_VERSION = 5
+PROTOCOL_VERSION = 6
 
 
 @dataclass(frozen=True, slots=True)
@@ -61,6 +61,7 @@ class RemoteLatentTextModel:
         prompt: str | None = None,
         canvas_length: int | None = None,
         multi_canvas: int | None = None,
+        max_iterations: int | None = None,
     ) -> str:
         payload: dict[str, Any] = {
             "values": embedding.values.detach().float().cpu().tolist()
@@ -71,6 +72,8 @@ class RemoteLatentTextModel:
             payload["canvas_length"] = canvas_length
         if multi_canvas is not None:
             payload["multi_canvas"] = multi_canvas
+        if max_iterations is not None:
+            payload["max_iterations"] = max_iterations
         response = self._request(
             "decode",
             payload,
@@ -86,6 +89,7 @@ class RemoteLatentTextModel:
         prompt: str | None = None,
         canvas_length: int | None = None,
         multi_canvas: int | None = None,
+        max_iterations: int | None = None,
     ) -> str:
         payload: dict[str, Any] = {"texts": list(texts)}
         if prompt is not None:
@@ -94,6 +98,8 @@ class RemoteLatentTextModel:
             payload["canvas_length"] = canvas_length
         if multi_canvas is not None:
             payload["multi_canvas"] = multi_canvas
+        if max_iterations is not None:
+            payload["max_iterations"] = max_iterations
         response = self._request("interpolate", payload)
         text = response.get("text")
         if not isinstance(text, str):

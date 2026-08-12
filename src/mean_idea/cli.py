@@ -14,6 +14,13 @@ from mean_idea.diffusion_gemma import (
 from mean_idea.remote import RemoteLatentTextModel, RemoteModelSettings
 
 
+def non_negative_int(value: str) -> int:
+    parsed = int(value)
+    if parsed < 0:
+        raise argparse.ArgumentTypeError("must be non-negative")
+    return parsed
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description="Decode the mean DiffusionGemma embedding of two texts."
@@ -43,7 +50,12 @@ def build_parser() -> argparse.ArgumentParser:
         default=DEFAULT_MODEL_ID,
         help="Hugging Face DiffusionGemma model ID",
     )
-    parser.add_argument("--steps", type=int, default=48)
+    parser.add_argument(
+        "--steps",
+        type=non_negative_int,
+        default=48,
+        help="maximum diffusion denoising iterations; 0 disables denoising",
+    )
     parser.add_argument(
         "--canvas-length",
         type=int,
@@ -110,6 +122,7 @@ def main() -> None:
             prompt=prompt,
             canvas_length=args.canvas_length,
             multi_canvas=args.multi_canvas,
+            max_iterations=args.steps,
         )
     else:
         result = interpolate_texts(
@@ -118,6 +131,7 @@ def main() -> None:
             prompt=prompt,
             canvas_length=args.canvas_length,
             multi_canvas=args.multi_canvas,
+            max_iterations=args.steps,
         )
 
     if args.output:

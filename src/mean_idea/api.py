@@ -40,6 +40,7 @@ class LatentTextModel(Protocol):
         prompt: str | None = None,
         canvas_length: int | None = None,
         multi_canvas: int | None = None,
+        max_iterations: int | None = None,
     ) -> str: ...
 
 
@@ -61,23 +62,27 @@ def interpolate_texts(
     prompt: str | None = None,
     canvas_length: int | None = None,
     multi_canvas: int | None = None,
+    max_iterations: int | None = None,
 ) -> str:
     """Encode texts independently, average them, and decode the mean."""
 
-    model_options = {}
+    embedding_options = {}
     if prompt is not None:
-        model_options["prompt"] = prompt
+        embedding_options["prompt"] = prompt
     if canvas_length is not None:
-        model_options["canvas_length"] = canvas_length
+        embedding_options["canvas_length"] = canvas_length
     if multi_canvas is not None:
-        model_options["multi_canvas"] = multi_canvas
+        embedding_options["multi_canvas"] = multi_canvas
     embedding = mean_embeddings(
         *(
             model.text_to_embedding(
                 text,
-                **model_options,
+                **embedding_options,
             )
             for text in texts
         )
     )
-    return model.embedding_to_text(embedding, **model_options)
+    generation_options = dict(embedding_options)
+    if max_iterations is not None:
+        generation_options["max_iterations"] = max_iterations
+    return model.embedding_to_text(embedding, **generation_options)

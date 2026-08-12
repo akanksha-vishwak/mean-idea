@@ -224,6 +224,10 @@ The default generation configuration uses:
 | Stability threshold | `1` |
 | Default generated canvas | `256` tokens |
 
+`mean-idea --steps N` caps the denoising loop at `N`; adaptive
+stopping can still finish earlier. With `N = 0`, the application skips the
+diffusion loop and decodes the vocabulary-projected embedding tokens directly.
+
 The entropy-bound sampler accepts the lowest-entropy positions and replaces
 the remaining positions with new random vocabulary IDs for another denoising
 step. A completed canvas is appended to the encoder context before generating

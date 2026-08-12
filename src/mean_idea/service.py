@@ -48,6 +48,7 @@ class LatentModelService:
                     prompt=self._prompt(payload),
                     canvas_length=self._canvas_length(payload),
                     multi_canvas=self._multi_canvas(payload),
+                    max_iterations=self._max_iterations(payload),
                 )
             }
         elif operation == "interpolate":
@@ -65,6 +66,7 @@ class LatentModelService:
                     prompt=self._prompt(payload),
                     canvas_length=self._canvas_length(payload),
                     multi_canvas=self._multi_canvas(payload),
+                    max_iterations=self._max_iterations(payload),
                 )
             }
         else:
@@ -110,6 +112,17 @@ class LatentModelService:
         ):
             raise ValueError("multi_canvas must be a positive integer")
         return multi_canvas
+
+    @staticmethod
+    def _max_iterations(payload: dict[str, Any]) -> int | None:
+        max_iterations = payload.get("max_iterations")
+        if max_iterations is not None and (
+            not isinstance(max_iterations, int)
+            or isinstance(max_iterations, bool)
+            or max_iterations < 0
+        ):
+            raise ValueError("max_iterations must be a non-negative integer")
+        return max_iterations
 
 
 def create_app(service: LatentModelService):

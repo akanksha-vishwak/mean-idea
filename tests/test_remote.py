@@ -38,6 +38,7 @@ def test_remote_model_encodes_and_decodes() -> None:
         prompt="prompt: ",
         canvas_length=512,
         multi_canvas=2,
+        max_iterations=0,
     )
     interpolated = model.interpolate_texts(
         "left",
@@ -45,6 +46,7 @@ def test_remote_model_encodes_and_decodes() -> None:
         prompt="prompt: ",
         canvas_length=512,
         multi_canvas=2,
+        max_iterations=24,
     )
 
     assert torch.equal(embedding.values, torch.tensor([[1.0, 2.0]]))
@@ -71,6 +73,7 @@ def test_remote_model_encodes_and_decodes() -> None:
                 "prompt": "prompt: ",
                 "canvas_length": 512,
                 "multi_canvas": 2,
+                "max_iterations": 0,
             },
         ),
         (
@@ -82,6 +85,7 @@ def test_remote_model_encodes_and_decodes() -> None:
                 "prompt": "prompt: ",
                 "canvas_length": 512,
                 "multi_canvas": 2,
+                "max_iterations": 24,
             },
         ),
     ]

@@ -2,9 +2,11 @@ import pytest
 import torch
 
 from mean_idea.diffusion_gemma import (
+    _generate_canvas,
     _highest_score_token_ids,
     _input_length,
     _sample_tokens_and_entropy,
+    _validate_max_iterations,
 )
 
 
@@ -61,6 +63,30 @@ def test_sample_tokens_and_entropy_rejects_invalid_chunk_size() -> None:
             torch.zeros(1, 1, 2),
             sequence_chunk_size=0,
         )
+
+
+def test_generate_canvas_skips_model_for_zero_iterations() -> None:
+    class Model:
+        def generate(self, **kwargs):
+            raise AssertionError("generate must not be called")
+
+    decoder_input_ids = torch.tensor([[3, 2, 1]])
+
+    result = _generate_canvas(
+        Model(),
+        inputs={"input_ids": torch.tensor([[9, 8]])},
+        decoder_input_ids=decoder_input_ids,
+        canvas_length=3,
+        max_iterations=0,
+    )
+
+    assert result is decoder_input_ids
+
+
+@pytest.mark.parametrize("value", [-1, True, 1.5])
+def test_validate_max_iterations_rejects_invalid_values(value) -> None:
+    with pytest.raises(ValueError, match="non-negative"):
+        _validate_max_iterations(value)
 
 
 def test_input_length_accepts_multiple_canvases() -> None:

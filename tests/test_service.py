@@ -34,6 +34,7 @@ class FakeModel:
         prompt: str | None = None,
         canvas_length: int | None = None,
         multi_canvas: int | None = None,
+        max_iterations: int | None = None,
     ) -> str:
         return str(embedding.values.tolist())
 
@@ -60,7 +61,11 @@ def test_service_executes_latent_operations() -> None:
     )
     decoded = service.handle(
         "decode",
-        request(values=[[2.0, 1.0]], prompt="prompt: "),
+        request(
+            values=[[2.0, 1.0]],
+            prompt="prompt: ",
+            max_iterations=0,
+        ),
     )
     interpolated = service.handle(
         "interpolate",
@@ -69,6 +74,7 @@ def test_service_executes_latent_operations() -> None:
             prompt="prompt: ",
             canvas_length=512,
             multi_canvas=2,
+            max_iterations=24,
         ),
     )
 
@@ -96,6 +102,8 @@ def test_service_executes_latent_operations() -> None:
         ("interpolate", request(texts=["abc"], canvas_length=True), "canvas_length"),
         ("interpolate", request(texts=["abc"], multi_canvas=0), "multi_canvas"),
         ("interpolate", request(texts=["abc"], multi_canvas=True), "multi_canvas"),
+        ("interpolate", request(texts=["abc"], max_iterations=-1), "max_iterations"),
+        ("interpolate", request(texts=["abc"], max_iterations=True), "max_iterations"),
         ("unknown", request(), "unsupported operation"),
     ],
 )

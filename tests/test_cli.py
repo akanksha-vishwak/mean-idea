@@ -15,6 +15,7 @@ def test_cli_defaults_are_strings() -> None:
     assert args.generation_prompt == DEFAULT_PROMPT
     assert args.canvas_length == 256
     assert args.multi_canvas == 1
+    assert args.steps == 48
 
 
 def test_cli_accepts_prompt_file() -> None:
@@ -48,6 +49,41 @@ def test_cli_accepts_canvas_length() -> None:
     )
 
     assert args.canvas_length == 1024
+
+
+def test_cli_accepts_zero_steps() -> None:
+    args = build_parser().parse_args(
+        ["left.py", "right.py", "--steps", "0"]
+    )
+
+    assert args.steps == 0
+
+
+def test_cli_uses_steps_for_local_model(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    captured = None
+
+    class Model:
+        def __init__(self, settings):
+            nonlocal captured
+            captured = settings
+
+    monkeypatch.setattr("mean_idea.cli.DiffusionGemma", Model)
+    args = build_parser().parse_args(
+        ["left.py", "right.py", "--steps", "0"]
+    )
+
+    build_model(args)
+
+    assert captured.max_denoising_steps == 0
+
+
+def test_cli_rejects_negative_steps() -> None:
+    with pytest.raises(SystemExit):
+        build_parser().parse_args(
+            ["left.py", "right.py", "--steps", "-1"]
+        )
 
 
 def test_cli_builds_remote_model(monkeypatch: pytest.MonkeyPatch) -> None:
