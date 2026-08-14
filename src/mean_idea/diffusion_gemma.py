@@ -103,6 +103,7 @@ class DiffusionGemma:
             token_ids = encoded.input_ids.to(self.model.device)
             token_mask = encoded.attention_mask.to(self.model.device)
             chunks = []
+            noise_chunks = []
             for start in range(0, input_length, active_canvas_length):
                 inputs = self._prompt_inputs(
                     prompt_inputs,
@@ -115,10 +116,19 @@ class DiffusionGemma:
                         :, start : start + active_canvas_length
                     ],
                 )
-                chunks.append(outputs.last_hidden_state[0].detach().float().cpu())
+                hidden_states = outputs.last_hidden_state[0]
+                chunks.append(hidden_states.detach().float().cpu())
+                noise_chunks.append(
+                    _token_entropy(
+                        hidden_states,
+                        self.model.lm_head.weight,
+                        chunk_size=self.settings.quantization_chunk_size,
+                    ).cpu()
+                )
 
             values = torch.cat(chunks, dim=0)
-        return TextEmbedding(values.detach().float().cpu())
+            noise = torch.cat(noise_chunks, dim=0)
+        return TextEmbedding(values, noise)
 
     @torch.inference_mode()
     def embedding_to_text(
@@ -296,6 +306,52 @@ def _highest_score_token_ids(
         best_ids = torch.where(improved, chunk_ids + start, best_ids)
 
     return best_ids
+
+
+def _token_entropy(
+    values: torch.Tensor,
+    vocabulary: torch.Tensor,
+    *,
+    chunk_size: int,
+) -> torch.Tensor:
+    """Compute LM-head entropy per token without materializing all logits."""
+
+    if chunk_size <= 0:
+        raise ValueError("chunk_size must be positive")
+    if values.ndim != 2 or vocabulary.ndim != 2:
+        raise ValueError("values and vocabulary must both be matrices")
+    if values.shape[1] != vocabulary.shape[1]:
+        raise ValueError("embedding hidden sizes do not match")
+
+    device = vocabulary.device
+    queries = values.to(device=device, dtype=torch.float32)
+    running_max = torch.full(
+        (queries.shape[0],), -torch.inf, device=device, dtype=torch.float32
+    )
+    exponential_sum = torch.zeros_like(running_max)
+    weighted_logit_sum = torch.zeros_like(running_max)
+
+    for start in range(0, vocabulary.shape[0], chunk_size):
+        logits = queries @ vocabulary[start : start + chunk_size].float().T
+        chunk_max = logits.max(dim=1).values
+        new_max = torch.maximum(running_max, chunk_max)
+        previous_scale = torch.exp(running_max - new_max)
+        chunk_exponentials = torch.exp(logits - new_max.unsqueeze(1))
+        exponential_sum = (
+            exponential_sum * previous_scale + chunk_exponentials.sum(dim=1)
+        )
+        weighted_logit_sum = (
+            weighted_logit_sum * previous_scale
+            + (chunk_exponentials * logits).sum(dim=1)
+        )
+        running_max = new_max
+
+    entropy = (
+        running_max
+        + torch.log(exponential_sum)
+        - weighted_logit_sum / exponential_sum
+    )
+    return entropy.clamp_min(0.0)
 
 
 def _generate_canvas(

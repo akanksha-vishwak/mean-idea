@@ -1,6 +1,6 @@
 # mean-idea
 
-An experiment that averages two texts in a diffusion language model's
+An experiment that combines two texts in a diffusion language model's
 token-embedding space and asks the same model to denoise the result.
 
 The reusable API has two model calls:
@@ -28,10 +28,17 @@ result = interpolate_texts(
 `DiffusionGemma` implements those calls with
 `google/diffusiongemma-26B-A4B-it`. Each input is independently tokenized to
 the configured canvas and run through its prompt-conditioned,
-bidirectional diffusion decoder. Decoding projects the mean contextual hidden
-states through the model's tied language-model head, then passes the resulting
-token canvas as `decoder_input_ids` to DiffusionGemma's documented iterative
-denoising loop.
+bidirectional diffusion decoder. Decoding projects the confidence-weighted
+contextual hidden states through the model's tied language-model head, then
+passes the resulting token canvas as `decoder_input_ids` to DiffusionGemma's
+documented iterative denoising loop.
+
+Each `TextEmbedding` also carries one noise value per token position. The
+DiffusionGemma adapter computes that noise as the entropy of the tied LM-head
+vocabulary distribution. `mean_embeddings` applies a softmax over negative
+entropy at each position, so a lower-noise source contributes more strongly
+than a higher-noise source. Embeddings without noise values retain equal
+weighting for compatibility with other model implementations.
 
 This is contextual token-position interpolation, not a learned semantic latent
 autoencoder. Tokenization differences can misalign otherwise related texts,
@@ -111,7 +118,7 @@ uv run mean-idea first.py second.py --steps 24 \
 
 The default maximum is 48 denoising iterations. Adaptive stopping may finish
 earlier. Use `--steps 0` to skip diffusion generation and decode the token IDs
-obtained directly from the mean embedding projection.
+obtained directly from the combined embedding projection.
 
 ## Remote model
 

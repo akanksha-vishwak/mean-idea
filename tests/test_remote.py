@@ -20,7 +20,7 @@ def test_remote_model_encodes_and_decodes() -> None:
             "model_id": "example/model",
         }
         if operation == "encode":
-            return {**response, "values": [[1.0, 2.0]]}
+            return {**response, "values": [[1.0, 2.0]], "noise": [0.25]}
         if operation == "interpolate":
             return {**response, "text": "interpolated"}
         return {**response, "text": "decoded"}
@@ -50,6 +50,7 @@ def test_remote_model_encodes_and_decodes() -> None:
     )
 
     assert torch.equal(embedding.values, torch.tensor([[1.0, 2.0]]))
+    assert torch.equal(embedding.noise, torch.tensor([0.25]))
     assert result == "decoded"
     assert interpolated == "interpolated"
     assert requests == [
@@ -70,6 +71,7 @@ def test_remote_model_encodes_and_decodes() -> None:
                 "protocol_version": PROTOCOL_VERSION,
                 "model_id": "example/model",
                 "values": [[1.0, 2.0]],
+                "noise": [0.25],
                 "prompt": "prompt: ",
                 "canvas_length": 512,
                 "multi_canvas": 2,
@@ -105,6 +107,7 @@ def test_remote_model_rejects_incompatible_server(
         "protocol_version": PROTOCOL_VERSION,
         "model_id": "example/model",
         "values": [[1.0]],
+        "noise": [0.0],
         field: value,
     }
     model = RemoteLatentTextModel(
@@ -123,6 +126,7 @@ def test_remote_model_rejects_malformed_embedding() -> None:
             "protocol_version": PROTOCOL_VERSION,
             "model_id": "example/model",
             "values": [1.0, 2.0],
+            "noise": [0.0],
         },
     )
 

@@ -38,6 +38,27 @@ def test_mean_embeddings() -> None:
     result = mean_embeddings(left, right)
 
     assert torch.equal(result.values, torch.tensor([[2.0, 4.0]]))
+    assert torch.equal(result.noise, torch.tensor([0.0]))
+
+
+def test_mean_embeddings_weights_lower_noise_more_heavily() -> None:
+    left = TextEmbedding(torch.tensor([[1.0, 3.0]]), torch.tensor([0.0]))
+    right = TextEmbedding(torch.tensor([[3.0, 5.0]]), torch.tensor([2.0]))
+
+    result = mean_embeddings(left, right)
+    expected_weights = torch.softmax(torch.tensor([0.0, -2.0]), dim=0)
+
+    assert result.noise is not None
+    assert torch.allclose(
+        result.values,
+        expected_weights[0] * left.values + expected_weights[1] * right.values,
+    )
+    assert torch.allclose(result.noise, expected_weights[1:] * 2.0)
+
+
+def test_text_embedding_rejects_invalid_noise_shape() -> None:
+    with pytest.raises(ValueError, match="noise must have shape"):
+        TextEmbedding(torch.zeros(2, 3), torch.zeros(2, 1))
 
 
 def test_mean_embeddings_rejects_different_shapes() -> None:

@@ -9,7 +9,7 @@ import torch
 
 from mean_idea.api import TextEmbedding
 
-PROTOCOL_VERSION = 6
+PROTOCOL_VERSION = 7
 
 
 @dataclass(frozen=True, slots=True)
@@ -50,9 +50,10 @@ class RemoteLatentTextModel:
         response = self._request("encode", payload)
         try:
             values = torch.tensor(response["values"], dtype=torch.float32)
+            noise = torch.tensor(response["noise"], dtype=torch.float32)
         except (KeyError, TypeError, ValueError) as error:
-            raise ValueError("remote encode response has invalid embedding values") from error
-        return TextEmbedding(values)
+            raise ValueError("remote encode response has invalid embedding") from error
+        return TextEmbedding(values, noise)
 
     def embedding_to_text(
         self,
@@ -66,6 +67,8 @@ class RemoteLatentTextModel:
         payload: dict[str, Any] = {
             "values": embedding.values.detach().float().cpu().tolist()
         }
+        if embedding.noise is not None:
+            payload["noise"] = embedding.noise.detach().float().cpu().tolist()
         if prompt is not None:
             payload["prompt"] = prompt
         if canvas_length is not None:

@@ -27,18 +27,29 @@ class LatentModelService:
             if not isinstance(text, str):
                 raise ValueError("text must be a string")
             prompt = self._prompt(payload)
+            embedding = self.model.text_to_embedding(
+                text,
+                prompt=prompt,
+                canvas_length=self._canvas_length(payload),
+                multi_canvas=self._multi_canvas(payload),
+            )
             result = {
-                "values": self.model.text_to_embedding(
-                    text,
-                    prompt=prompt,
-                    canvas_length=self._canvas_length(payload),
-                    multi_canvas=self._multi_canvas(payload),
-                ).values.float().tolist()
+                "values": embedding.values.float().tolist(),
+                "noise": (
+                    embedding.noise.float().tolist()
+                    if embedding.noise is not None
+                    else [0.0] * embedding.values.shape[0]
+                ),
             }
         elif operation == "decode":
             try:
                 embedding = TextEmbedding(
-                    torch.tensor(payload["values"], dtype=torch.float32)
+                    torch.tensor(payload["values"], dtype=torch.float32),
+                    (
+                        torch.tensor(payload["noise"], dtype=torch.float32)
+                        if "noise" in payload
+                        else None
+                    ),
                 )
             except (KeyError, TypeError, ValueError) as error:
                 raise ValueError("values must be a finite embedding matrix") from error

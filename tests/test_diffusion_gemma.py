@@ -6,6 +6,7 @@ from mean_idea.diffusion_gemma import (
     _highest_score_token_ids,
     _input_length,
     _sample_tokens_and_entropy,
+    _token_entropy,
     _validate_max_iterations,
 )
 
@@ -31,6 +32,24 @@ def test_highest_score_token_ids_rejects_invalid_chunk_size() -> None:
         _highest_score_token_ids(
             torch.zeros(1, 2), torch.zeros(1, 2), chunk_size=0
         )
+
+
+def test_token_entropy_uses_tied_lm_head_across_chunks() -> None:
+    vocabulary = torch.tensor(
+        [
+            [1.0, 0.0],
+            [0.0, 1.0],
+            [-1.0, 0.0],
+        ]
+    )
+    values = torch.tensor([[2.0, 1.0], [0.0, 0.0]])
+
+    result = _token_entropy(values, vocabulary, chunk_size=2)
+    expected = torch.distributions.Categorical(
+        logits=values @ vocabulary.T
+    ).entropy()
+
+    assert torch.allclose(result, expected)
 
 
 def test_sample_tokens_and_entropy_chunks_sequence() -> None:

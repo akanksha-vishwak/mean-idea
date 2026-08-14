@@ -24,7 +24,8 @@ class FakeModel:
                         float(canvas_length or 1),
                     ]
                 ]
-            )
+            ),
+            torch.tensor([0.0]),
         )
 
     def embedding_to_text(
@@ -82,7 +83,11 @@ def test_service_executes_latent_operations() -> None:
         "protocol_version": PROTOCOL_VERSION,
         "model_id": "example/model",
     }
-    assert encoded == {**metadata, "values": [[3.0, 8.0, 512.0]]}
+    assert encoded == {
+        **metadata,
+        "values": [[3.0, 8.0, 512.0]],
+        "noise": [0.0],
+    }
     assert decoded == {**metadata, "text": "[[2.0, 1.0]]"}
     assert interpolated == {
         **metadata,

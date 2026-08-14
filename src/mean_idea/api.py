@@ -11,6 +11,7 @@ class TextEmbedding:
     """A configured-length sequence of continuous token embeddings."""
 
     values: torch.Tensor
+    noise: torch.Tensor | None = None
 
     def __post_init__(self) -> None:
         if self.values.ndim != 2:
@@ -19,6 +20,13 @@ class TextEmbedding:
             raise TypeError("embedding values must be floating point")
         if not torch.isfinite(self.values).all():
             raise ValueError("embedding values must be finite")
+        if self.noise is not None:
+            if self.noise.shape != self.values.shape[:1]:
+                raise ValueError("noise must have shape [sequence]")
+            if not self.noise.is_floating_point():
+                raise TypeError("noise values must be floating point")
+            if not torch.isfinite(self.noise).all() or (self.noise < 0).any():
+                raise ValueError("noise values must be finite and non-negative")
 
 
 class LatentTextModel(Protocol):
@@ -52,8 +60,19 @@ def mean_embeddings(*embeddings: TextEmbedding) -> TextEmbedding:
     if any(item.values.shape != shape for item in embeddings[1:]):
         raise ValueError("all embeddings must have the same shape")
 
-    values = torch.stack([item.values.float() for item in embeddings]).mean(dim=0)
-    return TextEmbedding(values)
+    values = torch.stack([item.values.float() for item in embeddings])
+    noise = torch.stack(
+        [
+            item.noise.float()
+            if item.noise is not None
+            else torch.zeros(shape[0], device=item.values.device)
+            for item in embeddings
+        ]
+    )
+    weights = torch.softmax(-noise, dim=0)
+    combined_values = (values * weights.unsqueeze(-1)).sum(dim=0)
+    combined_noise = (noise * weights).sum(dim=0)
+    return TextEmbedding(combined_values, combined_noise)
 
 
 def interpolate_texts(
