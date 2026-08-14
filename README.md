@@ -45,9 +45,18 @@ tests. It exercises the compatible model API but does not produce useful text.
 
 ```console
 uv sync
+uv sync --extra cpu
 uv run mean-idea first.py second.py
 uv run mean-idea first.py second.py --output result.py
 uv run mean-idea first.py second.py --prompt prompt.txt
+```
+
+Both `uv sync` and the explicit `uv sync --extra cpu` install the CPU build of
+PyTorch. On a Linux x86-64 system with an NVIDIA GPU, install the CUDA 12.8
+build instead:
+
+```console
+uv sync --extra cuda
 ```
 
 The canvas defaults to 256 tokens. Transformers also supports overriding the
@@ -66,11 +75,10 @@ substantially increase memory use and decoding cost. Sampling and entropy
 calculations are chunked along the canvas to avoid materializing a full
 float32 canvas-by-vocabulary probability matrix.
 
-On Linux x86-64, the lock file selects the official PyTorch CUDA 12.8 wheels
-instead of whichever PyTorch build is newest on the default package index.
-Those wheels bundle the CUDA runtime; the host only needs a compatible NVIDIA
-driver. Confirm that the environment can see the GPU before downloading a
-large model:
+With the `cuda` extra, the lock file selects the official PyTorch CUDA 12.8
+wheels instead of the CPU wheels from the default package index. The CUDA
+wheels bundle the runtime; the host only needs a compatible NVIDIA driver.
+Confirm that the environment can see the GPU before downloading a large model:
 
 ```console
 uv run python -c \
@@ -113,11 +121,11 @@ normal use. The latter avoids transferring the contextual embedding matrices
 over the network.
 
 ```console
-uv sync --extra server
+uv sync --extra cuda --extra server
 MEAN_IDEA_MODEL_ID=google/diffusiongemma-26B-A4B-it \
 MEAN_IDEA_CANVAS_LENGTH=256 \
 MEAN_IDEA_MULTI_CANVAS=1 \
-  uv run --extra server uvicorn mean_idea.server:app --host 0.0.0.0 --port 8000
+  uv run --extra cuda --extra server uvicorn mean_idea.server:app --host 0.0.0.0 --port 8000
 ```
 
 Point the CLI at the service. Set `MEAN_IDEA_API_TOKEN` when the hosting
