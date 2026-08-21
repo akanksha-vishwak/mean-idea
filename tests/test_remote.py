@@ -43,7 +43,7 @@ def test_remote_model_encodes_and_decodes() -> None:
     interpolated = model.interpolate_texts(
         "left",
         "right",
-        prompt="prompt: ",
+        prompts=("left prompt", "right prompt"),
         canvas_length=512,
         multi_canvas=2,
         max_iterations=24,
@@ -84,7 +84,7 @@ def test_remote_model_encodes_and_decodes() -> None:
                 "protocol_version": PROTOCOL_VERSION,
                 "model_id": "example/model",
                 "texts": ["left", "right"],
-                "prompt": "prompt: ",
+                "prompts": ["left prompt", "right prompt"],
                 "canvas_length": 512,
                 "multi_canvas": 2,
                 "max_iterations": 24,

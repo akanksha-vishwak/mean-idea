@@ -72,7 +72,7 @@ def test_service_executes_latent_operations() -> None:
         "interpolate",
         request(
             texts=["a", "abc"],
-            prompt="prompt: ",
+            prompts=["x", "xyz"],
             canvas_length=512,
             multi_canvas=2,
             max_iterations=24,
@@ -91,7 +91,7 @@ def test_service_executes_latent_operations() -> None:
     assert decoded == {**metadata, "text": "[[2.0, 1.0]]"}
     assert interpolated == {
         **metadata,
-        "text": "[[2.0, 8.0, 512.0]]",
+        "text": "[[2.0, 2.0, 512.0]]",
     }
 
 
@@ -102,7 +102,16 @@ def test_service_executes_latent_operations() -> None:
         ("encode", request(text="abc", prompt=1), "prompt must"),
         ("decode", request(values=[1.0]), "embedding matrix"),
         ("interpolate", request(texts=[]), "non-empty"),
-        ("interpolate", request(texts=["abc"], prompt=[]), "prompt must"),
+        (
+            "interpolate",
+            request(texts=["abc"], prompts=[]),
+            "prompts must match",
+        ),
+        (
+            "interpolate",
+            request(texts=["abc"], prompts=[1]),
+            "prompts must match",
+        ),
         ("interpolate", request(texts=["abc"], canvas_length=0), "canvas_length"),
         ("interpolate", request(texts=["abc"], canvas_length=True), "canvas_length"),
         ("interpolate", request(texts=["abc"], multi_canvas=0), "multi_canvas"),

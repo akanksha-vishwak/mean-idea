@@ -2,14 +2,14 @@ from __future__ import annotations
 
 import json
 from dataclasses import dataclass
-from typing import Any, Callable
+from typing import Any, Callable, Sequence
 from urllib.request import Request, urlopen
 
 import torch
 
 from mean_idea.api import TextEmbedding
 
-PROTOCOL_VERSION = 7
+PROTOCOL_VERSION = 8
 
 
 @dataclass(frozen=True, slots=True)
@@ -89,14 +89,24 @@ class RemoteLatentTextModel:
     def interpolate_texts(
         self,
         *texts: str,
-        prompt: str | None = None,
+        prompts: Sequence[str | None] | None = None,
         canvas_length: int | None = None,
         multi_canvas: int | None = None,
         max_iterations: int | None = None,
     ) -> str:
         payload: dict[str, Any] = {"texts": list(texts)}
-        if prompt is not None:
-            payload["prompt"] = prompt
+        if prompts is not None:
+            if isinstance(prompts, (str, bytes)):
+                raise ValueError("prompts must be a sequence of strings or None")
+            source_prompts = tuple(prompts)
+            if len(source_prompts) != len(texts):
+                raise ValueError("prompts must have the same length as texts")
+            if any(
+                prompt is not None and not isinstance(prompt, str)
+                for prompt in source_prompts
+            ):
+                raise ValueError("prompts must contain only strings or None")
+            payload["prompts"] = list(source_prompts)
         if canvas_length is not None:
             payload["canvas_length"] = canvas_length
         if multi_canvas is not None:

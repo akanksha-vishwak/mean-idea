@@ -25,8 +25,30 @@ def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description="Decode the mean DiffusionGemma embedding of two texts."
     )
-    parser.add_argument("first", type=Path, help="first UTF-8 text file")
-    parser.add_argument("second", type=Path, help="second UTF-8 text file")
+    parser.add_argument(
+        "--canvas1",
+        type=Path,
+        required=True,
+        help="first UTF-8 canvas file",
+    )
+    parser.add_argument(
+        "--prompt1",
+        type=Path,
+        required=True,
+        help="UTF-8 prompt file for the first canvas",
+    )
+    parser.add_argument(
+        "--canvas2",
+        type=Path,
+        required=True,
+        help="second UTF-8 canvas file",
+    )
+    parser.add_argument(
+        "--prompt2",
+        type=Path,
+        required=True,
+        help="UTF-8 prompt file for the second canvas",
+    )
     parser.add_argument("-o", "--output", type=Path, help="write output to this file")
     parser.add_argument(
         "--backend",
@@ -69,11 +91,6 @@ def build_parser() -> argparse.ArgumentParser:
         help="number of sequential canvases to process",
     )
     parser.add_argument(
-        "--prompt",
-        type=Path,
-        help="UTF-8 file added to model context outside the token canvas",
-    )
-    parser.add_argument(
         "--generation-prompt",
         default=DEFAULT_PROMPT,
         help="instruction used by the local DiffusionGemma decoder",
@@ -112,14 +129,17 @@ def main() -> None:
     except ValueError as error:
         parser.error(str(error))
     texts = (
-        args.first.read_text(encoding="utf-8"),
-        args.second.read_text(encoding="utf-8"),
+        args.canvas1.read_text(encoding="utf-8"),
+        args.canvas2.read_text(encoding="utf-8"),
     )
-    prompt = args.prompt.read_text(encoding="utf-8") if args.prompt else None
+    prompts = (
+        args.prompt1.read_text(encoding="utf-8"),
+        args.prompt2.read_text(encoding="utf-8"),
+    )
     if isinstance(model, RemoteLatentTextModel):
         result = model.interpolate_texts(
             *texts,
-            prompt=prompt,
+            prompts=prompts,
             canvas_length=args.canvas_length,
             multi_canvas=args.multi_canvas,
             max_iterations=args.steps,
@@ -128,7 +148,7 @@ def main() -> None:
         result = interpolate_texts(
             model,
             *texts,
-            prompt=prompt,
+            prompts=prompts,
             canvas_length=args.canvas_length,
             multi_canvas=args.multi_canvas,
             max_iterations=args.steps,

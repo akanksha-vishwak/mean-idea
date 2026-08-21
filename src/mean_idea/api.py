@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Protocol
+from typing import Protocol, Sequence
 
 import torch
 
@@ -78,16 +78,25 @@ def mean_embeddings(*embeddings: TextEmbedding) -> TextEmbedding:
 def interpolate_texts(
     model: LatentTextModel,
     *texts: str,
-    prompt: str | None = None,
+    prompts: Sequence[str | None] | None = None,
     canvas_length: int | None = None,
     multi_canvas: int | None = None,
     max_iterations: int | None = None,
 ) -> str:
     """Encode texts independently, average them, and decode the mean."""
 
+    if isinstance(prompts, (str, bytes)):
+        raise ValueError("prompts must be a sequence of strings or None")
+    source_prompts = (None,) * len(texts) if prompts is None else tuple(prompts)
+    if len(source_prompts) != len(texts):
+        raise ValueError("prompts must have the same length as texts")
+    if any(
+        prompt is not None and not isinstance(prompt, str)
+        for prompt in source_prompts
+    ):
+        raise ValueError("prompts must contain only strings or None")
+
     embedding_options = {}
-    if prompt is not None:
-        embedding_options["prompt"] = prompt
     if canvas_length is not None:
         embedding_options["canvas_length"] = canvas_length
     if multi_canvas is not None:
@@ -96,9 +105,10 @@ def interpolate_texts(
         *(
             model.text_to_embedding(
                 text,
+                prompt=prompt,
                 **embedding_options,
             )
-            for text in texts
+            for text, prompt in zip(texts, source_prompts, strict=True)
         )
     )
     generation_options = dict(embedding_options)

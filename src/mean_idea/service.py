@@ -74,7 +74,7 @@ class LatentModelService:
                 "text": interpolate_texts(
                     self.model,
                     *texts,
-                    prompt=self._prompt(payload),
+                    prompts=self._prompts(payload, len(texts)),
                     canvas_length=self._canvas_length(payload),
                     multi_canvas=self._multi_canvas(payload),
                     max_iterations=self._max_iterations(payload),
@@ -101,6 +101,27 @@ class LatentModelService:
         if prompt is not None and not isinstance(prompt, str):
             raise ValueError("prompt must be a string")
         return prompt
+
+    @staticmethod
+    def _prompts(
+        payload: dict[str, Any],
+        count: int,
+    ) -> tuple[str | None, ...] | None:
+        prompts = payload.get("prompts")
+        if prompts is None:
+            return None
+        if (
+            not isinstance(prompts, list)
+            or len(prompts) != count
+            or any(
+                prompt is not None and not isinstance(prompt, str)
+                for prompt in prompts
+            )
+        ):
+            raise ValueError(
+                "prompts must match texts and contain only strings or null"
+            )
+        return tuple(prompts)
 
     @staticmethod
     def _canvas_length(payload: dict[str, Any]) -> int | None:

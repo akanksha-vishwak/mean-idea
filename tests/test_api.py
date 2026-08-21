@@ -73,7 +73,9 @@ def test_interpolate_texts_uses_two_call_api() -> None:
     assert interpolate_texts(FakeModel(), "a", "abc") == "[[2.0, 1.0]]"
 
 
-def test_interpolate_texts_passes_prompt_without_changing_text() -> None:
+def test_interpolate_texts_passes_individual_prompts_only_to_encoders() -> None:
+    seen_prompts = iter(("left prompt", "right prompt"))
+
     class PromptModel(FakeModel):
         def text_to_embedding(
             self,
@@ -83,7 +85,7 @@ def test_interpolate_texts_passes_prompt_without_changing_text() -> None:
             canvas_length: int | None = None,
             multi_canvas: int | None = None,
         ) -> TextEmbedding:
-            assert prompt == "prompt: "
+            assert prompt == next(seen_prompts)
             return super().text_to_embedding(text)
 
         def embedding_to_text(
@@ -95,7 +97,7 @@ def test_interpolate_texts_passes_prompt_without_changing_text() -> None:
             multi_canvas: int | None = None,
             max_iterations: int | None = None,
         ) -> str:
-            assert prompt == "prompt: "
+            assert prompt is None
             assert max_iterations is None
             return super().embedding_to_text(embedding)
 
@@ -104,10 +106,17 @@ def test_interpolate_texts_passes_prompt_without_changing_text() -> None:
             PromptModel(),
             "a",
             "abc",
-            prompt="prompt: ",
+            prompts=("left prompt", "right prompt"),
         )
         == "[[2.0, 1.0]]"
     )
+
+
+def test_interpolate_texts_rejects_mismatched_prompts() -> None:
+    with pytest.raises(ValueError, match="same length"):
+        interpolate_texts(FakeModel(), "a", "b", prompts=("only one",))
+    with pytest.raises(ValueError, match="sequence"):
+        interpolate_texts(FakeModel(), "a", "b", prompts="ab")
 
 
 def test_interpolate_texts_passes_canvas_length() -> None:
