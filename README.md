@@ -11,15 +11,15 @@ right = model.text_to_embedding(text_b)
 result = model.embedding_to_text(mean_embeddings(left, right))
 ```
 
-An optional prompt can be added to the model context while leaving every token
-in the configured canvas available to the source text:
+Each source can use its own prompt in the model context while leaving every
+token in the configured canvas available to that source text:
 
 ```python
 result = interpolate_texts(
     model,
     text_a,
     text_b,
-    prompt=prompt_text,
+    prompts=(prompt_a, prompt_b),
     canvas_length=4096,
     multi_canvas=1,
 )
@@ -53,10 +53,18 @@ tests. It exercises the compatible model API but does not produce useful text.
 ```console
 uv sync
 uv sync --extra cpu
-uv run mean-idea first.py second.py
-uv run mean-idea first.py second.py --output result.py
-uv run mean-idea first.py second.py --prompt prompt.txt
+uv run mean-idea \
+  --canvas1 first.py --prompt1 first-prompt.txt \
+  --canvas2 second.py --prompt2 second-prompt.txt
+uv run mean-idea \
+  --canvas1 first.py --prompt1 first-prompt.txt \
+  --canvas2 second.py --prompt2 second-prompt.txt \
+  --output result.py
 ```
+
+All four input options are required and name UTF-8 files. Each prompt is used
+only while encoding its matching canvas. Decoding uses the configured
+`--generation-prompt`, not either source prompt.
 
 Both `uv sync` and the explicit `uv sync --extra cpu` install the CPU build of
 PyTorch. On a Linux x86-64 system with an NVIDIA GPU, install the CUDA 12.8
@@ -71,7 +79,9 @@ DiffusionGemma canvas size, which lets a longer input be processed as one
 canvas instead of a sequence of independently denoised canvases:
 
 ```console
-uv run mean-idea first.py second.py \
+uv run mean-idea \
+  --canvas1 first.py --prompt1 first-prompt.txt \
+  --canvas2 second.py --prompt2 second-prompt.txt \
   --canvas-length 4096
 ```
 
@@ -96,7 +106,9 @@ Select the useful 25.2B BF16 reference model explicitly. Its weights need about
 51 GB, plus runtime memory:
 
 ```console
-uv run mean-idea first.py second.py \
+uv run mean-idea \
+  --canvas1 first.py --prompt1 first-prompt.txt \
+  --canvas2 second.py --prompt2 second-prompt.txt \
   --model-id google/diffusiongemma-26B-A4B-it
 ```
 
@@ -112,7 +124,10 @@ commands above; the proxy is configured as the project's default uv index.
 The backend is configurable:
 
 ```console
-uv run mean-idea first.py second.py --steps 24 \
+uv run mean-idea \
+  --canvas1 first.py --prompt1 first-prompt.txt \
+  --canvas2 second.py --prompt2 second-prompt.txt \
+  --steps 24 \
   --generation-prompt "Refine this canvas into one complete Python sorting program."
 ```
 
@@ -139,12 +154,13 @@ Point the CLI at the service. Set `MEAN_IDEA_API_TOKEN` when the hosting
 platform expects bearer authentication:
 
 ```console
-uv run mean-idea first.py second.py \
+uv run mean-idea \
+  --canvas1 first.py --prompt1 first-prompt.txt \
+  --canvas2 second.py --prompt2 second-prompt.txt \
   --backend remote \
   --endpoint-url https://example.endpoints.huggingface.cloud \
   --model-id google/diffusiongemma-26B-A4B-it \
-  --canvas-length 4096 \
-  --prompt prompt.txt
+  --canvas-length 4096
 ```
 
 The client and server reject mismatched protocol versions and model IDs before
