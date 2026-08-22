@@ -1,0 +1,2 @@
+[idea_id=4] Use heapq.nsmallest or heapify+heappop to implement heap sort without calling list.sort
+[idea_id=9] Profile actual bottleneck: measure conversion overhead vs sort overhead for numpy approach

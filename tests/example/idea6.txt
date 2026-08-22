@@ -1,1 +1,0 @@
-Use ctypes to call qsort from the C standard library for near-native sorting speed.

@@ -1,0 +1,21 @@
+import sys
+import time
+
+
+def my_sort(arr: list[int]) -> list[int]:
+    # Counting sort: O(n + k) where k=10000, vastly better than bubble sort O(n^2)
+    count = [0] * 10000
+    for x in arr:
+        count[x] += 1
+    result = []
+    for val, cnt in enumerate(count):
+        if cnt:
+            result.extend([val] * cnt)
+    return result
+
+
+if __name__ == "__main__":
+    input_array = [int(x) for x in sys.argv[1:]]
+    ts = time.time()
+    sorted_array = my_sort(input_array)
+    print(time.time() - ts, " ".join(map(str, sorted_array)))

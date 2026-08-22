@@ -1,0 +1,2 @@
+[idea_id=4] Use heapq.nsmallest or heapify+heappop to implement heap sort without calling list.sort
+[idea_id=42] Use numpy.sort() to perform a C-backed introsort on the input list converted to a numpy array.

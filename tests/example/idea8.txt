@@ -1,1 +1,0 @@
-Use np.frompyfunc or np.vectorize with a merge sort to combine Python logic with numpy's vectorized execution.

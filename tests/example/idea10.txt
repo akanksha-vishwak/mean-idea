@@ -1,1 +1,0 @@
-Benchmark numpy sort vs counting sort empirically in the my_sort body to auto-select the fastest method.

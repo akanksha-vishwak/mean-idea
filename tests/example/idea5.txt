@@ -1,1 +1,0 @@
-Use Python's heapq module (heapify + nsmallest) which executes in C and avoids the O(n²) pure-Python loop.

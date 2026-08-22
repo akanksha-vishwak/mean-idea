@@ -1,0 +1,3 @@
+[idea_id=2] Use numpy.sort() on a numpy array to leverage C-speed introsort
+[idea_id=42] Use numpy.sort() to perform a C-backed introsort on the input list converted to a numpy array.
+[idea_id=41] Use numpy-based counting sort via np.bincount + np.repeat for O(n+k) sorting of bounded integers.

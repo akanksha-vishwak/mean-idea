@@ -1,0 +1,3 @@
+[idea_id=4] Use heapq.nsmallest or heapify+heappop to implement heap sort without calling list.sort
+[idea_id=41] Use numpy-based counting sort via np.bincount + np.repeat for O(n+k) sorting of bounded integers.
+[idea_id=47] Use Numba @njit or Cython to JIT-compile a counting or radix sort, eliminating Python interpreter overhead entirely.

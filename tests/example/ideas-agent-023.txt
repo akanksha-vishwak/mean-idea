@@ -1,0 +1,3 @@
+[idea_id=2] Use numpy.sort() on a numpy array to leverage C-speed introsort
+[idea_id=8] Implement insertion sort as a fast O(n^2) baseline improvement over bubble sort
+[idea_id=43] Use Python's sorted() built-in function as a fast Timsort alternative if list.sort() is prohibited.
