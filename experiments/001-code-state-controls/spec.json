@@ -1,0 +1,43 @@
+{
+  "experiment_id": "001-code-state-controls",
+  "status": "pilot",
+  "question": "Can the original mean-idea pipeline preserve each source program when both inputs are identical, and what changes when the two different programs are combined?",
+  "sources": {
+    "A": "tests/example/sort-agent-013.py",
+    "B": "tests/example/sort-agent-014.py",
+    "shared_prompt": "tests/example/prompt.txt"
+  },
+  "conditions": [
+    {
+      "id": "a-control",
+      "inputs": ["A", "A"],
+      "purpose": "Check whether the pipeline preserves the pure-Python bounded counting-sort source."
+    },
+    {
+      "id": "b-control",
+      "inputs": ["B", "B"],
+      "purpose": "Check whether the pipeline preserves the NumPy bincount-and-repeat source."
+    },
+    {
+      "id": "a-b-mixture",
+      "inputs": ["A", "B"],
+      "purpose": "Inspect the entropy-weighted mixture only after both source controls are available."
+    }
+  ],
+  "primary_interpretation_rule": "Do not interpret the A+B condition as an interpolation result unless A+A preserves Source A and B+B preserves Source B.",
+  "source_A_indicators": [
+    "counting sort or an equivalent frequency-counting description",
+    "a fixed-size frequency array or the known 0-9999 range"
+  ],
+  "source_B_indicators": [
+    "NumPy",
+    "bincount",
+    "repeat"
+  ],
+  "mixture_success_rule": "The A+B output must preserve the bounded counting-sort algorithm and the NumPy bincount/repeat implementation rather than merely naming a generic sorting method.",
+  "important_limitations": [
+    "This uses the repository's original entropy-based per-position weighting, not a controlled 50/50 arithmetic mixture.",
+    "The source programs are aligned only by token position; there is no syntax-tree or semantic alignment.",
+    "This is a pilot source-recovery experiment, not confirmatory paper evidence."
+  ]
+}
