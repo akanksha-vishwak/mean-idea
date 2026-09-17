@@ -4,7 +4,6 @@ import argparse
 import ast
 import hashlib
 import json
-import sys
 import time
 from datetime import UTC, datetime
 from pathlib import Path
@@ -136,12 +135,6 @@ def lexical_indicators(text: str) -> dict[str, bool]:
     }
 
 
-def print_generated_text(text: str) -> None:
-    encoding = sys.stdout.encoding or "utf-8"
-    printable = text.encode(encoding, errors="backslashreplace").decode(encoding)
-    print(printable, flush=True)
-
-
 def write_results(path: Path, results: dict[str, object]) -> None:
     path.write_text(
         json.dumps(results, indent=2, ensure_ascii=False) + "\n",
@@ -259,13 +252,16 @@ def main() -> None:
             "started_at": started_at,
             "duration_seconds": round(duration, 3),
             "output_file": output_path.name,
-            "text": text,
             **syntax_result(text),
             "lexical_indicators": lexical_indicators(text),
         }
         runs.append(run)
         write_results(results_path, results)
-        print_generated_text(text)
+        print(
+            f"Completed in {run['duration_seconds']}s; saved raw output to "
+            f"{output_path}",
+            flush=True,
+        )
 
     results["status"] = "completed"
     results["completed_at"] = datetime.now(UTC).isoformat()

@@ -35,6 +35,12 @@
     "repeat"
   ],
   "mixture_success_rule": "The A+B output must preserve the bounded counting-sort algorithm and the NumPy bincount/repeat implementation rather than merely naming a generic sorting method.",
+  "artifacts": {
+    "a-control.txt": "Exact human-readable raw generation for the A+A control.",
+    "b-control.txt": "Exact human-readable raw generation for the B+B control.",
+    "a-b-mixture.txt": "Exact human-readable raw generation for the A+B mixture.",
+    "results.json": "Structured settings, timings, syntax checks, lexical indicators, and references to the raw text files; raw generation text is not duplicated here."
+  },
   "important_limitations": [
     "This uses the repository's original entropy-based per-position weighting, not a controlled 50/50 arithmetic mixture.",
     "The source programs are aligned only by token position; there is no syntax-tree or semantic alignment.",
