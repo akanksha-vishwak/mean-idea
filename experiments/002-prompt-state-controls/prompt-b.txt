@@ -1,0 +1,4 @@
+Task: Improve the Python function my_sort without using list.sort or sorted.
+Candidate optimization idea:
+Use NumPy bincount and repeat to implement an O(n+k) counting sort for bounded integers.
+Return one concise optimization idea that preserves this specific technique.

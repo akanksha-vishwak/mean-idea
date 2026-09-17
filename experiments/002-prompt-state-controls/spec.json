@@ -1,0 +1,45 @@
+{
+  "experiment_id": "002-prompt-state-controls",
+  "status": "pilot",
+  "question": "With identical empty source canvases, can each idea-specific prompt control the generated idea independently, and does the entropy-weighted mixed state preserve both prompt-specific techniques?",
+  "canvas": {
+    "path": "tests/example/blank.txt",
+    "required_content": "empty",
+    "used_for_both_sources": true
+  },
+  "prompts": {
+    "A": "experiments/002-prompt-state-controls/prompt-a.txt",
+    "B": "experiments/002-prompt-state-controls/prompt-b.txt"
+  },
+  "conditions": [
+    {
+      "id": "a-control",
+      "prompts": ["A", "A"],
+      "purpose": "Check whether the blank canvas conditioned by Prompt A preserves bounded counting sort."
+    },
+    {
+      "id": "b-control",
+      "prompts": ["B", "B"],
+      "purpose": "Check whether the blank canvas conditioned by Prompt B preserves NumPy bincount and repeat."
+    },
+    {
+      "id": "a-b-mixture",
+      "prompts": ["A", "B"],
+      "purpose": "Inspect the entropy-weighted mixture only after both prompt controls are available."
+    }
+  ],
+  "primary_interpretation_rule": "Do not interpret A+B as a prompt-conditioned interpolation result unless A+A preserves bounded counting sort and B+B preserves NumPy bincount and repeat.",
+  "mixture_success_rule": "A+B must preserve the bounded counting-sort concept and the NumPy bincount/repeat implementation rather than merely returning generic sorting advice.",
+  "representation_note": "The prompt token IDs are not averaged directly. The experiment averages the final hidden states of identical blank canvas positions after each canvas has attended to its corresponding prompt.",
+  "artifacts": {
+    "a-control.txt": "Exact human-readable raw generation for Prompt A+A.",
+    "b-control.txt": "Exact human-readable raw generation for Prompt B+B.",
+    "a-b-mixture.txt": "Exact human-readable raw generation for Prompt A+B.",
+    "results.json": "Structured settings, prompt token alignment, timings, indicators, and raw-output filenames."
+  },
+  "important_limitations": [
+    "This uses the original entropy-based per-position weighting, not a controlled 50/50 arithmetic mixture.",
+    "The two ideas are related counting-sort techniques, so this tests preservation and composition more than conceptual novelty.",
+    "This is a pilot prompt-conditioned source-recovery experiment, not confirmatory paper evidence."
+  ]
+}
