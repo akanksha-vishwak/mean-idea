@@ -1,0 +1,40 @@
+{
+  "experiment_id": "006-top-candidate-projection",
+  "status": "pilot",
+  "question": "At the failed arithmetic midpoint, do the endpoint projection tokens remain highly ranked alternatives below top-1, or has the final-state vocabulary distribution already lost them?",
+  "inputs": {
+    "canvas": "tests/example/blank.txt",
+    "prompt_A": "experiments/004-controlled-prompt-weight-sweep/prompt-a-counting.txt",
+    "prompt_B": "experiments/004-controlled-prompt-weight-sweep/prompt-b-numba.txt",
+    "reference_projection": "experiments/005-projection-geometry-diagnostic/results/results.json"
+  },
+  "design": {
+    "weights": [0.0, 0.4, 0.5, 0.6, 1.0],
+    "top_k": 20,
+    "denoising_steps": 0,
+    "repeats": 1,
+    "repeat_reason": "LM-head scoring and ranking are deterministic.",
+    "mixing": "Global arithmetic interpolation of corresponding final prompt-conditioned canvas-state positions.",
+    "primary_positions": "The positions where the Experiment 005 A and B endpoint top-1 tokens differ."
+  },
+  "control_gate": {
+    "top_1_reproduction": "Every computed top-1 token must equal both the adapter projection and the saved Experiment 005 token ID at the same weight and position.",
+    "input_match": "Model ID, model revision, canvas, prompts, generation prompt, and canvas length must match Experiment 005."
+  },
+  "measurements": [
+    "Top-20 token IDs, decoded pieces, and raw LM-head scores at every canvas position.",
+    "Rank and score gap of the A and B endpoint top-1 token at every endpoint-distinct position.",
+    "Endpoint-token recall and joint availability at cutoffs 1, 5, and 20.",
+    "Counts of endpoint-distinct positions favoring A, favoring B, or tying by raw score."
+  ],
+  "interpretation": {
+    "both_present_below_top_1": "Hard argmax is discarding competing parent information, supporting a later soft, sampled, or per-step logit-mixing experiment.",
+    "one_or_both_absent_from_top_20": "The final-state LM-head distribution has already lost much of the parent information, favoring internal-layer or prompt-cache mixing.",
+    "mixed_positionwise_availability": "Some positions retain alternatives while others do not; any later soft projection must be evaluated against endpoint controls and cannot assume sequence-level composition."
+  },
+  "important_limitations": [
+    "Endpoint token availability at individual positions is not proof that a coherent hybrid sequence can be sampled.",
+    "Raw LM-head scores are useful for within-position ranking but are not calibrated probabilities.",
+    "This remains one prompt pair, one model revision, and final prompt-conditioned canvas states."
+  ]
+}
