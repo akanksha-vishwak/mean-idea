@@ -1,0 +1,2 @@
+thought
+Optimize breadth-first search over large sparse graphs by using a `collections.deque` as the BFS queue to perform `popleft` and `append` operations, while traversing the graph via a CSR representation where `indices` and `indptr` arrays provide cache-efficient access to contiguous neighbors.

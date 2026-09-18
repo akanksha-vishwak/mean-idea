@@ -8,11 +8,11 @@ From the repository root, run:
 uv run --with python-pptx --with matplotlib python deliverables\build.py
 ```
 
-The build fails if mandatory evidence for Experiments 001–012 is absent or malformed. The exact raw JSON for the earlier September 16 partial-scaffold and scaffold-handoff pilot is preserved under `evidence\prior-pilot`; it is source evidence, not a generated snapshot or cache.
+The build fails if mandatory evidence for Experiments 001–013 is absent or malformed. The exact raw JSON for the earlier September 16 partial-scaffold and scaffold-handoff pilot is preserved under `evidence\prior-pilot`; it is source evidence, not a generated snapshot or cache.
 
 Generated outputs:
 
-- `presentation.pptx` — 22-slide presentation.
+- `presentation.pptx` — 23-slide presentation.
 - `poster.html` — printable landscape poster.
 - `technical-report.html` — detailed methods, results, raw-output excerpts, and provenance.
 - `answers-to-sergiy.md` — direct answers to the proposal questions.

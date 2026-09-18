@@ -1,0 +1,15 @@
+You are optimizing the stated Python task. The generation canvas is blank, so rely only on the complete source records below.
+
+[PARENT A RECORD]
+Task: Improve breadth-first search over a large sparse graph in Python.
+Source technique: constant-time BFS queue.
+Implementation details: store the frontier in collections.deque, remove vertices with popleft, and append newly discovered vertices without shifting a list.
+Required terms: collections.deque, popleft, append, BFS queue.
+
+[PARENT B RECORD]
+Task: Improve breadth-first search over a large sparse graph in Python.
+Source technique: compact CSR adjacency representation.
+Implementation details: store graph neighbors in contiguous indices and indptr arrays, then traverse each vertex's CSR slice for cache-efficient sparse access.
+Required terms: CSR, indices, indptr, contiguous neighbors exactly.
+
+Produce one concise optimization idea that combines the specific implementation techniques from both records. Do not replace either technique with a generic alternative. Return only the combined optimization idea.

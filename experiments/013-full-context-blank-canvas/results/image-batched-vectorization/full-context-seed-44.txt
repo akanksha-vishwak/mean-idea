@@ -1,0 +1,2 @@
+thought
+Normalize the collection by processing images in fixed batch sizes to cap peak memory, where each batch is cast to float32 and normalized using NumPy broadcasting with mean and standard-deviation arrays to ensure no pixel loops.

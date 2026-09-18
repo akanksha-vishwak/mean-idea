@@ -92,7 +92,7 @@ def experiment_dir(number: int) -> Path:
 
 def load_evidence() -> dict[int, dict[str, Any]]:
     evidence: dict[int, dict[str, Any]] = {}
-    for number in range(1, 13):
+    for number in range(1, 14):
         directory = experiment_dir(number)
         results_path = directory / "results" / "results.json"
         spec_path = directory / "spec.json"
@@ -281,6 +281,68 @@ def calculate_claims(e: dict[int, dict[str, Any]], prior: dict[str, Any]) -> dic
         "Experiment 012 per-pair direct-prompt strict counts differ from raw evidence",
     )
 
+    r13 = e[13]["results"]
+    require(
+        r13["settings"]["parent_derived_canvas_state"] is False,
+        "Experiment 013 unexpectedly used a parent-derived canvas state",
+    )
+    runs13 = [
+        run
+        for pair in r13["pair_results"]
+        for run in pair["runs"]
+        if run["method"] == "full_context_blank_canvas_prompt"
+    ]
+    require(
+        len(runs13) == 9
+        and all(run.get("status") == "completed" for run in runs13),
+        "Experiment 013 did not complete all nine frozen runs",
+    )
+    full13_by_pair = {
+        pair["pair_id"]: (
+            sum(
+                bool(indicators(run).get("candidate_hybrid"))
+                for run in pair["runs"]
+            ),
+            len(pair["runs"]),
+        )
+        for pair in r13["pair_results"]
+    }
+    require(
+        full13_by_pair
+        == {
+            "matrix-blocked-blas": (3, 3),
+            "graph-csr-deque-bfs": (3, 3),
+            "image-batched-vectorization": (2, 3),
+        },
+        "Experiment 013 per-pair strict counts differ from raw evidence",
+    )
+    full13_hybrids = sum(
+        bool(indicators(run).get("candidate_hybrid")) for run in runs13
+    )
+    require(
+        (
+            full13_hybrids,
+            r13["summary"]["concise_baseline_hybrid_count"],
+            r13["summary"]["concise_baseline_run_count"],
+        )
+        == (8, 8, 9),
+        "Experiment 013 does not report the reviewed 8/9 versus 8/9 comparison",
+    )
+    failed13 = [
+        (pair["pair_id"], run)
+        for pair in r13["pair_results"]
+        for run in pair["runs"]
+        if not indicators(run).get("candidate_hybrid")
+    ]
+    require(
+        len(failed13) == 1
+        and failed13[0][0] == "image-batched-vectorization"
+        and failed13[0][1]["seed"] == 44
+        and indicators(failed13[0][1]).get("retains_A") is True
+        and indicators(failed13[0][1]).get("retains_B") is False,
+        "Experiment 013 strict failure is not the reviewed image seed 44 output",
+    )
+
     numerical8 = dual8 + hard8
     numerical_controlled = numerical8 + numerical9 + dual12 + hard12
     direct_controlled = direct8 + direct9 + direct12
@@ -345,6 +407,12 @@ def calculate_claims(e: dict[int, dict[str, Any]], prior: dict[str, Any]) -> dic
         "exp12_hard": (sum(bool(indicators(r).get("candidate_hybrid")) for r in hard12), len(hard12)),
         "exp12_direct": (sum(bool(indicators(r).get("candidate_hybrid")) for r in direct12), len(direct12)),
         "exp12_direct_by_pair": direct12_by_pair,
+        "exp13_full": (full13_hybrids, len(runs13)),
+        "exp13_concise": (
+            r13["summary"]["concise_baseline_hybrid_count"],
+            r13["summary"]["concise_baseline_run_count"],
+        ),
+        "exp13_full_by_pair": full13_by_pair,
         "controlled_numerical": (numerical_hybrids, len(numerical_controlled)),
         "controlled_direct": (direct_hybrids, len(direct_controlled)),
         "partial_scaffold_runs": len(partial_runs),
@@ -376,6 +444,8 @@ def collect_samples(e: dict[int, dict[str, Any]]) -> dict[str, tuple[str, str]]:
         ("e12_mid", 12, "dual-weight-0p5-seed-42-denoised.txt", "matrix-blocked-blas"),
         ("e12_direct", 12, "direct-prompt-seed-42.txt", "matrix-blocked-blas"),
         ("e12_graph_damaged", 12, "direct-prompt-seed-43.txt", "graph-csr-deque-bfs"),
+        ("e13_graph", 13, "full-context-seed-42.txt", "graph-csr-deque-bfs"),
+        ("e13_image_strict_failure", 13, "full-context-seed-44.txt", "image-batched-vectorization"),
     ]:
         samples[key] = read_raw_text(e[number], filename, subdir)
     return samples
@@ -549,7 +619,7 @@ def h(text: Any) -> str:
 
 def provenance_rows(e: dict[int, dict[str, Any]]) -> str:
     rows = []
-    for number in range(1, 13):
+    for number in range(1, 14):
         item = e[number]
         results = item["results"]
         status = results.get("status")
@@ -601,9 +671,10 @@ def experiment_cards(e: dict[int, dict[str, Any]], c: dict[str, Any]) -> str:
         10: f"Deterministic reproduction passed {c['exp10_reproduction'][0]}/{c['exp10_reproduction'][1]}. Strengthened A passed {c['exp10_strong_a'][0]}/{c['exp10_strong_a'][1]} and B {c['exp10_strong_b'][0]}/{c['exp10_strong_b'][1]}, so no midpoint test was admissible.",
         11: f"{c['exp11_passing']}/{c['exp11_pair_count']} nonsorting pairs passed both endpoint gates: matrix multiplication, graph BFS, and image normalization. The regex pair was blocked.",
         12: f"All {c['exp12_run_count']} frozen runs completed. Dual-logit midpoint: {c['exp12_dual'][0]}/{c['exp12_dual'][1]}; hard midpoint: {c['exp12_hard'][0]}/{c['exp12_hard'][1]}; direct prompting: {c['exp12_direct'][0]}/{c['exp12_direct'][1]} strict hybrids.",
+        13: f"Full-context blank-canvas prompting produced {c['exp13_full'][0]}/{c['exp13_full'][1]} strict hybrids, tying the frozen concise-prompt baseline at {c['exp13_concise'][0]}/{c['exp13_concise'][1]}. Graph improved while image exactness declined.",
     }
     cards = []
-    for number in range(1, 13):
+    for number in range(1, 14):
         spec = e[number]["spec"]
         question = spec.get("question", "See experiment specification.")
         cards.append(
@@ -617,7 +688,9 @@ def experiment_cards(e: dict[int, dict[str, Any]], c: dict[str, Any]) -> str:
 def build_poster(e: dict[int, dict[str, Any]], c: dict[str, Any], plots: dict[str, Path]) -> None:
     screen_summary = (
         f"Experiment 011: {c['exp11_passing']}/{c['exp11_pair_count']} endpoint-valid pairs "
-        f"(matrix, graph, image); regex blocked. Experiment 012 then tested every passing pair."
+        f"(matrix, graph, image); regex blocked. Experiment 012 tested numerical and concise-prompt "
+        f"composition; Experiment 013's full-context blank-canvas prompt tied the concise baseline "
+        f"at {c['exp13_full'][0]}/{c['exp13_full'][1]}."
     )
     document = f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1"><title>Can AI Average Two Ideas?</title>
@@ -635,7 +708,7 @@ def build_poster(e: dict[int, dict[str, Any]], c: dict[str, Any], plots: dict[st
 <section class="card"><h2>Why it matters</h2><p>Project Darwin explores program improvements. A useful numerical “idea space” could support controlled search for new optimizations—if nearby numerical points decode to related, valid ideas.</p></section>
 <section class="card"><h2>Method</h2><div class="flow"><div>Parent A prompt</div><span class="arrow">+</span><div>Parent B prompt</div><span class="arrow">→</span><div>Mix states / logits</div><span class="arrow">→</span><div>Project + denoise</div></div>
 <p>Controls first: endpoints had to reproduce each parent. Then we tested weights, geometry, top-token alternatives, stochastic projection, per-step logit mixing, multiple pairs, and prompt specificity.</p></section>
-<section class="card"><h2>Evidence standard</h2><p>Every number on this poster is calculated at build time from Experiments 001–012 raw JSON fields. Raw output text is read directly.</p></section>
+<section class="card"><h2>Evidence standard</h2><p>Every number on this poster is calculated at build time from Experiments 001–013 raw JSON fields. Raw output text is read directly.</p></section>
 </div><div>
 <section class="card"><h2>Strongest result</h2><p class="result">{c['controlled_numerical'][0]}/{c['controlled_numerical'][1]} numerical hybrids vs {c['controlled_direct'][0]}/{c['controlled_direct'][1]} direct-prompt hybrids</p>
 <img class="plot" src="{plots['aggregate'].relative_to(HERE).as_posix()}" alt="Across endpoint-valid sorting, matrix, graph, and image pairs, zero of 42 numerical outputs were hybrids while 17 of 18 direct prompts were strict hybrids."></section>
@@ -646,7 +719,7 @@ def build_poster(e: dict[int, dict[str, Any]], c: dict[str, Any], plots: dict[st
 </div><div>
 <section class="card"><h2>What we ruled out</h2><img class="plot" src="{plots['exp005'].relative_to(HERE).as_posix()}" alt="Positive cosine and strong norm retention show that vector cancellation does not explain the failure.">
 <p>No negative position cosines and {c['geometry']['midpoint_norm_retention_vs_mean_parent_norm']:.1%} norm retention make simple vector cancellation an unlikely explanation.</p></section>
-<section class="card"><h2>What succeeded</h2><ul><li>DiffusionGemma decoded validated endpoints.</li><li>Explicit prompts restored missing implementation details.</li><li>Direct diffusion instructions composed both parents {c['controlled_direct'][0]}/{c['controlled_direct'][1]} strict times across endpoint-valid pairs.</li><li>Raw manifests captured model, settings, seeds, runtime, and hashes.</li></ul></section>
+<section class="card"><h2>What succeeded</h2><ul><li>DiffusionGemma decoded validated endpoints.</li><li>Explicit prompts restored missing implementation details.</li><li>Direct diffusion instructions composed both parents {c['controlled_direct'][0]}/{c['controlled_direct'][1]} strict times across endpoint-valid pairs.</li><li>Full-context blank-canvas prompting also achieved {c['exp13_full'][0]}/{c['exp13_full'][1]}, tying the concise baseline.</li><li>Raw manifests captured model, settings, seeds, runtime, and hashes.</li></ul></section>
 <section class="card"><h2>Limitations</h2><ul><li>Exploratory/pilot—not confirmatory.</li><li>One model revision and public synthetic tasks.</li><li>Lexical rules are necessary but not a full human evaluation.</li><li>Internal-layer injection, KV-cache mixing, learned sequence-aware mixing, and preregistered confirmation are our later future-work ideas, not Sergiy’s explicit asks.</li></ul></section>
 <section class="card"><h2>Conclusion</h2><p>The tested final-state interpolation, hard projection, and linear output-logit mixing did not create a useful semantic bridge across sorting, matrix multiplication, sparse graph BFS, and image normalization. Bayesian optimization over this coordinate is not justified. Do not integrate this numerical mixer into Darwin yet; keep the successful direct-prompt baseline.</p>
 <p><strong>Our later future work:</strong> freeze a confirmatory protocol and test technically distinct sequence-aware mechanisms.</p><p class="small">{h(screen_summary)}</p></section>
@@ -684,15 +757,19 @@ def build_report(
       <section class="card"><h3>Exp012 numerical midpoint</h3>{raw_quote(samples['e12_mid'])}</section>
       <section class="card"><h3>Exp012 direct matrix prompt</h3>{raw_quote(samples['e12_direct'])}</section>
       <section class="card"><h3>Exp012 graph strict-gate failure</h3>{raw_quote(samples['e12_graph_damaged'])}</section>
+      <section class="card"><h3>Exp013 full-context graph success</h3>{raw_quote(samples['e13_graph'])}</section>
+      <section class="card"><h3>Exp013 image strict-gate failure</h3>{raw_quote(samples['e13_image_strict_failure'])}</section>
     </div>"""
 
     document = f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1"><title>Technical report — diffusion idea composition pilot</title>
 <style>{CSS}@media print{{header{{background:{NAVY}!important;-webkit-print-color-adjust:exact}} main{{max-width:none}}}}</style></head>
 <body><header><h1>Technical Report: Diffusion Representation Composition Pilot</h1>
-<p class="lede">Experiments 001–012 are mandatory and read directly from raw manifests and text. Build date: {BUILD_DATE}.</p></header><main>
+<p class="lede">Experiments 001–013 are mandatory and read directly from raw manifests and text. Build date: {BUILD_DATE}.</p></header><main>
 <section><h2>Executive summary</h2><div class="callout"><p class="result">Endpoint-valid aggregate: {c['controlled_numerical'][0]}/{c['controlled_numerical'][1]} numerical hybrids versus {c['controlled_direct'][0]}/{c['controlled_direct'][1]} strict direct-prompt hybrids.</p>
 <p>The bounded pilot result now spans sorting, dense matrix multiplication, sparse graph BFS, and image normalization. It does <strong>not</strong> show that all diffusion methods fail. It shows that the tested final-canvas arithmetic interpolation, hard projection, stochastic top-k projection, and per-step linear output-logit mixing did not provide a useful semantic composition coordinate.</p></div></section>
+<section><h2>Full-context blank-canvas follow-up</h2><p>Experiment 013 implemented Sergiy's follow-up suggestion by placing both complete frozen parent records in one prompt and supplying no parent-derived canvas state. It produced {c['exp13_full'][0]}/{c['exp13_full'][1]} strict hybrids, exactly tying Experiment 012's concise direct-prompt baseline at {c['exp13_concise'][0]}/{c['exp13_concise'][1]}. Matrix remained 3/3, graph improved to 3/3, and image declined to 2/3 because one output omitted order preservation.</p>
+<p>The ninth output still combined fixed-size batching, memory capping, NumPy broadcasting, and float32, but the preregistered strict outcome remains a failure. The follow-up supports prompt-only blank-canvas synthesis as a viable baseline; it does not improve aggregate reliability or rehabilitate numerical mixing.</p></section>
 <section><h2>Research question and operational definition</h2><p>Can prompt-conditioned numerical representations from two optimization ideas be combined so DiffusionGemma generates one coherent idea retaining both parents?</p>
 <p>A candidate hybrid had to satisfy the experiment-specific lexical groups for Parent A and Parent B and avoid prohibited operations. Endpoint gates prevented interpretation when the model could not first reproduce both parents.</p></section>
 <section><h2>System and provenance</h2><p>Where recorded, the full-model runs used <code>google/diffusiongemma-26B-A4B-it</code>, model revisions {h(', '.join(model_revisions) or 'not consistently recorded')}, and an NVIDIA GeForce RTX 5090. Exact settings, seeds, hashes, timestamps, and runtime details remain in each raw manifest.</p>
@@ -729,6 +806,7 @@ def build_report(
 <li>All results are exploratory/pilot and were not preregistered confirmatory evidence.</li>
 <li>The strongest comparison spans endpoint-valid sorting, matrix multiplication, graph BFS, and image-normalization pairs; Experiment 009's histogram pair and Experiment 011's regex pair were blocked by endpoint controls.</li>
 <li>Experiment 012's graph seed 43 was a strict automated-gate failure because <code>indptr</code> was damaged to <code>` `ptr</code>, although the intended deque-plus-CSR combination was human-identifiable.</li>
+<li>Experiment 013 tied rather than exceeded the concise prompt baseline. Its image seed 44 output combined the core vectorization and batching techniques but omitted the frozen output-order requirement.</li>
 <li>Automated lexical indicators are transparent and reproducible but do not replace blinded human evaluation, code implementation, tests, benchmarks, or uncertainty estimates.</li>
 <li>The conclusion is bounded to the exact model revision, representations, projection/injection points, prompts, seeds, canvases, and workloads tested.</li>
 <li>Internal transformer-layer injection, KV-cache mixing, learned sequence-aware methods, and preregistered confirmation are later project-proposed future work, not Sergiy’s explicit asks. The negative result is specifically bounded to final-state interpolation/projection and linear output-logit mixing.</li>
@@ -772,6 +850,12 @@ This result is bounded to final-state interpolation/projection and linear output
 
 **Status: not justified for the failed numerical mechanism.** It would add complexity and GPU cost without a demonstrated synthesis benefit. A simpler direct text-based idea synthesizer remains viable: direct diffusion prompting produced **{c['controlled_direct'][0]}/{c['controlled_direct'][1]}** strict hybrids across endpoint-valid sorting, matrix, graph, and image pairs. Program implementation, correctness testing, benchmarking, and fitness improvement inside Darwin remain untested.
 
+## Follow-up suggested by Sergiy on September 18: everything in the prompt, blank canvas
+
+**Status: tested successfully, with no aggregate improvement over the concise prompt.** Experiment 013 placed both complete frozen parent records in one prompt and supplied no parent embedding, hidden state, token canvas, or logits. Full-context prompting produced **{c['exp13_full'][0]}/{c['exp13_full'][1]}** strict hybrids, exactly tying Experiment 012's concise blank-canvas baseline at **{c['exp13_concise'][0]}/{c['exp13_concise'][1]}**.
+
+Matrix multiplication remained 3/3. Graph BFS improved from 2/3 to 3/3, while image normalization declined from 3/3 to 2/3 because one output omitted the frozen output-order requirement. Human inspection found the core two-technique combination in that ninth output, but the preregistered primary result remains 8/9. These public synthetic tasks contain complete parent descriptions rather than complete parent programs, so a full-program-context study remains technically distinct.
+
 ## What was not completed—and why
 
 These were **implementation aspirations from the proposal**, contingent on the research mechanism first passing scientific gates. They were not forgotten:
@@ -791,6 +875,7 @@ The underlying research questions were still addressed: the tested representatio
 - Direct diffusion prompting composed both parents in **{c['controlled_direct'][0]}/{c['controlled_direct'][1]}** strict runs across four workloads.
 - Experiment 011 found **{c['exp11_passing']}/{c['exp11_pair_count']}** endpoint-valid nonsorting pairs: matrix multiplication, graph BFS, and image normalization; regex was blocked.
 - Experiment 012 replicated the numerical failure on all three endpoint-valid nonsorting pairs. Matrix direct prompting passed 3/3, graph 2/3 strict, and image 3/3.
+- Experiment 013 tested Sergiy's full-context blank-canvas follow-up and tied the concise baseline at {c['exp13_full'][0]}/{c['exp13_full'][1]} strict hybrids. Graph improved to 3/3 while image declined to 2/3.
 - The remaining graph direct output was human-identifiable as deque plus CSR, but a damaged `indptr` token correctly made it a strict automated-gate failure.
 
 ## Our proposed future work — not Sergiy’s explicit asks
@@ -810,7 +895,7 @@ These are **exploratory/pilot** findings for the exact DiffusionGemma revision, 
 
 ## Provenance
 
-- Numbered experiment evidence: `experiments/001-*` through `experiments/012-*`.
+- Numbered experiment evidence: `experiments/001-*` through `experiments/013-*`.
 - Earlier partial-scaffold and handoff evidence: `{c['prior_pilot_sources'][0]}`, `{c['prior_pilot_sources'][1]}`, `{c['prior_pilot_sources'][2]}`, and `{c['prior_pilot_sources'][3]}`.
 """
     ANSWERS_PATH.write_text(text, encoding="utf-8")
@@ -949,7 +1034,7 @@ def build_pptx(
     add_card(slide, 0.75, 1.45, 3.75, 4.6, "1 • Start with two useful ideas", "Example A: use a bounded counting sort.\n\nExample B: compile custom loops with Numba.", BLUE)
     add_card(slide, 4.8, 1.45, 3.75, 4.6, "2 • Combine their numbers", "A language model represents text using large arrays of numbers. We tested whether averaging or mixing those arrays preserves both meanings.", PURPLE)
     add_card(slide, 8.85, 1.45, 3.75, 4.6, "3 • Ask for one new idea", "Success means the generated idea is coherent, relevant, and clearly uses both parent techniques—not merely fluent text.", CYAN)
-    add_notes_footer(slide, ["research design summarized from experiments/001–012/spec.json"])
+    add_notes_footer(slide, ["research design summarized from experiments/001–013/spec.json"])
 
     slide = new_slide(prs, "How diffusion text generation differs", "Simple conceptual model—not a claim about every implementation detail")
     stages = [("Prompt", "describes the task"), ("Continuous state", "numbers carry contextual information"), ("Token projection", "each position becomes a token choice"), ("Denoising", "tokens are refined into text")]
@@ -983,9 +1068,9 @@ def build_pptx(
         if i < 5:
             add_text(slide, "→", x + 1.82, 2.95, 0.3, 0.45, 18, MID, True, PP_ALIGN.CENTER)
     add_text(slide, "Raw outputs, failures, hashes, seeds, model revision, and runtime are preserved in each experiment directory.", 0.85, 5.25, 11.7, 0.8, 20, NAVY, True, PP_ALIGN.CENTER)
-    add_notes_footer(slide, ["experiments/001–012/results/results.json"])
+    add_notes_footer(slide, ["experiments/001–013/results/results.json"])
 
-    slide = new_slide(prs, "Twelve experiments form one diagnostic ladder", "Each step answers the previous step’s ambiguity")
+    slide = new_slide(prs, "Twelve experiments formed the diagnostic ladder", "Experiment 013 then tested Sergiy's prompt-only follow-up")
     labels = [
         "001 Code controls", "002 Prompt controls", "003 Specificity", "004 Weight sweep",
         "005 Geometry", "006 Top candidates", "007 Stochastic", "008 Dual logits",
@@ -995,7 +1080,8 @@ def build_pptx(
         row, col = divmod(i, 4)
         x, y = 0.55 + col * 3.16, 1.35 + row * 1.65
         add_card(slide, x, y, 2.85, 1.25, label, "completed", GREEN)
-    add_notes_footer(slide, ["experiments/001–012"])
+    add_text(slide, "013 follow-up: complete parent records in one prompt, with no parent-derived canvas state.", 0.8, 6.25, 11.7, 0.5, 16, NAVY, True, PP_ALIGN.CENTER)
+    add_notes_footer(slide, ["experiments/001–013"])
 
     slide = new_slide(prs, "Experiments 001–003: controls changed the question")
     add_card(slide, 0.65, 1.4, 3.85, 4.8, "001 • Code states", "Parent techniques were recognizable, but all generated programs—including the mixture—were invalid Python.\n\nLesson: move first to shorter idea generation.", BLUE)
@@ -1065,6 +1151,13 @@ def build_pptx(
     add_card(slide, 8.93, 1.4, 3.85, 4.85, "Image normalization", f"Dual logit: 0/3\nHard midpoint: 0/3\nDirect prompt: {c['exp12_direct_by_pair']['image-batched-vectorization'][0]}/3 strict\n\nDirect prompts combined float32 broadcasting with bounded batches.", CYAN)
     add_notes_footer(slide, ["experiments/012-nonsorting-composition/results/results.json", "experiments/012-nonsorting-composition/results/assessment.md"])
 
+    slide = new_slide(prs, "Experiment 013: all parent context in the prompt, blank canvas")
+    add_card(slide, 0.55, 1.4, 3.85, 4.7, "Prompt-only configuration", "Both complete frozen parent records were placed in one prompt.\n\nNo parent embedding, hidden state, token canvas, or logits were supplied.", BLUE)
+    add_card(slide, 4.74, 1.4, 3.85, 4.7, "Strict aggregate", f"Full context: {c['exp13_full'][0]}/{c['exp13_full'][1]}\nConcise baseline: {c['exp13_concise'][0]}/{c['exp13_concise'][1]}\n\nAggregate improvement: none.", GREEN)
+    add_card(slide, 8.93, 1.4, 3.85, 4.7, "Pair-level shift", f"Matrix: {c['exp13_full_by_pair']['matrix-blocked-blas'][0]}/3\nGraph: {c['exp13_full_by_pair']['graph-csr-deque-bfs'][0]}/3\nImage: {c['exp13_full_by_pair']['image-batched-vectorization'][0]}/3\n\nThe image failure omitted output order but retained vectorization and batching.", PURPLE)
+    add_text(slide, "Result: Sergiy's blank-canvas prompt-only approach works reliably, but the longer context did not outperform the concise explicit prompt.", 0.8, 6.25, 11.7, 0.55, 18, NAVY, True, PP_ALIGN.CENTER)
+    add_notes_footer(slide, ["experiments/013-full-context-blank-canvas/results/results.json", "experiments/013-full-context-blank-canvas/results/assessment.md"])
+
     slide = new_slide(prs, "Aggregate endpoint-valid result across four workloads")
     add_image(slide, plots["aggregate"], 0.65, 1.4, 7.1, 4.8, alt["controlled-aggregate.png"])
     add_card(slide, 8.1, 1.55, 4.35, 1.6, "Numerical representation methods", f"{c['controlled_numerical'][0]}/{c['controlled_numerical'][1]} candidate hybrids.", RED)
@@ -1081,6 +1174,7 @@ def build_pptx(
             "A causal diagnostic: poor composition was not explained by simple vector cancellation.",
             "A likely bottleneck: useful endpoint alternatives survived below top-1 but hard projection broke sequence-level meaning.",
             f"Direct diffusion prompting composed both parents {c['controlled_direct'][0]}/{c['controlled_direct'][1]} strict times across sorting, matrix, graph, and image pairs.",
+            f"Full-context blank-canvas prompting independently achieved {c['exp13_full'][0]}/{c['exp13_full'][1]}, tying rather than improving the concise prompt.",
             "Endpoint gates prevented overinterpreting the blocked histogram and regex pairs.",
         ],
         1.0, 1.4, 11.4, 5.4, 21,
@@ -1094,7 +1188,7 @@ def build_pptx(
     add_card(slide, 1.25, 3.65, 5.25, 1.85, "4 • Bayesian optimization", "Not justified: the tested coordinate crosses a broad unrelated region rather than a smooth useful bridge.", RED)
     add_card(slide, 6.83, 3.65, 5.25, 1.85, "5 • Darwin search-stage integration", "Not justified for the failed numerical mixer. Direct text-based idea synthesis remains viable; program-level Darwin evaluation is still untested.", PURPLE)
     add_text(slide, "Attribution boundary: internal-layer injection, KV-cache mixing, learned sequence-aware mixing, and preregistered confirmation are our later future-work ideas—not Sergiy’s explicit asks.", 0.65, 5.95, 12.0, 0.75, 16, NAVY, True, PP_ALIGN.CENTER)
-    add_notes_footer(slide, ["experiments/001–012", "earlier pilot: partial-scaffolds and scaffold-handoff assessments", "answers-to-sergiy.md"])
+    add_notes_footer(slide, ["experiments/001–013", "earlier pilot: partial-scaffolds and scaffold-handoff assessments", "answers-to-sergiy.md"])
 
     slide = new_slide(prs, "What was not completed—and why", "Implementation aspirations were gated by the research result")
     add_card(slide, 0.65, 1.45, 3.8, 4.35, "No production Darwin stage", "The tested numerical synthesis mechanism showed no benefit. Building it into the production sampling pipeline was therefore not scientifically justified.", PURPLE)
@@ -1123,9 +1217,9 @@ def build_pptx(
     add_card(slide, 4.77, 1.35, 3.8, 4.9, "2 • Test distinct mechanisms", "Try internal-layer injection, KV-cache mixing, or learned sequence-aware mixing that preserves sequence structure.", PURPLE)
     add_card(slide, 8.89, 1.35, 3.8, 4.9, "3 • Keep the viable baseline", f"Direct text-based synthesis is simpler and succeeded in {c['controlled_direct'][0]}/{c['controlled_direct'][1]} strict runs across four workloads. Revisit optimization only after finding a smooth useful coordinate.", GREEN)
     add_text(slide, "Conclusion: the tested numerical bridge failed, but the diagnostic ladder produced a clear, reproducible, and scientifically useful negative result.", 0.85, 6.35, 11.7, 0.55, 18, NAVY, True, PP_ALIGN.CENTER)
-    add_notes_footer(slide, ["experiments/001–012", "answers-to-sergiy.md"])
+    add_notes_footer(slide, ["experiments/001–013", "answers-to-sergiy.md"])
 
-    require(18 <= len(prs.slides) <= 22, f"Presentation must contain 18–22 slides; generated {len(prs.slides)}")
+    require(18 <= len(prs.slides) <= 23, f"Presentation must contain 18–23 slides; generated {len(prs.slides)}")
     prs.save(PPTX_PATH)
 
 
@@ -1135,8 +1229,8 @@ def verify_outputs() -> None:
     for path in expected:
         require(path.exists() and path.stat().st_size > 0, f"Generated output is empty or missing: {path}")
     reopened = Presentation(PPTX_PATH)
-    require(18 <= len(reopened.slides) <= 22, f"Reopened PPTX has unexpected slide count: {len(reopened.slides)}")
-    require(len(reopened.slides) == 22, f"Expected 22 slides after reopening; found {len(reopened.slides)}")
+    require(18 <= len(reopened.slides) <= 23, f"Reopened PPTX has unexpected slide count: {len(reopened.slides)}")
+    require(len(reopened.slides) == 23, f"Expected 23 slides after reopening; found {len(reopened.slides)}")
 
 
 def main() -> int:

@@ -1,0 +1,540 @@
+{
+  "experiment_id": "013-full-context-blank-canvas",
+  "status": "completed",
+  "started_at": "2026-09-18T18:43:04.937737+00:00",
+  "repository_revision": "42974f67b77e03de3be57a8bab4fcb553d1da6f1",
+  "model": {
+    "id": "google/diffusiongemma-26B-A4B-it",
+    "revision": "f7f5b7f5fa82ffc52addd066915886d497f5517b"
+  },
+  "runtime": {
+    "python": "3.12.3",
+    "torch": "2.9.1+cu128",
+    "cuda_available": true,
+    "cuda_version": "12.8",
+    "cuda_device": "NVIDIA GeForce RTX 5090"
+  },
+  "settings": {
+    "canvas_length": 96,
+    "denoising_steps": 8,
+    "seeds": [
+      42,
+      43,
+      44
+    ],
+    "method": "full_context_blank_canvas_prompt",
+    "parent_derived_canvas_state": false,
+    "new_generation_count": 9
+  },
+  "inputs": {
+    "pairs_path": "experiments/011-nonsorting-endpoint-screen/pairs.json",
+    "pairs_sha256": "dba6f5b48726cf4b82be097526d2babd6da3c78d361cdad108ee95c712cafd46",
+    "prompt_template_path": "experiments/013-full-context-blank-canvas/prompt-template.txt",
+    "prompt_template_sha256": "0cc939deeb280a41b06b1436ab7d70daf8e8eb67b4b1e6588d7579594a8cf8dd",
+    "baseline_results_path": "experiments/012-nonsorting-composition/results/results.json",
+    "baseline_results_sha256": "b1dbbb98aa5904e6bba5c28c45d50467436eed3622f9dc3b7d49ba8eba8cb83e"
+  },
+  "baseline": {
+    "experiment_id": "012-nonsorting-composition",
+    "model_revision": "f7f5b7f5fa82ffc52addd066915886d497f5517b",
+    "hybrid_count": 8,
+    "run_count": 9
+  },
+  "pair_results": [
+    {
+      "pair_id": "matrix-blocked-blas",
+      "workload": "dense-matrix-multiplication",
+      "expected_combined_concept": "Use cache-sized matrix tiles and invoke BLAS-backed NumPy matmul for each compatible block product.",
+      "prompt_file": "full-context-prompt.txt",
+      "prompt_sha256": "0683eaa48127ffd925d6169a0f4c9f73ac48867f55d4396fdf710d244e7b9ff9",
+      "prompt_character_count": 1100,
+      "prompt_token_count": 236,
+      "baseline": {
+        "run_count": 3,
+        "hybrid_count": 3,
+        "output_files": [
+          {
+            "seed": 42,
+            "path": "experiments/012-nonsorting-composition/results/matrix-blocked-blas/direct-prompt-seed-42.txt",
+            "sha256": "46a70e357f588c385de133856e2d27081c7526b375c2847e6b1648921b8857ff"
+          },
+          {
+            "seed": 43,
+            "path": "experiments/012-nonsorting-composition/results/matrix-blocked-blas/direct-prompt-seed-43.txt",
+            "sha256": "48568736bf642f79b7fdbd1d45e3ec8c41622fe2d8614c3ec3ba0938c7b412c5"
+          },
+          {
+            "seed": 44,
+            "path": "experiments/012-nonsorting-composition/results/matrix-blocked-blas/direct-prompt-seed-44.txt",
+            "sha256": "7902d85f5792896b0417c83f681907880bbd8c73035639edc588a4caa589a9a8"
+          }
+        ]
+      },
+      "runs": [
+        {
+          "method": "full_context_blank_canvas_prompt",
+          "seed": 42,
+          "status": "completed",
+          "started_at": "2026-09-18T18:43:04.942000+00:00",
+          "duration_seconds": 13.125,
+          "output_file": "full-context-seed-42.txt",
+          "output_sha256": "892872653cb626a91ea64ed1583c9356de93ef0b6e4eec02896e378c8e13fb3c",
+          "lexical_indicators": {
+            "retains_A": true,
+            "retains_B": true,
+            "retains_both": true,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": true,
+            "matched_A_groups": [
+              [
+                "np."
+              ],
+              [
+                "matmul",
+                "matrix multiplication"
+              ],
+              [
+                "blas"
+              ]
+            ],
+            "matched_B_groups": [
+              [
+                "block",
+                "tile"
+              ],
+              [
+                "cache"
+              ],
+              [
+                "accumul"
+              ]
+            ],
+            "matched_prohibited_markers": []
+          }
+        },
+        {
+          "method": "full_context_blank_canvas_prompt",
+          "seed": 43,
+          "status": "completed",
+          "started_at": "2026-09-18T18:43:18.067392+00:00",
+          "duration_seconds": 12.815,
+          "output_file": "full-context-seed-43.txt",
+          "output_sha256": "d8bb0759b54858ba38de115db80ae7a2d9367c49561d54d90c995fcb9b61fdac",
+          "lexical_indicators": {
+            "retains_A": true,
+            "retains_B": true,
+            "retains_both": true,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": true,
+            "matched_A_groups": [
+              [
+                "np."
+              ],
+              [
+                "matmul",
+                "matrix multiplication"
+              ],
+              [
+                "blas"
+              ]
+            ],
+            "matched_B_groups": [
+              [
+                "block",
+                "tile"
+              ],
+              [
+                "cache"
+              ],
+              [
+                "accumul"
+              ]
+            ],
+            "matched_prohibited_markers": []
+          }
+        },
+        {
+          "method": "full_context_blank_canvas_prompt",
+          "seed": 44,
+          "status": "completed",
+          "started_at": "2026-09-18T18:43:30.884517+00:00",
+          "duration_seconds": 14.344,
+          "output_file": "full-context-seed-44.txt",
+          "output_sha256": "1a5f7cdcb7a4d26c16df889959a6757c5253b8fbff8ec4e1dbc319c1a1d5fff5",
+          "lexical_indicators": {
+            "retains_A": true,
+            "retains_B": true,
+            "retains_both": true,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": true,
+            "matched_A_groups": [
+              [
+                "np."
+              ],
+              [
+                "matmul",
+                "matrix multiplication"
+              ],
+              [
+                "blas"
+              ]
+            ],
+            "matched_B_groups": [
+              [
+                "block",
+                "tile"
+              ],
+              [
+                "cache"
+              ],
+              [
+                "accumul"
+              ]
+            ],
+            "matched_prohibited_markers": []
+          }
+        }
+      ],
+      "summary": {
+        "hybrid_count": 3,
+        "run_count": 3,
+        "hybrid_rate": 1.0,
+        "concise_baseline_hybrid_rate": 1.0,
+        "difference_from_concise_baseline_rate": 0.0
+      }
+    },
+    {
+      "pair_id": "graph-csr-deque-bfs",
+      "workload": "sparse-graph-breadth-first-search",
+      "expected_combined_concept": "Traverse compact CSR adjacency slices while maintaining the BFS frontier with deque and popleft.",
+      "prompt_file": "full-context-prompt.txt",
+      "prompt_sha256": "1bf07dd9978ee12d6b3c81ba7e435efc27f4e8c99c0c9c0d33edce2ffea34adf",
+      "prompt_character_count": 1069,
+      "prompt_token_count": 236,
+      "baseline": {
+        "run_count": 3,
+        "hybrid_count": 2,
+        "output_files": [
+          {
+            "seed": 42,
+            "path": "experiments/012-nonsorting-composition/results/graph-csr-deque-bfs/direct-prompt-seed-42.txt",
+            "sha256": "9aa85035d9fba035dc67f68965a95c392b314e055ae95f72891d9746efb92971"
+          },
+          {
+            "seed": 43,
+            "path": "experiments/012-nonsorting-composition/results/graph-csr-deque-bfs/direct-prompt-seed-43.txt",
+            "sha256": "59b275662cf5318b1aa6cf080dad22e52124667f7a906c5b465e054b9eb22ec9"
+          },
+          {
+            "seed": 44,
+            "path": "experiments/012-nonsorting-composition/results/graph-csr-deque-bfs/direct-prompt-seed-44.txt",
+            "sha256": "b5d9be3cf6c91c7c50d6f7c228dc01e64805a28021d46f34116fff0d2a7fcbc8"
+          }
+        ]
+      },
+      "runs": [
+        {
+          "method": "full_context_blank_canvas_prompt",
+          "seed": 42,
+          "status": "completed",
+          "started_at": "2026-09-18T18:43:45.231156+00:00",
+          "duration_seconds": 14.437,
+          "output_file": "full-context-seed-42.txt",
+          "output_sha256": "a6e0b1774cdcff22d1a76af589dfe81cf812779f51b09b3ec66829de3bf94e92",
+          "lexical_indicators": {
+            "retains_A": true,
+            "retains_B": true,
+            "retains_both": true,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": true,
+            "matched_A_groups": [
+              [
+                "deque"
+              ],
+              [
+                "popleft"
+              ],
+              [
+                "bfs",
+                "queue"
+              ]
+            ],
+            "matched_B_groups": [
+              [
+                "csr"
+              ],
+              [
+                "indices"
+              ],
+              [
+                "indptr"
+              ],
+              [
+                "contiguous"
+              ]
+            ],
+            "matched_prohibited_markers": []
+          }
+        },
+        {
+          "method": "full_context_blank_canvas_prompt",
+          "seed": 43,
+          "status": "completed",
+          "started_at": "2026-09-18T18:43:59.668245+00:00",
+          "duration_seconds": 11.243,
+          "output_file": "full-context-seed-43.txt",
+          "output_sha256": "bbdce927c0ceb028b86bc8eae1aa6dd0e0353998b7fa8f04a1f87eefa9e56984",
+          "lexical_indicators": {
+            "retains_A": true,
+            "retains_B": true,
+            "retains_both": true,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": true,
+            "matched_A_groups": [
+              [
+                "deque"
+              ],
+              [
+                "popleft"
+              ],
+              [
+                "bfs",
+                "queue"
+              ]
+            ],
+            "matched_B_groups": [
+              [
+                "csr"
+              ],
+              [
+                "indices"
+              ],
+              [
+                "indptr"
+              ],
+              [
+                "contiguous"
+              ]
+            ],
+            "matched_prohibited_markers": []
+          }
+        },
+        {
+          "method": "full_context_blank_canvas_prompt",
+          "seed": 44,
+          "status": "completed",
+          "started_at": "2026-09-18T18:44:10.911690+00:00",
+          "duration_seconds": 11.229,
+          "output_file": "full-context-seed-44.txt",
+          "output_sha256": "233a57bb76803830263b1d32441511855a1bab94ba5afa4554c0815bf10753f1",
+          "lexical_indicators": {
+            "retains_A": true,
+            "retains_B": true,
+            "retains_both": true,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": true,
+            "matched_A_groups": [
+              [
+                "deque"
+              ],
+              [
+                "popleft"
+              ],
+              [
+                "bfs",
+                "queue"
+              ]
+            ],
+            "matched_B_groups": [
+              [
+                "csr"
+              ],
+              [
+                "indices"
+              ],
+              [
+                "indptr"
+              ],
+              [
+                "contiguous"
+              ]
+            ],
+            "matched_prohibited_markers": []
+          }
+        }
+      ],
+      "summary": {
+        "hybrid_count": 3,
+        "run_count": 3,
+        "hybrid_rate": 1.0,
+        "concise_baseline_hybrid_rate": 0.6666666666666666,
+        "difference_from_concise_baseline_rate": 0.33333333333333337
+      }
+    },
+    {
+      "pair_id": "image-batched-vectorization",
+      "workload": "rgb-image-normalization",
+      "expected_combined_concept": "Normalize each bounded image batch with NumPy float32 broadcasting, then release temporary arrays before the next batch.",
+      "prompt_file": "full-context-prompt.txt",
+      "prompt_sha256": "e292f7cdcc81171ca6d2f4cfaf3b0e1c052737d3ea9bf928c63afb6b868f84d2",
+      "prompt_character_count": 1135,
+      "prompt_token_count": 246,
+      "baseline": {
+        "run_count": 3,
+        "hybrid_count": 3,
+        "output_files": [
+          {
+            "seed": 42,
+            "path": "experiments/012-nonsorting-composition/results/image-batched-vectorization/direct-prompt-seed-42.txt",
+            "sha256": "0470d59b3d130c3270e09a7023eb9e2da0af89cdd86091206bcfc3bbd6f06884"
+          },
+          {
+            "seed": 43,
+            "path": "experiments/012-nonsorting-composition/results/image-batched-vectorization/direct-prompt-seed-43.txt",
+            "sha256": "da633c6c9a73af904f68bd759f139ffd32f2cbebe2b5a71f2355c8cf7c8798f7"
+          },
+          {
+            "seed": 44,
+            "path": "experiments/012-nonsorting-composition/results/image-batched-vectorization/direct-prompt-seed-44.txt",
+            "sha256": "227292866a992b8da6f82a181735d2498ccf451ac2e4e9823811dd8ae532aaa8"
+          }
+        ]
+      },
+      "runs": [
+        {
+          "method": "full_context_blank_canvas_prompt",
+          "seed": 42,
+          "status": "completed",
+          "started_at": "2026-09-18T18:44:22.146086+00:00",
+          "duration_seconds": 14.443,
+          "output_file": "full-context-seed-42.txt",
+          "output_sha256": "d521856908a61e8c11c155410ec6ceebab62d32aecef3898b02f1aa2c0cc7d9f",
+          "lexical_indicators": {
+            "retains_A": true,
+            "retains_B": true,
+            "retains_both": true,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": true,
+            "matched_A_groups": [
+              [
+                "numpy"
+              ],
+              [
+                "broadcast"
+              ],
+              [
+                "float32"
+              ]
+            ],
+            "matched_B_groups": [
+              [
+                "batch"
+              ],
+              [
+                "memory"
+              ],
+              [
+                "order"
+              ]
+            ],
+            "matched_prohibited_markers": []
+          }
+        },
+        {
+          "method": "full_context_blank_canvas_prompt",
+          "seed": 43,
+          "status": "completed",
+          "started_at": "2026-09-18T18:44:36.589379+00:00",
+          "duration_seconds": 14.443,
+          "output_file": "full-context-seed-43.txt",
+          "output_sha256": "db258a45fe6e3d39cd8c210850cb30836da064bea98c7156cc534b744b2e442b",
+          "lexical_indicators": {
+            "retains_A": true,
+            "retains_B": true,
+            "retains_both": true,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": true,
+            "matched_A_groups": [
+              [
+                "numpy"
+              ],
+              [
+                "broadcast"
+              ],
+              [
+                "float32"
+              ]
+            ],
+            "matched_B_groups": [
+              [
+                "batch"
+              ],
+              [
+                "memory"
+              ],
+              [
+                "order"
+              ]
+            ],
+            "matched_prohibited_markers": []
+          }
+        },
+        {
+          "method": "full_context_blank_canvas_prompt",
+          "seed": 44,
+          "status": "completed",
+          "started_at": "2026-09-18T18:44:51.032540+00:00",
+          "duration_seconds": 12.817,
+          "output_file": "full-context-seed-44.txt",
+          "output_sha256": "7e16f9203ef01e4523ea606e8ced77ecc025f22fd01093ab612cd4d22996611d",
+          "lexical_indicators": {
+            "retains_A": true,
+            "retains_B": false,
+            "retains_both": false,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": false,
+            "matched_A_groups": [
+              [
+                "numpy"
+              ],
+              [
+                "broadcast"
+              ],
+              [
+                "float32"
+              ]
+            ],
+            "matched_B_groups": [
+              [
+                "batch"
+              ],
+              [
+                "memory"
+              ],
+              []
+            ],
+            "matched_prohibited_markers": []
+          }
+        }
+      ],
+      "summary": {
+        "hybrid_count": 2,
+        "run_count": 3,
+        "hybrid_rate": 0.6666666666666666,
+        "concise_baseline_hybrid_rate": 1.0,
+        "difference_from_concise_baseline_rate": -0.33333333333333337
+      }
+    }
+  ],
+  "summary": {
+    "pair_count": 3,
+    "completed_run_count": 9,
+    "full_context_hybrid_count": 8,
+    "full_context_hybrid_rate": 0.8888888888888888,
+    "concise_baseline_hybrid_count": 8,
+    "concise_baseline_run_count": 9,
+    "concise_baseline_hybrid_rate": 0.8888888888888888,
+    "difference_from_concise_baseline_rate": 0.0
+  },
+  "completed_at": "2026-09-18T18:45:03.852282+00:00"
+}

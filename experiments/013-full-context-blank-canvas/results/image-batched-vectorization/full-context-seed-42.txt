@@ -1,0 +1,2 @@
+thought
+Normalize the image collection by processing it in fixed batch sizes to release memory and preserve order, using NumPy broadcasting and float32 vectorization to normalize channels with mean and standard-deviation arrays instead of pixel loops.

@@ -26,6 +26,12 @@ This result is bounded to final-state interpolation/projection and linear output
 
 **Status: not justified for the failed numerical mechanism.** It would add complexity and GPU cost without a demonstrated synthesis benefit. A simpler direct text-based idea synthesizer remains viable: direct diffusion prompting produced **17/18** strict hybrids across endpoint-valid sorting, matrix, graph, and image pairs. Program implementation, correctness testing, benchmarking, and fitness improvement inside Darwin remain untested.
 
+## Follow-up suggested by Sergiy on September 18: everything in the prompt, blank canvas
+
+**Status: tested successfully, with no aggregate improvement over the concise prompt.** Experiment 013 placed both complete frozen parent records in one prompt and supplied no parent embedding, hidden state, token canvas, or logits. Full-context prompting produced **8/9** strict hybrids, exactly tying Experiment 012's concise blank-canvas baseline at **8/9**.
+
+Matrix multiplication remained 3/3. Graph BFS improved from 2/3 to 3/3, while image normalization declined from 3/3 to 2/3 because one output omitted the frozen output-order requirement. Human inspection found the core two-technique combination in that ninth output, but the preregistered primary result remains 8/9. These public synthetic tasks contain complete parent descriptions rather than complete parent programs, so a full-program-context study remains technically distinct.
+
 ## What was not completed—and why
 
 These were **implementation aspirations from the proposal**, contingent on the research mechanism first passing scientific gates. They were not forgotten:
@@ -45,6 +51,7 @@ The underlying research questions were still addressed: the tested representatio
 - Direct diffusion prompting composed both parents in **17/18** strict runs across four workloads.
 - Experiment 011 found **3/4** endpoint-valid nonsorting pairs: matrix multiplication, graph BFS, and image normalization; regex was blocked.
 - Experiment 012 replicated the numerical failure on all three endpoint-valid nonsorting pairs. Matrix direct prompting passed 3/3, graph 2/3 strict, and image 3/3.
+- Experiment 013 tested Sergiy's full-context blank-canvas follow-up and tied the concise baseline at 8/9 strict hybrids. Graph improved to 3/3 while image declined to 2/3.
 - The remaining graph direct output was human-identifiable as deque plus CSR, but a damaged `indptr` token correctly made it a strict automated-gate failure.
 
 ## Our proposed future work — not Sergiy’s explicit asks
@@ -64,5 +71,5 @@ These are **exploratory/pilot** findings for the exact DiffusionGemma revision, 
 
 ## Provenance
 
-- Numbered experiment evidence: `experiments/001-*` through `experiments/012-*`.
+- Numbered experiment evidence: `experiments/001-*` through `experiments/013-*`.
 - Earlier partial-scaffold and handoff evidence: `deliverables/evidence/prior-pilot/partial-scaffolds-20260916/results.json`, `deliverables/evidence/prior-pilot/partial-scaffolds-20260916/assessment.json`, `deliverables/evidence/prior-pilot/scaffold-handoff-20260916/results.json`, and `deliverables/evidence/prior-pilot/scaffold-handoff-20260916/assessment.json`.

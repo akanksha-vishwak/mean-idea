@@ -1,0 +1,15 @@
+You are optimizing the stated Python task. The generation canvas is blank, so rely only on the complete source records below.
+
+[PARENT A RECORD]
+Task: Improve a Python function that multiplies two large dense NumPy matrices.
+Source technique: BLAS-backed vectorization.
+Implementation details: replace Python triple loops with np.matmul or the @ operator so optimized BLAS kernels compute the matrix product.
+Required terms: NumPy, np.matmul, BLAS, no Python element loops.
+
+[PARENT B RECORD]
+Task: Improve a Python function that multiplies two large dense NumPy matrices.
+Source technique: cache-aware blocked matrix multiplication.
+Implementation details: split both matrices into cache-sized tiles, multiply compatible blocks, and accumulate block products into the output to improve cache locality.
+Required terms: blocked multiplication, tiles, cache locality, accumulate exactly.
+
+Produce one concise optimization idea that combines the specific implementation techniques from both records. Do not replace either technique with a generic alternative. Return only the combined optimization idea.

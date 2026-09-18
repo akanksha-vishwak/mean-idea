@@ -1,0 +1,2 @@
+thought
+Normalize the large collection of RGB images by processing them in fixed batch sizes to release memory and preserve order, using NumPy broadcasting and vectorization on float32 arrays with mean and standard-deviation arrays to eliminate pixel loops.

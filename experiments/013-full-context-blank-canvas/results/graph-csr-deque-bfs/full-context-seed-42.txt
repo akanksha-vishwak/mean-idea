@@ -1,0 +1,2 @@
+thought
+Optimize breadth-first search over a large sparse graph by using a CSR adjacency representation to store contiguous neighbors in indices and indptr arrays for cache-efficient access, while managing the BFS queue with a collections.deque to utilize popleft and append for constant-time operations.

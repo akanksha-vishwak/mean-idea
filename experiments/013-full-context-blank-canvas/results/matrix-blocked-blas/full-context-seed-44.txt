@@ -1,0 +1,2 @@
+thought
+Implement cache-aware blocked matrix multiplication by splitting matrices into cache-sized tiles to improve locality, then use np.matmul or the @ operator to multiply and accumulate blocks via BLAS-backed kernels without any Python element loops.

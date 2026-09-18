@@ -1,0 +1,15 @@
+You are optimizing the stated Python task. The generation canvas is blank, so rely only on the complete source records below.
+
+[PARENT A RECORD]
+Task: Improve a Python function that normalizes a large collection of RGB images.
+Source technique: NumPy broadcasting and vectorization.
+Implementation details: stack image arrays, cast to float32, and normalize channels with broadcast mean and standard-deviation arrays instead of Python pixel loops.
+Required terms: NumPy, broadcasting, float32, no pixel loops exactly.
+
+[PARENT B RECORD]
+Task: Improve a Python function that normalizes a large collection of RGB images.
+Source technique: bounded batch processing.
+Implementation details: process a fixed number of images per batch, emit each completed batch in order, and release temporary arrays before loading the next batch to cap peak memory.
+Required terms: batches, fixed batch size, release memory, preserve order.
+
+Produce one concise optimization idea that combines the specific implementation techniques from both records. Do not replace either technique with a generic alternative. Return only the combined optimization idea.
