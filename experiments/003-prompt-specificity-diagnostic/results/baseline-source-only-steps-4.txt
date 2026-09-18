@@ -1,0 +1,2 @@
+thought
+Implement $ $(n+k)$ counting sort by using a frequency array to store occurrences and then the reconstruct the to output.

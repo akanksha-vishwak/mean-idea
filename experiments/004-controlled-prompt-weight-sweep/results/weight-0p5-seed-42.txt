@@ -1,0 +1,2 @@
+thought
+Implement a merge-sort using an auxiliary buffer to reduce the overhead of list slicing and concatenation during the recursive merge steps.

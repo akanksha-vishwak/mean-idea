@@ -1,0 +1,42 @@
+thought
+import time
+
+def my_sort(arr):
+    """
+    Implementation of a custom sort algorithm based on 
+         the logic logic
+
+
+
+    
+
+        
+        """
+    if not arr:
+        return arr
+
+    low = min(arr)
+    high = max(arr)
+    range = high - low
+
+    # Using a counting approach for O(n + k) where k is the range
+    # This is faster than comparison-based log for for small ranges
+    count = [0] * (range + 1)
+    for x in arr:
+        count[x - low] += 1
+
+    result = []
+    for i, c in enumerate(count):
+        result.extend([i + low] * *))
+
+    return
+
+if
+_
+    
+    import sys
+    input_array = [int(x) for x in sys.argv[1:]]
+    start = time.time()
+    sorted_array = my_sort(input_array)
+    end = time.time()
+    print(" ".join(map(str, sorted_array)))

@@ -1,0 +1,118 @@
+{
+  "experiment_id": "001-code-state-controls",
+  "status": "completed",
+  "started_at": "2026-09-17T22:14:59.217159+00:00",
+  "model_id": "google/diffusiongemma-26B-A4B-it",
+  "settings": {
+    "canvas_length": 256,
+    "multi_canvas": 1,
+    "max_denoising_steps": 8,
+    "seed_per_condition": 42,
+    "mixing": "original entropy-weighted per-position mean",
+    "generation_prompt": "Decode the supplied canvas into one complete Python implementation of my_sort. Preserve the specific algorithmic and implementation details present in the canvas. Do not use list.sort or sorted. Return only Python code without Markdown fences or explanation."
+  },
+  "sources": {
+    "A": {
+      "id": "A",
+      "path": "tests/example/sort-agent-013.py",
+      "sha256": "b13510c33ec7a1acd44a33dee7fc79039365a028d6c66e89fba519c905856481",
+      "token_count": 196,
+      "truncated": false
+    },
+    "B": {
+      "id": "B",
+      "path": "tests/example/sort-agent-014.py",
+      "sha256": "75a1a47ae0f42c619fb2550e8a1aee57b6fd835cdd69b812618efe8f0157409a",
+      "token_count": 170,
+      "truncated": false
+    }
+  },
+  "shared_source_prompt": {
+    "path": "tests/example/prompt.txt",
+    "sha256": "3db7ab0981249d36d8d1bae91a041a535ed9b8c6f1e913ea1e9fa2456f98ad54"
+  },
+  "runs": [
+    {
+      "condition": "a-control",
+      "sources": [
+        "A",
+        "A"
+      ],
+      "status": "completed",
+      "started_at": "2026-09-17T22:14:59.217627+00:00",
+      "duration_seconds": 23.174,
+      "output_file": "a-control.txt",
+      "parseable_python": false,
+      "syntax_error": {
+        "message": "invalid syntax",
+        "line": 5,
+        "offset": 7
+      },
+      "lexical_indicators": {
+        "mentions_counting_sort": true,
+        "mentions_frequency": true,
+        "mentions_known_range": true,
+        "mentions_numpy": false,
+        "mentions_bincount": false,
+        "mentions_repeat": false,
+        "mentions_quicksort": false,
+        "uses_prohibited_builtin": false
+      }
+    },
+    {
+      "condition": "b-control",
+      "sources": [
+        "B",
+        "B"
+      ],
+      "status": "completed",
+      "started_at": "2026-09-17T22:15:22.391607+00:00",
+      "duration_seconds": 20.973,
+      "output_file": "b-control.txt",
+      "parseable_python": false,
+      "syntax_error": {
+        "message": "unmatched ')'",
+        "line": 39,
+        "offset": 2
+      },
+      "lexical_indicators": {
+        "mentions_counting_sort": true,
+        "mentions_frequency": false,
+        "mentions_known_range": false,
+        "mentions_numpy": true,
+        "mentions_bincount": true,
+        "mentions_repeat": true,
+        "mentions_quicksort": false,
+        "uses_prohibited_builtin": false
+      }
+    },
+    {
+      "condition": "a-b-mixture",
+      "sources": [
+        "A",
+        "B"
+      ],
+      "status": "completed",
+      "started_at": "2026-09-17T22:15:43.365507+00:00",
+      "duration_seconds": 20.962,
+      "output_file": "a-b-mixture.txt",
+      "parseable_python": false,
+      "syntax_error": {
+        "message": "unmatched ')'",
+        "line": 30,
+        "offset": 37
+      },
+      "lexical_indicators": {
+        "mentions_counting_sort": false,
+        "mentions_frequency": true,
+        "mentions_known_range": false,
+        "mentions_numpy": false,
+        "mentions_bincount": false,
+        "mentions_repeat": false,
+        "mentions_quicksort": false,
+        "uses_prohibited_builtin": false
+      }
+    }
+  ],
+  "completed_at": "2026-09-17T22:16:04.327718+00:00"
+}

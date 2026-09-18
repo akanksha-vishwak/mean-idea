@@ -1,0 +1,252 @@
+{
+  "experiment_id": "003-prompt-specificity-diagnostic",
+  "status": "completed",
+  "started_at": "2026-09-18T12:41:14.261425+00:00",
+  "model_id": "google/diffusiongemma-26B-A4B-it",
+  "settings": {
+    "canvas_length": 64,
+    "multi_canvas": 1,
+    "seed_per_condition": 42,
+    "mixing": "original entropy-weighted mean of two identical states",
+    "generation_prompt": "Generate one concise optimization idea for the Python function my_sort. Preserve the specific algorithmic and implementation details represented in the supplied canvas. Do not use list.sort or sorted. Return only the optimization idea."
+  },
+  "canvas": {
+    "path": "tests/example/blank.txt",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "character_count": 0
+  },
+  "prompts": {
+    "baseline": {
+      "path": "experiments/003-prompt-specificity-diagnostic/prompt-b-baseline.txt",
+      "sha256": "0a9577085ccce1cfaf155c6c907ac450dc021bbb9ce5c110f86c15cfed92c4dd",
+      "token_count_with_generation_prompt": 108
+    },
+    "explicit": {
+      "path": "experiments/003-prompt-specificity-diagnostic/prompt-b-explicit.txt",
+      "sha256": "2caccc96b8a262b59eb6a4026b9811f2ed7096930535d81440662176cfbfb4c9",
+      "token_count_with_generation_prompt": 146
+    }
+  },
+  "embedding_shapes": {
+    "baseline": [
+      64,
+      2816
+    ],
+    "explicit": [
+      64,
+      2816
+    ]
+  },
+  "runs": [
+    {
+      "condition": "baseline-source-only-steps-0",
+      "source_prompt": "baseline",
+      "decoder_prompt": null,
+      "steps": 0,
+      "status": "completed",
+      "started_at": "2026-09-18T12:41:14.262155+00:00",
+      "duration_seconds": 0.009,
+      "output_file": "baseline-source-only-steps-0.txt",
+      "lexical_indicators": {
+        "mentions_numpy": false,
+        "mentions_bincount": false,
+        "mentions_repeat": false,
+        "mentions_all_required_terms": false,
+        "mentions_counting_sort": true,
+        "mentions_generic_frequency": false,
+        "uses_prohibited_builtin": false
+      }
+    },
+    {
+      "condition": "baseline-source-only-steps-1",
+      "source_prompt": "baseline",
+      "decoder_prompt": null,
+      "steps": 1,
+      "status": "completed",
+      "started_at": "2026-09-18T12:41:14.271769+00:00",
+      "duration_seconds": 3.658,
+      "output_file": "baseline-source-only-steps-1.txt",
+      "lexical_indicators": {
+        "mentions_numpy": false,
+        "mentions_bincount": false,
+        "mentions_repeat": false,
+        "mentions_all_required_terms": false,
+        "mentions_counting_sort": true,
+        "mentions_generic_frequency": false,
+        "uses_prohibited_builtin": false
+      }
+    },
+    {
+      "condition": "baseline-source-only-steps-2",
+      "source_prompt": "baseline",
+      "decoder_prompt": null,
+      "steps": 2,
+      "status": "completed",
+      "started_at": "2026-09-18T12:41:17.932233+00:00",
+      "duration_seconds": 4.769,
+      "output_file": "baseline-source-only-steps-2.txt",
+      "lexical_indicators": {
+        "mentions_numpy": false,
+        "mentions_bincount": false,
+        "mentions_repeat": false,
+        "mentions_all_required_terms": false,
+        "mentions_counting_sort": true,
+        "mentions_generic_frequency": true,
+        "uses_prohibited_builtin": false
+      }
+    },
+    {
+      "condition": "baseline-source-only-steps-4",
+      "source_prompt": "baseline",
+      "decoder_prompt": null,
+      "steps": 4,
+      "status": "completed",
+      "started_at": "2026-09-18T12:41:22.701605+00:00",
+      "duration_seconds": 7.931,
+      "output_file": "baseline-source-only-steps-4.txt",
+      "lexical_indicators": {
+        "mentions_numpy": false,
+        "mentions_bincount": false,
+        "mentions_repeat": false,
+        "mentions_all_required_terms": false,
+        "mentions_counting_sort": true,
+        "mentions_generic_frequency": true,
+        "uses_prohibited_builtin": false
+      }
+    },
+    {
+      "condition": "baseline-source-only-steps-8",
+      "source_prompt": "baseline",
+      "decoder_prompt": null,
+      "steps": 8,
+      "status": "completed",
+      "started_at": "2026-09-18T12:41:30.635078+00:00",
+      "duration_seconds": 12.628,
+      "output_file": "baseline-source-only-steps-8.txt",
+      "lexical_indicators": {
+        "mentions_numpy": false,
+        "mentions_bincount": false,
+        "mentions_repeat": false,
+        "mentions_all_required_terms": false,
+        "mentions_counting_sort": true,
+        "mentions_generic_frequency": true,
+        "uses_prohibited_builtin": false
+      }
+    },
+    {
+      "condition": "explicit-source-only-steps-0",
+      "source_prompt": "explicit",
+      "decoder_prompt": null,
+      "steps": 0,
+      "status": "completed",
+      "started_at": "2026-09-18T12:41:43.263792+00:00",
+      "duration_seconds": 0.007,
+      "output_file": "explicit-source-only-steps-0.txt",
+      "lexical_indicators": {
+        "mentions_numpy": true,
+        "mentions_bincount": true,
+        "mentions_repeat": false,
+        "mentions_all_required_terms": false,
+        "mentions_counting_sort": false,
+        "mentions_generic_frequency": true,
+        "uses_prohibited_builtin": false
+      }
+    },
+    {
+      "condition": "explicit-source-only-steps-1",
+      "source_prompt": "explicit",
+      "decoder_prompt": null,
+      "steps": 1,
+      "status": "completed",
+      "started_at": "2026-09-18T12:41:43.270980+00:00",
+      "duration_seconds": 3.168,
+      "output_file": "explicit-source-only-steps-1.txt",
+      "lexical_indicators": {
+        "mentions_numpy": true,
+        "mentions_bincount": true,
+        "mentions_repeat": true,
+        "mentions_all_required_terms": true,
+        "mentions_counting_sort": false,
+        "mentions_generic_frequency": true,
+        "uses_prohibited_builtin": false
+      }
+    },
+    {
+      "condition": "explicit-source-only-steps-2",
+      "source_prompt": "explicit",
+      "decoder_prompt": null,
+      "steps": 2,
+      "status": "completed",
+      "started_at": "2026-09-18T12:41:46.439521+00:00",
+      "duration_seconds": 4.8,
+      "output_file": "explicit-source-only-steps-2.txt",
+      "lexical_indicators": {
+        "mentions_numpy": true,
+        "mentions_bincount": true,
+        "mentions_repeat": true,
+        "mentions_all_required_terms": true,
+        "mentions_counting_sort": false,
+        "mentions_generic_frequency": true,
+        "uses_prohibited_builtin": false
+      }
+    },
+    {
+      "condition": "explicit-source-only-steps-4",
+      "source_prompt": "explicit",
+      "decoder_prompt": null,
+      "steps": 4,
+      "status": "completed",
+      "started_at": "2026-09-18T12:41:51.240224+00:00",
+      "duration_seconds": 7.987,
+      "output_file": "explicit-source-only-steps-4.txt",
+      "lexical_indicators": {
+        "mentions_numpy": true,
+        "mentions_bincount": true,
+        "mentions_repeat": true,
+        "mentions_all_required_terms": true,
+        "mentions_counting_sort": false,
+        "mentions_generic_frequency": true,
+        "uses_prohibited_builtin": false
+      }
+    },
+    {
+      "condition": "explicit-source-only-steps-8",
+      "source_prompt": "explicit",
+      "decoder_prompt": null,
+      "steps": 8,
+      "status": "completed",
+      "started_at": "2026-09-18T12:41:59.227423+00:00",
+      "duration_seconds": 9.598,
+      "output_file": "explicit-source-only-steps-8.txt",
+      "lexical_indicators": {
+        "mentions_numpy": true,
+        "mentions_bincount": true,
+        "mentions_repeat": true,
+        "mentions_all_required_terms": true,
+        "mentions_counting_sort": false,
+        "mentions_generic_frequency": true,
+        "uses_prohibited_builtin": false
+      }
+    },
+    {
+      "condition": "explicit-decoder-visible-steps-8",
+      "source_prompt": "explicit",
+      "decoder_prompt": "explicit",
+      "steps": 8,
+      "status": "completed",
+      "started_at": "2026-09-18T12:42:08.826002+00:00",
+      "duration_seconds": 11.212,
+      "output_file": "explicit-decoder-visible-steps-8.txt",
+      "lexical_indicators": {
+        "mentions_numpy": true,
+        "mentions_bincount": true,
+        "mentions_repeat": true,
+        "mentions_all_required_terms": true,
+        "mentions_counting_sort": false,
+        "mentions_generic_frequency": true,
+        "uses_prohibited_builtin": false
+      }
+    }
+  ],
+  "completed_at": "2026-09-18T12:42:20.038589+00:00"
+}

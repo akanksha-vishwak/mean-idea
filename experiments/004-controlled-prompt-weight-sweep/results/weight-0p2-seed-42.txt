@@ -1,0 +1,2 @@
+thought
+Implement a counting-sort-based approach by using an array of size 1000 to store occurrences of integers between 0-999, then reconstruct the list from the counts.

@@ -1,0 +1,2 @@
+thought
+Implement a counting-sort approach by using a fixed-size array of 10000 integers to track frequencies (0-9999), avoiding the overhead of repeated comparisons.

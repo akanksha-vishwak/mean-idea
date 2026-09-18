@@ -1,0 +1,2 @@
+thought
+Implement a counting-sort approach by using a fixed-size array of 1000 integers to store frequencies of values 0-999, achieving $O(n)$ time complexity instead of $O(n \log n)$.

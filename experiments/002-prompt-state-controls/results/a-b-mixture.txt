@@ -1,0 +1,2 @@
+thought
+Implement counting sort to achieve O(n) time complexity by mapping element frequencies to an array instead of performing comparisons.

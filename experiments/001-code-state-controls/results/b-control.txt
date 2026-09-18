@@ -1,0 +1,47 @@
+thought
+import numpy as np
+
+def my_sort(arr):
+    """
+    Implementation of a counting sort based on the provided logic.
+    """
+    if not arr:
+        return []
+    
+    max
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+import sys
+import time
+
+
+def my_sort(arr: list[int]) -> list[int]:
+    import numpy as np
+    a = np.array(arr, dtype=np.int32)
+    counts = np.bincount(a)
+    indices = np.
+.)
+    return np.repeat(np.arange(len(counts), dtype=np.int32), counts).tolist()
+
+
+if __name__ == "__main__":
+    input_array = [int(x) for x in sys.argv[1:]]
+    start = time.time()
+    sorted_array = my_sort(input_array)
+    print(time.time() - start, " ".join(map(str, sorted_array)))

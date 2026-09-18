@@ -1,0 +1,725 @@
+{
+  "experiment_id": "004-controlled-prompt-weight-sweep",
+  "status": "completed",
+  "started_at": "2026-09-18T13:07:55.871047+00:00",
+  "model_id": "google/diffusiongemma-26B-A4B-it",
+  "settings": {
+    "canvas_length": 64,
+    "multi_canvas": 1,
+    "max_denoising_steps": 8,
+    "weights": [
+      0.0,
+      0.1,
+      0.2,
+      0.3,
+      0.4,
+      0.5,
+      0.6,
+      0.7,
+      0.8,
+      0.9,
+      1.0
+    ],
+    "seeds": [
+      42,
+      43,
+      44
+    ],
+    "mixing": "global arithmetic final-canvas-state interpolation",
+    "weight_meaning": "0.0 is all A; 1.0 is all B",
+    "generation_prompt": "Generate one concise optimization idea for the Python function my_sort. Preserve the specific algorithmic and implementation details represented in the supplied canvas. Do not use list.sort or sorted. Return only the optimization idea."
+  },
+  "canvas": {
+    "path": "tests/example/blank.txt",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "character_count": 0
+  },
+  "prompts": {
+    "A": {
+      "path": "experiments/004-controlled-prompt-weight-sweep/prompt-a-counting.txt",
+      "sha256": "2aee36a774ae3fb5002eb57af8dcf629fb09e42e11abad5fafc19f04cad8f571",
+      "token_count_with_generation_prompt": 145
+    },
+    "B": {
+      "path": "experiments/004-controlled-prompt-weight-sweep/prompt-b-numba.txt",
+      "sha256": "f604d5881126369d7e5cb72d3d303356acfcb11f58252fb3675b7d6c6679d5b6",
+      "token_count_with_generation_prompt": 131
+    }
+  },
+  "prompt_common_prefix_tokens": 28,
+  "embedding_shapes": {
+    "A": [
+      64,
+      2816
+    ],
+    "B": [
+      64,
+      2816
+    ]
+  },
+  "runs": [
+    {
+      "weight": 0.0,
+      "seed": 42,
+      "status": "completed",
+      "started_at": "2026-09-18T13:07:55.874010+00:00",
+      "duration_seconds": 13.334,
+      "output_file": "weight-0p0-seed-42.txt",
+      "lexical_indicators": {
+        "mentions_counting_sort": false,
+        "mentions_frequency": true,
+        "mentions_bounded_range": true,
+        "retains_A": true,
+        "mentions_numba": false,
+        "mentions_jit_compilation": false,
+        "retains_B": false,
+        "retains_both": false,
+        "uses_prohibited_builtin": false,
+        "candidate_hybrid": false
+      }
+    },
+    {
+      "weight": 0.0,
+      "seed": 43,
+      "status": "completed",
+      "started_at": "2026-09-18T13:08:09.255250+00:00",
+      "duration_seconds": 14.456,
+      "output_file": "weight-0p0-seed-43.txt",
+      "lexical_indicators": {
+        "mentions_counting_sort": false,
+        "mentions_frequency": true,
+        "mentions_bounded_range": true,
+        "retains_A": true,
+        "mentions_numba": false,
+        "mentions_jit_compilation": false,
+        "retains_B": false,
+        "retains_both": false,
+        "uses_prohibited_builtin": false,
+        "candidate_hybrid": false
+      }
+    },
+    {
+      "weight": 0.0,
+      "seed": 44,
+      "status": "completed",
+      "started_at": "2026-09-18T13:08:23.759266+00:00",
+      "duration_seconds": 14.39,
+      "output_file": "weight-0p0-seed-44.txt",
+      "lexical_indicators": {
+        "mentions_counting_sort": false,
+        "mentions_frequency": true,
+        "mentions_bounded_range": true,
+        "retains_A": true,
+        "mentions_numba": false,
+        "mentions_jit_compilation": false,
+        "retains_B": false,
+        "retains_both": false,
+        "uses_prohibited_builtin": false,
+        "candidate_hybrid": false
+      }
+    },
+    {
+      "weight": 1.0,
+      "seed": 42,
+      "status": "completed",
+      "started_at": "2026-09-18T13:08:38.196246+00:00",
+      "duration_seconds": 12.755,
+      "output_file": "weight-1p0-seed-42.txt",
+      "lexical_indicators": {
+        "mentions_counting_sort": false,
+        "mentions_frequency": false,
+        "mentions_bounded_range": false,
+        "retains_A": false,
+        "mentions_numba": true,
+        "mentions_jit_compilation": true,
+        "retains_B": true,
+        "retains_both": false,
+        "uses_prohibited_builtin": false,
+        "candidate_hybrid": false
+      }
+    },
+    {
+      "weight": 1.0,
+      "seed": 43,
+      "status": "completed",
+      "started_at": "2026-09-18T13:08:50.998310+00:00",
+      "duration_seconds": 10.135,
+      "output_file": "weight-1p0-seed-43.txt",
+      "lexical_indicators": {
+        "mentions_counting_sort": false,
+        "mentions_frequency": false,
+        "mentions_bounded_range": false,
+        "retains_A": false,
+        "mentions_numba": true,
+        "mentions_jit_compilation": true,
+        "retains_B": true,
+        "retains_both": false,
+        "uses_prohibited_builtin": false,
+        "candidate_hybrid": false
+      }
+    },
+    {
+      "weight": 1.0,
+      "seed": 44,
+      "status": "completed",
+      "started_at": "2026-09-18T13:09:01.134299+00:00",
+      "duration_seconds": 8.019,
+      "output_file": "weight-1p0-seed-44.txt",
+      "lexical_indicators": {
+        "mentions_counting_sort": false,
+        "mentions_frequency": false,
+        "mentions_bounded_range": false,
+        "retains_A": false,
+        "mentions_numba": true,
+        "mentions_jit_compilation": true,
+        "retains_B": true,
+        "retains_both": false,
+        "uses_prohibited_builtin": false,
+        "candidate_hybrid": false
+      }
+    },
+    {
+      "weight": 0.1,
+      "seed": 42,
+      "status": "completed",
+      "started_at": "2026-09-18T13:09:09.154534+00:00",
+      "duration_seconds": 12.859,
+      "output_file": "weight-0p1-seed-42.txt",
+      "lexical_indicators": {
+        "mentions_counting_sort": false,
+        "mentions_frequency": true,
+        "mentions_bounded_range": true,
+        "retains_A": true,
+        "mentions_numba": false,
+        "mentions_jit_compilation": false,
+        "retains_B": false,
+        "retains_both": false,
+        "uses_prohibited_builtin": false,
+        "candidate_hybrid": false
+      }
+    },
+    {
+      "weight": 0.1,
+      "seed": 43,
+      "status": "completed",
+      "started_at": "2026-09-18T13:09:22.059247+00:00",
+      "duration_seconds": 14.489,
+      "output_file": "weight-0p1-seed-43.txt",
+      "lexical_indicators": {
+        "mentions_counting_sort": false,
+        "mentions_frequency": true,
+        "mentions_bounded_range": true,
+        "retains_A": true,
+        "mentions_numba": false,
+        "mentions_jit_compilation": false,
+        "retains_B": false,
+        "retains_both": false,
+        "uses_prohibited_builtin": false,
+        "candidate_hybrid": false
+      }
+    },
+    {
+      "weight": 0.1,
+      "seed": 44,
+      "status": "completed",
+      "started_at": "2026-09-18T13:09:36.591260+00:00",
+      "duration_seconds": 14.479,
+      "output_file": "weight-0p1-seed-44.txt",
+      "lexical_indicators": {
+        "mentions_counting_sort": false,
+        "mentions_frequency": true,
+        "mentions_bounded_range": true,
+        "retains_A": true,
+        "mentions_numba": false,
+        "mentions_jit_compilation": false,
+        "retains_B": false,
+        "retains_both": false,
+        "uses_prohibited_builtin": false,
+        "candidate_hybrid": false
+      }
+    },
+    {
+      "weight": 0.2,
+      "seed": 42,
+      "status": "completed",
+      "started_at": "2026-09-18T13:09:51.113261+00:00",
+      "duration_seconds": 12.836,
+      "output_file": "weight-0p2-seed-42.txt",
+      "lexical_indicators": {
+        "mentions_counting_sort": false,
+        "mentions_frequency": false,
+        "mentions_bounded_range": false,
+        "retains_A": false,
+        "mentions_numba": false,
+        "mentions_jit_compilation": false,
+        "retains_B": false,
+        "retains_both": false,
+        "uses_prohibited_builtin": false,
+        "candidate_hybrid": false
+      }
+    },
+    {
+      "weight": 0.2,
+      "seed": 43,
+      "status": "completed",
+      "started_at": "2026-09-18T13:10:03.992259+00:00",
+      "duration_seconds": 14.43,
+      "output_file": "weight-0p2-seed-43.txt",
+      "lexical_indicators": {
+        "mentions_counting_sort": false,
+        "mentions_frequency": true,
+        "mentions_bounded_range": false,
+        "retains_A": false,
+        "mentions_numba": false,
+        "mentions_jit_compilation": false,
+        "retains_B": false,
+        "retains_both": false,
+        "uses_prohibited_builtin": false,
+        "candidate_hybrid": false
+      }
+    },
+    {
+      "weight": 0.2,
+      "seed": 44,
+      "status": "completed",
+      "started_at": "2026-09-18T13:10:18.465251+00:00",
+      "duration_seconds": 11.236,
+      "output_file": "weight-0p2-seed-44.txt",
+      "lexical_indicators": {
+        "mentions_counting_sort": false,
+        "mentions_frequency": true,
+        "mentions_bounded_range": false,
+        "retains_A": false,
+        "mentions_numba": false,
+        "mentions_jit_compilation": false,
+        "retains_B": false,
+        "retains_both": false,
+        "uses_prohibited_builtin": false,
+        "candidate_hybrid": false
+      }
+    },
+    {
+      "weight": 0.3,
+      "seed": 42,
+      "status": "completed",
+      "started_at": "2026-09-18T13:10:29.748256+00:00",
+      "duration_seconds": 12.769,
+      "output_file": "weight-0p3-seed-42.txt",
+      "lexical_indicators": {
+        "mentions_counting_sort": false,
+        "mentions_frequency": true,
+        "mentions_bounded_range": true,
+        "retains_A": true,
+        "mentions_numba": false,
+        "mentions_jit_compilation": false,
+        "retains_B": false,
+        "retains_both": false,
+        "uses_prohibited_builtin": false,
+        "candidate_hybrid": false
+      }
+    },
+    {
+      "weight": 0.3,
+      "seed": 43,
+      "status": "completed",
+      "started_at": "2026-09-18T13:10:42.564252+00:00",
+      "duration_seconds": 14.448,
+      "output_file": "weight-0p3-seed-43.txt",
+      "lexical_indicators": {
+        "mentions_counting_sort": false,
+        "mentions_frequency": true,
+        "mentions_bounded_range": true,
+        "retains_A": true,
+        "mentions_numba": false,
+        "mentions_jit_compilation": false,
+        "retains_B": false,
+        "retains_both": false,
+        "uses_prohibited_builtin": false,
+        "candidate_hybrid": false
+      }
+    },
+    {
+      "weight": 0.3,
+      "seed": 44,
+      "status": "completed",
+      "started_at": "2026-09-18T13:10:57.060261+00:00",
+      "duration_seconds": 12.781,
+      "output_file": "weight-0p3-seed-44.txt",
+      "lexical_indicators": {
+        "mentions_counting_sort": false,
+        "mentions_frequency": true,
+        "mentions_bounded_range": true,
+        "retains_A": true,
+        "mentions_numba": false,
+        "mentions_jit_compilation": false,
+        "retains_B": false,
+        "retains_both": false,
+        "uses_prohibited_builtin": false,
+        "candidate_hybrid": false
+      }
+    },
+    {
+      "weight": 0.4,
+      "seed": 42,
+      "status": "completed",
+      "started_at": "2026-09-18T13:11:09.889251+00:00",
+      "duration_seconds": 11.165,
+      "output_file": "weight-0p4-seed-42.txt",
+      "lexical_indicators": {
+        "mentions_counting_sort": false,
+        "mentions_frequency": true,
+        "mentions_bounded_range": true,
+        "retains_A": true,
+        "mentions_numba": false,
+        "mentions_jit_compilation": false,
+        "retains_B": false,
+        "retains_both": false,
+        "uses_prohibited_builtin": false,
+        "candidate_hybrid": false
+      }
+    },
+    {
+      "weight": 0.4,
+      "seed": 43,
+      "status": "completed",
+      "started_at": "2026-09-18T13:11:21.101248+00:00",
+      "duration_seconds": 14.411,
+      "output_file": "weight-0p4-seed-43.txt",
+      "lexical_indicators": {
+        "mentions_counting_sort": false,
+        "mentions_frequency": true,
+        "mentions_bounded_range": true,
+        "retains_A": true,
+        "mentions_numba": false,
+        "mentions_jit_compilation": false,
+        "retains_B": false,
+        "retains_both": false,
+        "uses_prohibited_builtin": false,
+        "candidate_hybrid": false
+      }
+    },
+    {
+      "weight": 0.4,
+      "seed": 44,
+      "status": "completed",
+      "started_at": "2026-09-18T13:11:35.561238+00:00",
+      "duration_seconds": 14.396,
+      "output_file": "weight-0p4-seed-44.txt",
+      "lexical_indicators": {
+        "mentions_counting_sort": false,
+        "mentions_frequency": true,
+        "mentions_bounded_range": true,
+        "retains_A": true,
+        "mentions_numba": false,
+        "mentions_jit_compilation": false,
+        "retains_B": false,
+        "retains_both": false,
+        "uses_prohibited_builtin": false,
+        "candidate_hybrid": false
+      }
+    },
+    {
+      "weight": 0.5,
+      "seed": 42,
+      "status": "completed",
+      "started_at": "2026-09-18T13:11:49.998278+00:00",
+      "duration_seconds": 12.834,
+      "output_file": "weight-0p5-seed-42.txt",
+      "lexical_indicators": {
+        "mentions_counting_sort": false,
+        "mentions_frequency": false,
+        "mentions_bounded_range": false,
+        "retains_A": false,
+        "mentions_numba": false,
+        "mentions_jit_compilation": false,
+        "retains_B": false,
+        "retains_both": false,
+        "uses_prohibited_builtin": false,
+        "candidate_hybrid": false
+      }
+    },
+    {
+      "weight": 0.5,
+      "seed": 43,
+      "status": "completed",
+      "started_at": "2026-09-18T13:12:02.880262+00:00",
+      "duration_seconds": 14.344,
+      "output_file": "weight-0p5-seed-43.txt",
+      "lexical_indicators": {
+        "mentions_counting_sort": false,
+        "mentions_frequency": false,
+        "mentions_bounded_range": false,
+        "retains_A": false,
+        "mentions_numba": false,
+        "mentions_jit_compilation": false,
+        "retains_B": false,
+        "retains_both": false,
+        "uses_prohibited_builtin": false,
+        "candidate_hybrid": false
+      }
+    },
+    {
+      "weight": 0.5,
+      "seed": 44,
+      "status": "completed",
+      "started_at": "2026-09-18T13:12:17.271233+00:00",
+      "duration_seconds": 11.19,
+      "output_file": "weight-0p5-seed-44.txt",
+      "lexical_indicators": {
+        "mentions_counting_sort": false,
+        "mentions_frequency": false,
+        "mentions_bounded_range": false,
+        "retains_A": false,
+        "mentions_numba": false,
+        "mentions_jit_compilation": false,
+        "retains_B": false,
+        "retains_both": false,
+        "uses_prohibited_builtin": false,
+        "candidate_hybrid": false
+      }
+    },
+    {
+      "weight": 0.6,
+      "seed": 42,
+      "status": "completed",
+      "started_at": "2026-09-18T13:12:28.508258+00:00",
+      "duration_seconds": 11.152,
+      "output_file": "weight-0p6-seed-42.txt",
+      "lexical_indicators": {
+        "mentions_counting_sort": false,
+        "mentions_frequency": false,
+        "mentions_bounded_range": false,
+        "retains_A": false,
+        "mentions_numba": true,
+        "mentions_jit_compilation": true,
+        "retains_B": true,
+        "retains_both": false,
+        "uses_prohibited_builtin": false,
+        "candidate_hybrid": false
+      }
+    },
+    {
+      "weight": 0.6,
+      "seed": 43,
+      "status": "completed",
+      "started_at": "2026-09-18T13:12:39.707232+00:00",
+      "duration_seconds": 11.197,
+      "output_file": "weight-0p6-seed-43.txt",
+      "lexical_indicators": {
+        "mentions_counting_sort": false,
+        "mentions_frequency": false,
+        "mentions_bounded_range": false,
+        "retains_A": false,
+        "mentions_numba": true,
+        "mentions_jit_compilation": true,
+        "retains_B": true,
+        "retains_both": false,
+        "uses_prohibited_builtin": false,
+        "candidate_hybrid": false
+      }
+    },
+    {
+      "weight": 0.6,
+      "seed": 44,
+      "status": "completed",
+      "started_at": "2026-09-18T13:12:50.951248+00:00",
+      "duration_seconds": 11.168,
+      "output_file": "weight-0p6-seed-44.txt",
+      "lexical_indicators": {
+        "mentions_counting_sort": false,
+        "mentions_frequency": false,
+        "mentions_bounded_range": false,
+        "retains_A": false,
+        "mentions_numba": true,
+        "mentions_jit_compilation": true,
+        "retains_B": true,
+        "retains_both": false,
+        "uses_prohibited_builtin": false,
+        "candidate_hybrid": false
+      }
+    },
+    {
+      "weight": 0.7,
+      "seed": 42,
+      "status": "completed",
+      "started_at": "2026-09-18T13:13:02.165228+00:00",
+      "duration_seconds": 12.746,
+      "output_file": "weight-0p7-seed-42.txt",
+      "lexical_indicators": {
+        "mentions_counting_sort": false,
+        "mentions_frequency": false,
+        "mentions_bounded_range": false,
+        "retains_A": false,
+        "mentions_numba": true,
+        "mentions_jit_compilation": true,
+        "retains_B": true,
+        "retains_both": false,
+        "uses_prohibited_builtin": false,
+        "candidate_hybrid": false
+      }
+    },
+    {
+      "weight": 0.7,
+      "seed": 43,
+      "status": "completed",
+      "started_at": "2026-09-18T13:13:14.958235+00:00",
+      "duration_seconds": 12.785,
+      "output_file": "weight-0p7-seed-43.txt",
+      "lexical_indicators": {
+        "mentions_counting_sort": false,
+        "mentions_frequency": false,
+        "mentions_bounded_range": false,
+        "retains_A": false,
+        "mentions_numba": true,
+        "mentions_jit_compilation": true,
+        "retains_B": true,
+        "retains_both": false,
+        "uses_prohibited_builtin": false,
+        "candidate_hybrid": false
+      }
+    },
+    {
+      "weight": 0.7,
+      "seed": 44,
+      "status": "completed",
+      "started_at": "2026-09-18T13:13:27.790253+00:00",
+      "duration_seconds": 12.749,
+      "output_file": "weight-0p7-seed-44.txt",
+      "lexical_indicators": {
+        "mentions_counting_sort": false,
+        "mentions_frequency": false,
+        "mentions_bounded_range": false,
+        "retains_A": false,
+        "mentions_numba": true,
+        "mentions_jit_compilation": true,
+        "retains_B": true,
+        "retains_both": false,
+        "uses_prohibited_builtin": false,
+        "candidate_hybrid": false
+      }
+    },
+    {
+      "weight": 0.8,
+      "seed": 42,
+      "status": "completed",
+      "started_at": "2026-09-18T13:13:40.586233+00:00",
+      "duration_seconds": 14.387,
+      "output_file": "weight-0p8-seed-42.txt",
+      "lexical_indicators": {
+        "mentions_counting_sort": false,
+        "mentions_frequency": false,
+        "mentions_bounded_range": false,
+        "retains_A": false,
+        "mentions_numba": true,
+        "mentions_jit_compilation": true,
+        "retains_B": true,
+        "retains_both": false,
+        "uses_prohibited_builtin": false,
+        "candidate_hybrid": false
+      }
+    },
+    {
+      "weight": 0.8,
+      "seed": 43,
+      "status": "completed",
+      "started_at": "2026-09-18T13:13:55.019257+00:00",
+      "duration_seconds": 14.424,
+      "output_file": "weight-0p8-seed-43.txt",
+      "lexical_indicators": {
+        "mentions_counting_sort": false,
+        "mentions_frequency": false,
+        "mentions_bounded_range": false,
+        "retains_A": false,
+        "mentions_numba": true,
+        "mentions_jit_compilation": true,
+        "retains_B": true,
+        "retains_both": false,
+        "uses_prohibited_builtin": false,
+        "candidate_hybrid": false
+      }
+    },
+    {
+      "weight": 0.8,
+      "seed": 44,
+      "status": "completed",
+      "started_at": "2026-09-18T13:14:09.490241+00:00",
+      "duration_seconds": 12.81,
+      "output_file": "weight-0p8-seed-44.txt",
+      "lexical_indicators": {
+        "mentions_counting_sort": false,
+        "mentions_frequency": false,
+        "mentions_bounded_range": false,
+        "retains_A": false,
+        "mentions_numba": true,
+        "mentions_jit_compilation": true,
+        "retains_B": true,
+        "retains_both": false,
+        "uses_prohibited_builtin": false,
+        "candidate_hybrid": false
+      }
+    },
+    {
+      "weight": 0.9,
+      "seed": 42,
+      "status": "completed",
+      "started_at": "2026-09-18T13:14:22.348227+00:00",
+      "duration_seconds": 9.607,
+      "output_file": "weight-0p9-seed-42.txt",
+      "lexical_indicators": {
+        "mentions_counting_sort": false,
+        "mentions_frequency": false,
+        "mentions_bounded_range": false,
+        "retains_A": false,
+        "mentions_numba": true,
+        "mentions_jit_compilation": true,
+        "retains_B": true,
+        "retains_both": false,
+        "uses_prohibited_builtin": false,
+        "candidate_hybrid": false
+      }
+    },
+    {
+      "weight": 0.9,
+      "seed": 43,
+      "status": "completed",
+      "started_at": "2026-09-18T13:14:32.001238+00:00",
+      "duration_seconds": 9.619,
+      "output_file": "weight-0p9-seed-43.txt",
+      "lexical_indicators": {
+        "mentions_counting_sort": false,
+        "mentions_frequency": false,
+        "mentions_bounded_range": false,
+        "retains_A": false,
+        "mentions_numba": true,
+        "mentions_jit_compilation": true,
+        "retains_B": true,
+        "retains_both": false,
+        "uses_prohibited_builtin": false,
+        "candidate_hybrid": false
+      }
+    },
+    {
+      "weight": 0.9,
+      "seed": 44,
+      "status": "completed",
+      "started_at": "2026-09-18T13:14:41.667238+00:00",
+      "duration_seconds": 8.013,
+      "output_file": "weight-0p9-seed-44.txt",
+      "lexical_indicators": {
+        "mentions_counting_sort": false,
+        "mentions_frequency": false,
+        "mentions_bounded_range": false,
+        "retains_A": false,
+        "mentions_numba": true,
+        "mentions_jit_compilation": true,
+        "retains_B": true,
+        "retains_both": false,
+        "uses_prohibited_builtin": false,
+        "candidate_hybrid": false
+      }
+    }
+  ],
+  "endpoint_controls_passed": true,
+  "completed_at": "2026-09-18T13:14:49.680765+00:00",
+  "candidate_hybrid_count": 0
+}

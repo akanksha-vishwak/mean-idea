@@ -1,0 +1,2 @@
+thought
+Implement a counting-sort approach using a fixed-size array of 256 integers to track byte frequencies, avoiding the overhead of repeated comparisons and swaps.

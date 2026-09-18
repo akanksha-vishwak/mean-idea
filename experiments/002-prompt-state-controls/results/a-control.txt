@@ -1,0 +1,2 @@
+thought
+Implement counting sort to track the frequency of each 0000-9999 digit and reconstruct the sorted list.

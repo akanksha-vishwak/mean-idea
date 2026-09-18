@@ -1,0 +1,2 @@
+thought
+Implement a merge-sort using an auxiliary array to avoid the overhead of repeated list slicing during the recursive steps.

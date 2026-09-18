@@ -1,0 +1,2 @@
+thought
+Implement a counting-sort-based approach by using an array of size 1000 to store frequencies of integers between 0-999, then reconstructing the list from these counts.

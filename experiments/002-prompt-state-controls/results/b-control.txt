@@ -1,0 +1,2 @@
+thought
+Implement $O(n+k)$ counting sort by using a frequency array to store occurrences and then reconstructing the list based on those counts.

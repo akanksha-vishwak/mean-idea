@@ -1,0 +1,2 @@
+thought
+Implement a counting-based approach using a fixed-size array of 256 integers to store character frequencies, avoiding the overhead of repeated comparisons and swaps.

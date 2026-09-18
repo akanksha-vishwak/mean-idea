@@ -1,0 +1,98 @@
+{
+  "experiment_id": "002-prompt-state-controls",
+  "status": "completed",
+  "started_at": "2026-09-18T00:03:26.199900+00:00",
+  "model_id": "google/diffusiongemma-26B-A4B-it",
+  "settings": {
+    "canvas_length": 64,
+    "multi_canvas": 1,
+    "max_denoising_steps": 8,
+    "seed_per_condition": 42,
+    "mixing": "original entropy-weighted per-position mean",
+    "generation_prompt": "Generate one concise optimization idea for the Python function my_sort. Preserve the specific algorithmic and implementation details represented in the supplied canvas. Do not use list.sort or sorted. Return only the optimization idea."
+  },
+  "canvas": {
+    "path": "tests/example/blank.txt",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "character_count": 0
+  },
+  "prompts": {
+    "A": {
+      "path": "experiments/002-prompt-state-controls/prompt-a.txt",
+      "sha256": "b985acf911d9fab0ea80e2e2207e9da7f04f20696e1a66a5533b1c0ca1338a48",
+      "token_count_with_generation_prompt": 108
+    },
+    "B": {
+      "path": "experiments/002-prompt-state-controls/prompt-b.txt",
+      "sha256": "0a9577085ccce1cfaf155c6c907ac450dc021bbb9ce5c110f86c15cfed92c4dd",
+      "token_count_with_generation_prompt": 108
+    }
+  },
+  "prompt_common_prefix_tokens": 28,
+  "runs": [
+    {
+      "condition": "a-control",
+      "prompts": [
+        "A",
+        "A"
+      ],
+      "status": "completed",
+      "started_at": "2026-09-18T00:03:26.200516+00:00",
+      "duration_seconds": 19.018,
+      "output_file": "a-control.txt",
+      "lexical_indicators": {
+        "mentions_counting_sort": true,
+        "mentions_frequency": true,
+        "mentions_known_range": true,
+        "mentions_numpy": false,
+        "mentions_bincount": false,
+        "mentions_repeat": false,
+        "mentions_quicksort": false,
+        "uses_prohibited_builtin": false
+      }
+    },
+    {
+      "condition": "b-control",
+      "prompts": [
+        "B",
+        "B"
+      ],
+      "status": "completed",
+      "started_at": "2026-09-18T00:03:45.218845+00:00",
+      "duration_seconds": 19.039,
+      "output_file": "b-control.txt",
+      "lexical_indicators": {
+        "mentions_counting_sort": true,
+        "mentions_frequency": true,
+        "mentions_known_range": false,
+        "mentions_numpy": false,
+        "mentions_bincount": false,
+        "mentions_repeat": false,
+        "mentions_quicksort": false,
+        "uses_prohibited_builtin": false
+      }
+    },
+    {
+      "condition": "a-b-mixture",
+      "prompts": [
+        "A",
+        "B"
+      ],
+      "status": "completed",
+      "started_at": "2026-09-18T00:04:04.257931+00:00",
+      "duration_seconds": 17.486,
+      "output_file": "a-b-mixture.txt",
+      "lexical_indicators": {
+        "mentions_counting_sort": true,
+        "mentions_frequency": true,
+        "mentions_known_range": false,
+        "mentions_numpy": false,
+        "mentions_bincount": false,
+        "mentions_repeat": false,
+        "mentions_quicksort": false,
+        "uses_prohibited_builtin": false
+      }
+    }
+  ],
+  "completed_at": "2026-09-18T00:04:21.744103+00:00"
+}

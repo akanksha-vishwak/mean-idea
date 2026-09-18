@@ -1,0 +1,2 @@
+thought
+Utilize the Numba `@njit` decorator to compile the sorting logic into machine code, significantly reducing Python's interpreter overhead.

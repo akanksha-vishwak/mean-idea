@@ -1,0 +1,2 @@
+thought
+To optimize `my_sort` for bounded integer data, use `numpy.bincount` to count frequencies and then use `numpy.repeat` to reconstruct the sorted array.
