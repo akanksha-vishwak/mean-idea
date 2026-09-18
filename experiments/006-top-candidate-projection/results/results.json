@@ -1,0 +1,398 @@
+{
+  "experiment_id": "006-top-candidate-projection",
+  "status": "completed",
+  "started_at": "2026-09-18T14:16:06.849735+00:00",
+  "repository_revision": "19bb78035029161826f535d8b5a920ea14ac391a",
+  "model": {
+    "id": "google/diffusiongemma-26B-A4B-it",
+    "revision": "f7f5b7f5fa82ffc52addd066915886d497f5517b"
+  },
+  "runtime": {
+    "python": "3.12.3",
+    "torch": "2.9.1+cu128",
+    "cuda_available": true,
+    "cuda_version": "12.8",
+    "cuda_device": "NVIDIA GeForce RTX 5090"
+  },
+  "settings": {
+    "canvas_length": 64,
+    "multi_canvas": 1,
+    "denoising_steps": 0,
+    "weights": [
+      0.0,
+      0.4,
+      0.5,
+      0.6,
+      1.0
+    ],
+    "top_k": 20,
+    "mixing": "global arithmetic final-canvas-state interpolation",
+    "generation_prompt": "Generate one concise optimization idea for the Python function my_sort. Preserve the specific algorithmic and implementation details represented in the supplied canvas. Do not use list.sort or sorted. Return only the optimization idea.",
+    "reference_control_skipped": false
+  },
+  "canvas": {
+    "path": "tests/example/blank.txt",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "character_count": 0
+  },
+  "prompts": {
+    "A": {
+      "path": "experiments/004-controlled-prompt-weight-sweep/prompt-a-counting.txt",
+      "sha256": "2aee36a774ae3fb5002eb57af8dcf629fb09e42e11abad5fafc19f04cad8f571",
+      "canonical_text_sha256": "2aee36a774ae3fb5002eb57af8dcf629fb09e42e11abad5fafc19f04cad8f571",
+      "token_count_with_generation_prompt": 145
+    },
+    "B": {
+      "path": "experiments/004-controlled-prompt-weight-sweep/prompt-b-numba.txt",
+      "sha256": "f604d5881126369d7e5cb72d3d303356acfcb11f58252fb3675b7d6c6679d5b6",
+      "canonical_text_sha256": "f604d5881126369d7e5cb72d3d303356acfcb11f58252fb3675b7d6c6679d5b6",
+      "token_count_with_generation_prompt": 131
+    }
+  },
+  "prompt_common_prefix_tokens": 28,
+  "embedding_shapes": {
+    "A": [
+      64,
+      2816
+    ],
+    "B": [
+      64,
+      2816
+    ]
+  },
+  "reference": {
+    "path": "experiments/005-projection-geometry-diagnostic/results/results.json",
+    "sha256": "a7f4ae1730654b08760c0cdd073527f809f4c500ed4f57a02e32619dc980bb24",
+    "repository_revision": "f8cbfc8af5f19491819e7a1e23913fa83a381b75",
+    "model_revision": "f7f5b7f5fa82ffc52addd066915886d497f5517b"
+  },
+  "runs": [
+    {
+      "weight": 0.0,
+      "status": "completed",
+      "top_1_output_file": "weight-0p0-top1.txt",
+      "top_1_output_sha256": "5a6970c433e71d525d712f3bb53337c48c44d994f3a157caaeea3816b1f5e10d",
+      "candidate_file": "weight-0p0-top-candidates.json",
+      "candidate_file_sha256": "b9f5c64c2f109228b076b446003fdae96a11b603df10e52250d8c65c43f65871",
+      "summary": {
+        "endpoint_distinct_position_count": 40,
+        "endpoint_score_preference": {
+          "A_higher_count": 40,
+          "B_higher_count": 0,
+          "tie_count": 0
+        },
+        "endpoint_A_rank_within_top_k": {
+          "found_count": 40,
+          "missing_count": 0,
+          "minimum": 1,
+          "median": 1.0,
+          "maximum": 1
+        },
+        "endpoint_B_rank_within_top_k": {
+          "found_count": 14,
+          "missing_count": 26,
+          "minimum": 2,
+          "median": 15.0,
+          "maximum": 20
+        },
+        "availability_by_cutoff": {
+          "1": {
+            "position_count": 40,
+            "A_present_count": 40,
+            "B_present_count": 0,
+            "both_present_count": 0,
+            "neither_present_count": 0,
+            "A_present_fraction": 1.0,
+            "B_present_fraction": 0.0,
+            "both_present_fraction": 0.0,
+            "neither_present_fraction": 0.0
+          },
+          "5": {
+            "position_count": 40,
+            "A_present_count": 40,
+            "B_present_count": 3,
+            "both_present_count": 3,
+            "neither_present_count": 0,
+            "A_present_fraction": 1.0,
+            "B_present_fraction": 0.075,
+            "both_present_fraction": 0.075,
+            "neither_present_fraction": 0.0
+          },
+          "20": {
+            "position_count": 40,
+            "A_present_count": 40,
+            "B_present_count": 14,
+            "both_present_count": 14,
+            "neither_present_count": 0,
+            "A_present_fraction": 1.0,
+            "B_present_fraction": 0.35,
+            "both_present_fraction": 0.35,
+            "neither_present_fraction": 0.0
+          }
+        }
+      }
+    },
+    {
+      "weight": 0.4,
+      "status": "completed",
+      "top_1_output_file": "weight-0p4-top1.txt",
+      "top_1_output_sha256": "fcb900346368e40e997127b7bf37e52b1fa71e0edb7b2e0634a0d42f0c4e3c5f",
+      "candidate_file": "weight-0p4-top-candidates.json",
+      "candidate_file_sha256": "2735264c5075e7e8870af9f854aba6756396208a083c45c078b53707c461b536",
+      "summary": {
+        "endpoint_distinct_position_count": 40,
+        "endpoint_score_preference": {
+          "A_higher_count": 23,
+          "B_higher_count": 17,
+          "tie_count": 0
+        },
+        "endpoint_A_rank_within_top_k": {
+          "found_count": 40,
+          "missing_count": 0,
+          "minimum": 1,
+          "median": 2.0,
+          "maximum": 14
+        },
+        "endpoint_B_rank_within_top_k": {
+          "found_count": 37,
+          "missing_count": 3,
+          "minimum": 1,
+          "median": 2.0,
+          "maximum": 13
+        },
+        "availability_by_cutoff": {
+          "1": {
+            "position_count": 40,
+            "A_present_count": 16,
+            "B_present_count": 14,
+            "both_present_count": 0,
+            "neither_present_count": 10,
+            "A_present_fraction": 0.4,
+            "B_present_fraction": 0.35,
+            "both_present_fraction": 0.0,
+            "neither_present_fraction": 0.25
+          },
+          "5": {
+            "position_count": 40,
+            "A_present_count": 30,
+            "B_present_count": 24,
+            "both_present_count": 18,
+            "neither_present_count": 4,
+            "A_present_fraction": 0.75,
+            "B_present_fraction": 0.6,
+            "both_present_fraction": 0.45,
+            "neither_present_fraction": 0.1
+          },
+          "20": {
+            "position_count": 40,
+            "A_present_count": 40,
+            "B_present_count": 37,
+            "both_present_count": 37,
+            "neither_present_count": 0,
+            "A_present_fraction": 1.0,
+            "B_present_fraction": 0.925,
+            "both_present_fraction": 0.925,
+            "neither_present_fraction": 0.0
+          }
+        }
+      }
+    },
+    {
+      "weight": 0.5,
+      "status": "completed",
+      "top_1_output_file": "weight-0p5-top1.txt",
+      "top_1_output_sha256": "208ad7eff550bd2bf214c0fb677fde7c9e320bebccd37c34b40dd0569ad8c477",
+      "candidate_file": "weight-0p5-top-candidates.json",
+      "candidate_file_sha256": "5f47baa3476f146ddaf6733d7d3357a6197bfd5270884e456c8be7fd733626cd",
+      "summary": {
+        "endpoint_distinct_position_count": 40,
+        "endpoint_score_preference": {
+          "A_higher_count": 15,
+          "B_higher_count": 25,
+          "tie_count": 0
+        },
+        "endpoint_A_rank_within_top_k": {
+          "found_count": 38,
+          "missing_count": 2,
+          "minimum": 1,
+          "median": 2.0,
+          "maximum": 17
+        },
+        "endpoint_B_rank_within_top_k": {
+          "found_count": 40,
+          "missing_count": 0,
+          "minimum": 1,
+          "median": 1.0,
+          "maximum": 20
+        },
+        "availability_by_cutoff": {
+          "1": {
+            "position_count": 40,
+            "A_present_count": 8,
+            "B_present_count": 22,
+            "both_present_count": 0,
+            "neither_present_count": 10,
+            "A_present_fraction": 0.2,
+            "B_present_fraction": 0.55,
+            "both_present_fraction": 0.0,
+            "neither_present_fraction": 0.25
+          },
+          "5": {
+            "position_count": 40,
+            "A_present_count": 25,
+            "B_present_count": 32,
+            "both_present_count": 21,
+            "neither_present_count": 4,
+            "A_present_fraction": 0.625,
+            "B_present_fraction": 0.8,
+            "both_present_fraction": 0.525,
+            "neither_present_fraction": 0.1
+          },
+          "20": {
+            "position_count": 40,
+            "A_present_count": 38,
+            "B_present_count": 40,
+            "both_present_count": 38,
+            "neither_present_count": 0,
+            "A_present_fraction": 0.95,
+            "B_present_fraction": 1.0,
+            "both_present_fraction": 0.95,
+            "neither_present_fraction": 0.0
+          }
+        }
+      }
+    },
+    {
+      "weight": 0.6,
+      "status": "completed",
+      "top_1_output_file": "weight-0p6-top1.txt",
+      "top_1_output_sha256": "d287fb2f9e8eadb8b63eb51c1af2e67ac28e59bb32f2a3762561a8c7a1744a62",
+      "candidate_file": "weight-0p6-top-candidates.json",
+      "candidate_file_sha256": "0b06f790eb6e17204f8b18633865da9802a0e29a142faf713ccbd07425f2530e",
+      "summary": {
+        "endpoint_distinct_position_count": 40,
+        "endpoint_score_preference": {
+          "A_higher_count": 5,
+          "B_higher_count": 35,
+          "tie_count": 0
+        },
+        "endpoint_A_rank_within_top_k": {
+          "found_count": 27,
+          "missing_count": 13,
+          "minimum": 1,
+          "median": 3.0,
+          "maximum": 13
+        },
+        "endpoint_B_rank_within_top_k": {
+          "found_count": 40,
+          "missing_count": 0,
+          "minimum": 1,
+          "median": 1.0,
+          "maximum": 11
+        },
+        "availability_by_cutoff": {
+          "1": {
+            "position_count": 40,
+            "A_present_count": 4,
+            "B_present_count": 27,
+            "both_present_count": 0,
+            "neither_present_count": 9,
+            "A_present_fraction": 0.1,
+            "B_present_fraction": 0.675,
+            "both_present_fraction": 0.0,
+            "neither_present_fraction": 0.225
+          },
+          "5": {
+            "position_count": 40,
+            "A_present_count": 20,
+            "B_present_count": 38,
+            "both_present_count": 20,
+            "neither_present_count": 2,
+            "A_present_fraction": 0.5,
+            "B_present_fraction": 0.95,
+            "both_present_fraction": 0.5,
+            "neither_present_fraction": 0.05
+          },
+          "20": {
+            "position_count": 40,
+            "A_present_count": 27,
+            "B_present_count": 40,
+            "both_present_count": 27,
+            "neither_present_count": 0,
+            "A_present_fraction": 0.675,
+            "B_present_fraction": 1.0,
+            "both_present_fraction": 0.675,
+            "neither_present_fraction": 0.0
+          }
+        }
+      }
+    },
+    {
+      "weight": 1.0,
+      "status": "completed",
+      "top_1_output_file": "weight-1p0-top1.txt",
+      "top_1_output_sha256": "0e06d7a51f1e256e9aa96d4e824c67a45daabe4ff18e72462fffbf3fe23920be",
+      "candidate_file": "weight-1p0-top-candidates.json",
+      "candidate_file_sha256": "778b180a4d34d065520c9dd29d63e8caa00846c6c0cbb3aaa9c2cf00b8152889",
+      "summary": {
+        "endpoint_distinct_position_count": 40,
+        "endpoint_score_preference": {
+          "A_higher_count": 0,
+          "B_higher_count": 40,
+          "tie_count": 0
+        },
+        "endpoint_A_rank_within_top_k": {
+          "found_count": 13,
+          "missing_count": 27,
+          "minimum": 4,
+          "median": 9.0,
+          "maximum": 18
+        },
+        "endpoint_B_rank_within_top_k": {
+          "found_count": 40,
+          "missing_count": 0,
+          "minimum": 1,
+          "median": 1.0,
+          "maximum": 1
+        },
+        "availability_by_cutoff": {
+          "1": {
+            "position_count": 40,
+            "A_present_count": 0,
+            "B_present_count": 40,
+            "both_present_count": 0,
+            "neither_present_count": 0,
+            "A_present_fraction": 0.0,
+            "B_present_fraction": 1.0,
+            "both_present_fraction": 0.0,
+            "neither_present_fraction": 0.0
+          },
+          "5": {
+            "position_count": 40,
+            "A_present_count": 1,
+            "B_present_count": 40,
+            "both_present_count": 1,
+            "neither_present_count": 0,
+            "A_present_fraction": 0.025,
+            "B_present_fraction": 1.0,
+            "both_present_fraction": 0.025,
+            "neither_present_fraction": 0.0
+          },
+          "20": {
+            "position_count": 40,
+            "A_present_count": 13,
+            "B_present_count": 40,
+            "both_present_count": 13,
+            "neither_present_count": 0,
+            "A_present_fraction": 0.325,
+            "B_present_fraction": 1.0,
+            "both_present_fraction": 0.325,
+            "neither_present_fraction": 0.0
+          }
+        }
+      }
+    }
+  ],
+  "endpoint_distinct_position_count": 40,
+  "completed_at": "2026-09-18T14:16:06.984991+00:00"
+}
