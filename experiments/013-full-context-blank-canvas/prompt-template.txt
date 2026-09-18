@@ -1,0 +1,9 @@
+You are optimizing the stated Python task. The generation canvas is blank, so rely only on the complete source records below.
+
+[PARENT A RECORD]
+{parent_a}
+
+[PARENT B RECORD]
+{parent_b}
+
+Produce one concise optimization idea that combines the specific implementation techniques from both records. Do not replace either technique with a generic alternative. Return only the combined optimization idea.

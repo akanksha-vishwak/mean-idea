@@ -1,0 +1,39 @@
+{
+  "experiment_id": "013-full-context-blank-canvas",
+  "status": "pilot",
+  "frozen_on": "2026-09-18",
+  "question": "When all available frozen context for both parent techniques is placed in one prompt and no parent-derived canvas state is supplied, does DiffusionGemma produce a coherent idea retaining both techniques?",
+  "references": {
+    "pairs": "experiments/011-nonsorting-endpoint-screen/pairs.json",
+    "concise_prompt_baseline": "experiments/012-nonsorting-composition/results/results.json",
+    "required_pair_ids": [
+      "matrix-blocked-blas",
+      "graph-csr-deque-bfs",
+      "image-batched-vectorization"
+    ]
+  },
+  "design": {
+    "method": "Direct DiffusionGemma generation from a blank model-initialized output canvas using one prompt containing both complete frozen parent records.",
+    "control": "Reuse the exact Experiment 012 concise direct-prompt outputs for the same pairs, seeds, model revision, denoising steps, and canvas length.",
+    "seeds": [42, 43, 44],
+    "denoising_steps": 8,
+    "canvas_length": 96,
+    "new_generations": 9,
+    "source_canvas_state": "None; neither parent embedding, hidden state, token canvas, nor logits are supplied."
+  },
+  "primary_outcomes": {
+    "strict_hybrid_rate": "Fraction of full-context outputs retaining every predefined lexical group for both parents without a prohibited operation.",
+    "difference_from_concise_prompt": "Full-context strict hybrid count minus the frozen Experiment 012 concise-prompt count of 8/9.",
+    "pair_consistency": "Whether the result holds across matrix multiplication, graph BFS, and image normalization."
+  },
+  "interpretation": {
+    "improves": "Richer prompt context improves direct blank-canvas composition for these pairs.",
+    "matches": "The concise prompt was already sufficient; richer context confirms but does not improve the direct-prompt result.",
+    "degrades": "Additional context distracts the model or makes exact technique retention less reliable."
+  },
+  "limitations": [
+    "This remains exploratory pilot evidence.",
+    "The workloads are public synthetic task descriptions, not complete Darwin programs.",
+    "This tests prompt-only generation and does not rescue or validate numerical representation mixing."
+  ]
+}
