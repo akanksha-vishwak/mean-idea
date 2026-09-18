@@ -1,0 +1,2 @@
+thought
+Implement `my_sort` as a dual-strategy algorithm: first check if the input consists of bounded nonnegative integers to execute a fast path using `np.bincount` for frequency mapping and `np.repeat` to reconstruct the sorted array; otherwise, fallback to a general-purpose heap sort using `heapq.heapify` to transform the input in-place and `heapq.heappop` to extract elements in order.

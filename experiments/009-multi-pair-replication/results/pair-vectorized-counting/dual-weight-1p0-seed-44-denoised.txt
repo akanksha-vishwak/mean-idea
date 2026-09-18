@@ -1,0 +1,2 @@
+thought
+Optimize `my_sort` by implementing a vectorized NumPy counting sort that uses `np.bincount` to determine frequencies of bounded integers and `np.repeat` to reconstruct the sorted array.

@@ -1,0 +1,2 @@
+thought
+Optimize `my_sort` by implementing a **counting sort** that utilizes a **fixed frequency array** to count occurrences of each integer in the range **0-9999**, then reconstruct the sorted output through a single pass.

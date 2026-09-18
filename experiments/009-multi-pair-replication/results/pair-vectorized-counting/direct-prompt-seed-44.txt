@@ -1,0 +1,2 @@
+thought
+Optimize `my_sort` by implementing a bounded counting sort that exploits the 0-9999 integer range, utilizing `np.bincount` to generate a fixed-size frequency array and `np.repeat` to reconstruct the sorted array without using Python lists.

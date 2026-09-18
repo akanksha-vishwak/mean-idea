@@ -1,0 +1,2 @@
+thought
+Implement a dual-path sorting strategy that first checks if the input consists of bounded nonnegative integers to execute a high-speed path using `np.bincount` to count frequencies and `np.repeat` to reconstruct the array, falling back to a general-purpose sort using `heapq.heapify` andify`q.heappop` when these constraints are not met.

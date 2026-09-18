@@ -1,0 +1,2 @@
+thought
+Implement `my_sort` by utilizing a bounded counting sort that exploits the 0-9999 range, using `np.bincount` to generate a fixed-size frequency array and `np.repeat` to reconstruct the sorted array from those counts.

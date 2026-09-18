@@ -1,0 +1,2135 @@
+{
+  "experiment_id": "009-multi-pair-replication",
+  "status": "completed_with_blocked_pairs",
+  "started_at": "2026-09-18T15:37:30.872355+00:00",
+  "repository_revision": "67385d77893a42686a836e3bef027ec2d7213686",
+  "model": {
+    "id": "google/diffusiongemma-26B-A4B-it",
+    "revision": "f7f5b7f5fa82ffc52addd066915886d497f5517b"
+  },
+  "runtime": {
+    "python": "3.12.3",
+    "torch": "2.9.1+cu128",
+    "cuda_available": true,
+    "cuda_version": "12.8",
+    "cuda_device": "NVIDIA GeForce RTX 5090"
+  },
+  "settings": {
+    "canvas_length": 96,
+    "multi_canvas": 1,
+    "denoising_steps": 8,
+    "weights": [
+      0.0,
+      0.5,
+      1.0
+    ],
+    "seeds": [
+      42,
+      43,
+      44
+    ],
+    "generation_prompt": "Generate one concise optimization idea for the stated Python task. Preserve the specific algorithmic and implementation details represented in the supplied canvas. Return only the optimization idea.",
+    "endpoint_gate": "all A and B seeds retain their source concepts",
+    "midpoint_methods": [
+      "aligned hard projection",
+      "per-step linear output-logit mixing"
+    ]
+  },
+  "canvas": {
+    "path": "tests/example/blank.txt",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "character_count": 0
+  },
+  "inputs": {
+    "pairs_path": "experiments/009-multi-pair-replication/pairs.json",
+    "pairs_sha256": "5a229fe46987e18bcef76a35ec789758652246d31c6b5cc1d9d560d1ebb21d3f",
+    "experiment_008_runner_path": "experiments/008-dual-prompt-logit-mixing/run.py",
+    "experiment_008_runner_sha256": "4f3806453b2427a4523c3480706ac80eb5607eb346ef563b27f68aebc2d51d60"
+  },
+  "pair_results": [
+    {
+      "pair_id": "pair-vectorized-counting",
+      "workload": "sorting",
+      "provenance": "experiments/idea-pairs.json from the September 15 pilot corpus",
+      "expected_combined_concept": "Exploit the bounded integer range with a vectorized counting sort implemented using NumPy bincount and repeat.",
+      "status": "completed",
+      "prompt_alignment": {
+        "token_count": 115,
+        "requires_padding": false,
+        "prompt_a_sha256": "40768dfee8a89b93618369b5c1f2dc233a98640077cd2adedd403f9dc5c2ee28",
+        "prompt_b_sha256": "e725f8c87e1de07e25aecee6fb1620caa4880bc493d17f33cec827bcdb70593a",
+        "direct_prompt_sha256": "78102f1b4fa5a98eefa0db073639c041c425bd47442ad230e7ae7b9d90b4f1da"
+      },
+      "embedding_shapes": {
+        "A": [
+          96,
+          2816
+        ],
+        "B": [
+          96,
+          2816
+        ]
+      },
+      "runs": [
+        {
+          "method": "dual_prompt_logit_mixing",
+          "weight": 0.0,
+          "seed": 42,
+          "status": "completed",
+          "started_at": "2026-09-18T15:37:38.283166+00:00",
+          "duration_seconds": 13.406,
+          "initial_output_file": "dual-weight-0p0-seed-42-initial.txt",
+          "initial_output_sha256": "c25e200702f1feae0803d3e23d33eb733a2af8ad2129d552c06457e5f0ebe491",
+          "denoised_output_file": "dual-weight-0p0-seed-42-denoised.txt",
+          "denoised_output_sha256": "dd2fd2373e11d54a191246377b86dd0dd40303f90f0bb99354e442fefbe99924",
+          "trace_file": "dual-weight-0p0-seed-42-trace.json",
+          "trace_sha256": "30baf51a11ec30295396a771fc9130e0d0fc4a51a3717d40455e7c1ada891f90",
+          "initial_lexical_indicators": {
+            "retains_A": false,
+            "retains_B": false,
+            "retains_both": false,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": false,
+            "matched_A_groups": [
+              [],
+              []
+            ],
+            "matched_B_groups": [
+              [],
+              [],
+              []
+            ],
+            "matched_prohibited_markers": []
+          },
+          "denoised_lexical_indicators": {
+            "retains_A": true,
+            "retains_B": false,
+            "retains_both": false,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": false,
+            "matched_A_groups": [
+              [
+                "counting sort"
+              ],
+              [
+                "fixed frequency",
+                "frequency array",
+                "0-9999",
+                "10000"
+              ]
+            ],
+            "matched_B_groups": [
+              [],
+              [],
+              []
+            ],
+            "matched_prohibited_markers": []
+          }
+        },
+        {
+          "method": "dual_prompt_logit_mixing",
+          "weight": 0.0,
+          "seed": 43,
+          "status": "completed",
+          "started_at": "2026-09-18T15:37:51.696326+00:00",
+          "duration_seconds": 11.338,
+          "initial_output_file": "dual-weight-0p0-seed-43-initial.txt",
+          "initial_output_sha256": "c25e200702f1feae0803d3e23d33eb733a2af8ad2129d552c06457e5f0ebe491",
+          "denoised_output_file": "dual-weight-0p0-seed-43-denoised.txt",
+          "denoised_output_sha256": "78bb29bf7b557e3f01a3eb2380d6bc0ce1a7f873795595ab0dc336b445eac948",
+          "trace_file": "dual-weight-0p0-seed-43-trace.json",
+          "trace_sha256": "bff3b163c94de51d28ca05b57734d6a3c82ec58457d00df62884e723c688fde4",
+          "initial_lexical_indicators": {
+            "retains_A": false,
+            "retains_B": false,
+            "retains_both": false,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": false,
+            "matched_A_groups": [
+              [],
+              []
+            ],
+            "matched_B_groups": [
+              [],
+              [],
+              []
+            ],
+            "matched_prohibited_markers": []
+          },
+          "denoised_lexical_indicators": {
+            "retains_A": true,
+            "retains_B": false,
+            "retains_both": false,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": false,
+            "matched_A_groups": [
+              [
+                "counting sort"
+              ],
+              [
+                "fixed frequency",
+                "frequency array",
+                "0-9999",
+                "10000"
+              ]
+            ],
+            "matched_B_groups": [
+              [],
+              [],
+              []
+            ],
+            "matched_prohibited_markers": []
+          }
+        },
+        {
+          "method": "dual_prompt_logit_mixing",
+          "weight": 0.0,
+          "seed": 44,
+          "status": "completed",
+          "started_at": "2026-09-18T15:38:03.041979+00:00",
+          "duration_seconds": 14.561,
+          "initial_output_file": "dual-weight-0p0-seed-44-initial.txt",
+          "initial_output_sha256": "c25e200702f1feae0803d3e23d33eb733a2af8ad2129d552c06457e5f0ebe491",
+          "denoised_output_file": "dual-weight-0p0-seed-44-denoised.txt",
+          "denoised_output_sha256": "e406b9f1c2101c671b5a3681b687c68dcb0f33352eb789ee776758fffac4f718",
+          "trace_file": "dual-weight-0p0-seed-44-trace.json",
+          "trace_sha256": "e440e22f3f368a7e5772ae4900220ea75ecde834d99b81242353d8d604d0b0b0",
+          "initial_lexical_indicators": {
+            "retains_A": false,
+            "retains_B": false,
+            "retains_both": false,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": false,
+            "matched_A_groups": [
+              [],
+              []
+            ],
+            "matched_B_groups": [
+              [],
+              [],
+              []
+            ],
+            "matched_prohibited_markers": []
+          },
+          "denoised_lexical_indicators": {
+            "retains_A": true,
+            "retains_B": false,
+            "retains_both": false,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": false,
+            "matched_A_groups": [
+              [
+                "counting sort"
+              ],
+              [
+                "fixed frequency",
+                "frequency array",
+                "0-9999"
+              ]
+            ],
+            "matched_B_groups": [
+              [],
+              [],
+              []
+            ],
+            "matched_prohibited_markers": []
+          }
+        },
+        {
+          "method": "dual_prompt_logit_mixing",
+          "weight": 1.0,
+          "seed": 42,
+          "status": "completed",
+          "started_at": "2026-09-18T15:38:17.610924+00:00",
+          "duration_seconds": 9.705,
+          "initial_output_file": "dual-weight-1p0-seed-42-initial.txt",
+          "initial_output_sha256": "a2967ee73aab79258df5ba12365b6f07bf27ddbf15b0e37b6bb8f512c6bb94c7",
+          "denoised_output_file": "dual-weight-1p0-seed-42-denoised.txt",
+          "denoised_output_sha256": "6ed0e787bf770827ba03e73a2b6b5ac5aeeab5b70ee8f6e82d26970faa429583",
+          "trace_file": "dual-weight-1p0-seed-42-trace.json",
+          "trace_sha256": "7eb12474c619f18ac20d2202f1f17dbcdbc13eef04dd551cbb7349ee280faf0b",
+          "initial_lexical_indicators": {
+            "retains_A": false,
+            "retains_B": false,
+            "retains_both": false,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": false,
+            "matched_A_groups": [
+              [
+                "counting sort"
+              ],
+              []
+            ],
+            "matched_B_groups": [
+              [
+                "np."
+              ],
+              [],
+              []
+            ],
+            "matched_prohibited_markers": []
+          },
+          "denoised_lexical_indicators": {
+            "retains_A": true,
+            "retains_B": true,
+            "retains_both": true,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": true,
+            "matched_A_groups": [
+              [
+                "counting sort"
+              ],
+              [
+                "bounded"
+              ]
+            ],
+            "matched_B_groups": [
+              [
+                "numpy",
+                "np."
+              ],
+              [
+                "bincount"
+              ],
+              [
+                "repeat"
+              ]
+            ],
+            "matched_prohibited_markers": []
+          }
+        },
+        {
+          "method": "dual_prompt_logit_mixing",
+          "weight": 1.0,
+          "seed": 43,
+          "status": "completed",
+          "started_at": "2026-09-18T15:38:27.323148+00:00",
+          "duration_seconds": 8.072,
+          "initial_output_file": "dual-weight-1p0-seed-43-initial.txt",
+          "initial_output_sha256": "a2967ee73aab79258df5ba12365b6f07bf27ddbf15b0e37b6bb8f512c6bb94c7",
+          "denoised_output_file": "dual-weight-1p0-seed-43-denoised.txt",
+          "denoised_output_sha256": "6ed0e787bf770827ba03e73a2b6b5ac5aeeab5b70ee8f6e82d26970faa429583",
+          "trace_file": "dual-weight-1p0-seed-43-trace.json",
+          "trace_sha256": "055623976b904f2479818a9e4e7f36afec004b522e1ee1c42cb4325fe8da5e95",
+          "initial_lexical_indicators": {
+            "retains_A": false,
+            "retains_B": false,
+            "retains_both": false,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": false,
+            "matched_A_groups": [
+              [
+                "counting sort"
+              ],
+              []
+            ],
+            "matched_B_groups": [
+              [
+                "np."
+              ],
+              [],
+              []
+            ],
+            "matched_prohibited_markers": []
+          },
+          "denoised_lexical_indicators": {
+            "retains_A": true,
+            "retains_B": true,
+            "retains_both": true,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": true,
+            "matched_A_groups": [
+              [
+                "counting sort"
+              ],
+              [
+                "bounded"
+              ]
+            ],
+            "matched_B_groups": [
+              [
+                "numpy",
+                "np."
+              ],
+              [
+                "bincount"
+              ],
+              [
+                "repeat"
+              ]
+            ],
+            "matched_prohibited_markers": []
+          }
+        },
+        {
+          "method": "dual_prompt_logit_mixing",
+          "weight": 1.0,
+          "seed": 44,
+          "status": "completed",
+          "started_at": "2026-09-18T15:38:35.402233+00:00",
+          "duration_seconds": 9.693,
+          "initial_output_file": "dual-weight-1p0-seed-44-initial.txt",
+          "initial_output_sha256": "a2967ee73aab79258df5ba12365b6f07bf27ddbf15b0e37b6bb8f512c6bb94c7",
+          "denoised_output_file": "dual-weight-1p0-seed-44-denoised.txt",
+          "denoised_output_sha256": "6ed0e787bf770827ba03e73a2b6b5ac5aeeab5b70ee8f6e82d26970faa429583",
+          "trace_file": "dual-weight-1p0-seed-44-trace.json",
+          "trace_sha256": "baf46a7f3a39343b89d282b5169c9d97367709eee11375a4a69748b2dcfc7160",
+          "initial_lexical_indicators": {
+            "retains_A": false,
+            "retains_B": false,
+            "retains_both": false,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": false,
+            "matched_A_groups": [
+              [
+                "counting sort"
+              ],
+              []
+            ],
+            "matched_B_groups": [
+              [
+                "np."
+              ],
+              [],
+              []
+            ],
+            "matched_prohibited_markers": []
+          },
+          "denoised_lexical_indicators": {
+            "retains_A": true,
+            "retains_B": true,
+            "retains_both": true,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": true,
+            "matched_A_groups": [
+              [
+                "counting sort"
+              ],
+              [
+                "bounded"
+              ]
+            ],
+            "matched_B_groups": [
+              [
+                "numpy",
+                "np."
+              ],
+              [
+                "bincount"
+              ],
+              [
+                "repeat"
+              ]
+            ],
+            "matched_prohibited_markers": []
+          }
+        },
+        {
+          "method": "dual_prompt_logit_mixing",
+          "weight": 0.5,
+          "seed": 42,
+          "status": "completed",
+          "started_at": "2026-09-18T15:38:45.104697+00:00",
+          "duration_seconds": 14.59,
+          "initial_output_file": "dual-weight-0p5-seed-42-initial.txt",
+          "initial_output_sha256": "92b35084e20b2cec580b5f8efaf5f6d42c56465767d0cd764c720311ade0b93d",
+          "denoised_output_file": "dual-weight-0p5-seed-42-denoised.txt",
+          "denoised_output_sha256": "180d8ce3922ef31d05c065cfe6051a248487aefa6e4feed70bf2f18f80f3c524",
+          "trace_file": "dual-weight-0p5-seed-42-trace.json",
+          "trace_sha256": "a6e70e9c65a2c6b85418ae47f9712478656bcc1f1c261da47d3d87a993a6b87f",
+          "initial_lexical_indicators": {
+            "retains_A": false,
+            "retains_B": false,
+            "retains_both": false,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": false,
+            "matched_A_groups": [
+              [],
+              []
+            ],
+            "matched_B_groups": [
+              [],
+              [],
+              []
+            ],
+            "matched_prohibited_markers": []
+          },
+          "denoised_lexical_indicators": {
+            "retains_A": true,
+            "retains_B": false,
+            "retains_both": false,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": false,
+            "matched_A_groups": [
+              [
+                "counting sort"
+              ],
+              [
+                "fixed frequency",
+                "frequency array"
+              ]
+            ],
+            "matched_B_groups": [
+              [],
+              [],
+              []
+            ],
+            "matched_prohibited_markers": []
+          }
+        },
+        {
+          "method": "dual_prompt_logit_mixing",
+          "weight": 0.5,
+          "seed": 43,
+          "status": "completed",
+          "started_at": "2026-09-18T15:38:59.702212+00:00",
+          "duration_seconds": 14.588,
+          "initial_output_file": "dual-weight-0p5-seed-43-initial.txt",
+          "initial_output_sha256": "92b35084e20b2cec580b5f8efaf5f6d42c56465767d0cd764c720311ade0b93d",
+          "denoised_output_file": "dual-weight-0p5-seed-43-denoised.txt",
+          "denoised_output_sha256": "93d1bf619400c4f9d9faa9ea4333d185088575050afebcc11a152d82f08d0507",
+          "trace_file": "dual-weight-0p5-seed-43-trace.json",
+          "trace_sha256": "f9d0a33b97e557a3e5b5b3f362446628854f5473a9bdb64c15db6d4a6296e65d",
+          "initial_lexical_indicators": {
+            "retains_A": false,
+            "retains_B": false,
+            "retains_both": false,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": false,
+            "matched_A_groups": [
+              [],
+              []
+            ],
+            "matched_B_groups": [
+              [],
+              [],
+              []
+            ],
+            "matched_prohibited_markers": []
+          },
+          "denoised_lexical_indicators": {
+            "retains_A": true,
+            "retains_B": false,
+            "retains_both": false,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": false,
+            "matched_A_groups": [
+              [
+                "counting sort"
+              ],
+              [
+                "fixed frequency",
+                "frequency array",
+                "0-9999"
+              ]
+            ],
+            "matched_B_groups": [
+              [],
+              [],
+              []
+            ],
+            "matched_prohibited_markers": []
+          }
+        },
+        {
+          "method": "dual_prompt_logit_mixing",
+          "weight": 0.5,
+          "seed": 44,
+          "status": "completed",
+          "started_at": "2026-09-18T15:39:14.298006+00:00",
+          "duration_seconds": 14.729,
+          "initial_output_file": "dual-weight-0p5-seed-44-initial.txt",
+          "initial_output_sha256": "92b35084e20b2cec580b5f8efaf5f6d42c56465767d0cd764c720311ade0b93d",
+          "denoised_output_file": "dual-weight-0p5-seed-44-denoised.txt",
+          "denoised_output_sha256": "4737bb2ff7c0e2c40c5a57f6519e09fe9775a95354504670a20ce7d0ea7f269d",
+          "trace_file": "dual-weight-0p5-seed-44-trace.json",
+          "trace_sha256": "2cdbc58db10be3739c626835d0032d5870c6e4912f3f1f63e512847fb01471b9",
+          "initial_lexical_indicators": {
+            "retains_A": false,
+            "retains_B": false,
+            "retains_both": false,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": false,
+            "matched_A_groups": [
+              [],
+              []
+            ],
+            "matched_B_groups": [
+              [],
+              [],
+              []
+            ],
+            "matched_prohibited_markers": []
+          },
+          "denoised_lexical_indicators": {
+            "retains_A": true,
+            "retains_B": false,
+            "retains_both": false,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": false,
+            "matched_A_groups": [
+              [
+                "counting sort"
+              ],
+              [
+                "fixed frequency",
+                "frequency array",
+                "0-9999"
+              ]
+            ],
+            "matched_B_groups": [
+              [],
+              [],
+              []
+            ],
+            "matched_prohibited_markers": []
+          }
+        },
+        {
+          "method": "aligned_hard_projection",
+          "weight": 0.5,
+          "seed": 42,
+          "status": "completed",
+          "started_at": "2026-09-18T15:39:29.035178+00:00",
+          "duration_seconds": 14.743,
+          "initial_output_file": "hard-midpoint-seed-42-initial.txt",
+          "initial_output_sha256": "92b35084e20b2cec580b5f8efaf5f6d42c56465767d0cd764c720311ade0b93d",
+          "denoised_output_file": "hard-midpoint-seed-42-denoised.txt",
+          "denoised_output_sha256": "e00ee583f584d78b27bc4b50f25982d0b8b76b9b293223bf1c4fc49f87ef7a70",
+          "initial_lexical_indicators": {
+            "retains_A": false,
+            "retains_B": false,
+            "retains_both": false,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": false,
+            "matched_A_groups": [
+              [],
+              []
+            ],
+            "matched_B_groups": [
+              [],
+              [],
+              []
+            ],
+            "matched_prohibited_markers": []
+          },
+          "denoised_lexical_indicators": {
+            "retains_A": false,
+            "retains_B": false,
+            "retains_both": false,
+            "uses_prohibited_operation": true,
+            "candidate_hybrid": false,
+            "matched_A_groups": [
+              [],
+              []
+            ],
+            "matched_B_groups": [
+              [],
+              [],
+              []
+            ],
+            "matched_prohibited_markers": [
+              "list.sort"
+            ]
+          }
+        },
+        {
+          "method": "aligned_hard_projection",
+          "weight": 0.5,
+          "seed": 43,
+          "status": "completed",
+          "started_at": "2026-09-18T15:39:43.785531+00:00",
+          "duration_seconds": 12.861,
+          "initial_output_file": "hard-midpoint-seed-43-initial.txt",
+          "initial_output_sha256": "92b35084e20b2cec580b5f8efaf5f6d42c56465767d0cd764c720311ade0b93d",
+          "denoised_output_file": "hard-midpoint-seed-43-denoised.txt",
+          "denoised_output_sha256": "8b9c9da623f6cc31dfd252ab224f5cd61f366d25c7c6330c7a7054653d12a1b6",
+          "initial_lexical_indicators": {
+            "retains_A": false,
+            "retains_B": false,
+            "retains_both": false,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": false,
+            "matched_A_groups": [
+              [],
+              []
+            ],
+            "matched_B_groups": [
+              [],
+              [],
+              []
+            ],
+            "matched_prohibited_markers": []
+          },
+          "denoised_lexical_indicators": {
+            "retains_A": false,
+            "retains_B": false,
+            "retains_both": false,
+            "uses_prohibited_operation": true,
+            "candidate_hybrid": false,
+            "matched_A_groups": [
+              [],
+              []
+            ],
+            "matched_B_groups": [
+              [],
+              [],
+              []
+            ],
+            "matched_prohibited_markers": [
+              "list.sort"
+            ]
+          }
+        },
+        {
+          "method": "aligned_hard_projection",
+          "weight": 0.5,
+          "seed": 44,
+          "status": "completed",
+          "started_at": "2026-09-18T15:39:56.653747+00:00",
+          "duration_seconds": 14.415,
+          "initial_output_file": "hard-midpoint-seed-44-initial.txt",
+          "initial_output_sha256": "92b35084e20b2cec580b5f8efaf5f6d42c56465767d0cd764c720311ade0b93d",
+          "denoised_output_file": "hard-midpoint-seed-44-denoised.txt",
+          "denoised_output_sha256": "bac87617be046b8ba60f121708663df6541625771cc3432294c9b43066e228a8",
+          "initial_lexical_indicators": {
+            "retains_A": false,
+            "retains_B": false,
+            "retains_both": false,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": false,
+            "matched_A_groups": [
+              [],
+              []
+            ],
+            "matched_B_groups": [
+              [],
+              [],
+              []
+            ],
+            "matched_prohibited_markers": []
+          },
+          "denoised_lexical_indicators": {
+            "retains_A": false,
+            "retains_B": false,
+            "retains_both": false,
+            "uses_prohibited_operation": true,
+            "candidate_hybrid": false,
+            "matched_A_groups": [
+              [],
+              []
+            ],
+            "matched_B_groups": [
+              [],
+              [],
+              []
+            ],
+            "matched_prohibited_markers": [
+              "list.sort",
+              "sorted("
+            ]
+          }
+        },
+        {
+          "method": "direct_diffusion_prompt",
+          "seed": 42,
+          "status": "completed",
+          "started_at": "2026-09-18T15:40:11.068967+00:00",
+          "duration_seconds": 11.25,
+          "output_file": "direct-prompt-seed-42.txt",
+          "output_sha256": "a73fbcb4bd55a969ecca706989e80fd179d3781c906a02bddec63bf47b4c8e1d",
+          "lexical_indicators": {
+            "retains_A": true,
+            "retains_B": true,
+            "retains_both": true,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": true,
+            "matched_A_groups": [
+              [
+                "counting sort"
+              ],
+              [
+                "frequency array",
+                "0-9999",
+                "bounded"
+              ]
+            ],
+            "matched_B_groups": [
+              [
+                "np."
+              ],
+              [
+                "bincount"
+              ],
+              [
+                "repeat"
+              ]
+            ],
+            "matched_prohibited_markers": []
+          }
+        },
+        {
+          "method": "direct_diffusion_prompt",
+          "seed": 43,
+          "status": "completed",
+          "started_at": "2026-09-18T15:40:22.319709+00:00",
+          "duration_seconds": 12.874,
+          "output_file": "direct-prompt-seed-43.txt",
+          "output_sha256": "b945f9005dbf093382ea39f478757fc44eeb5ef887cd1409fc0b09d6f1429ef7",
+          "lexical_indicators": {
+            "retains_A": true,
+            "retains_B": true,
+            "retains_both": true,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": true,
+            "matched_A_groups": [
+              [
+                "counting sort"
+              ],
+              [
+                "frequency array",
+                "0-9999",
+                "bounded"
+              ]
+            ],
+            "matched_B_groups": [
+              [
+                "np."
+              ],
+              [
+                "bincount"
+              ],
+              [
+                "repeat"
+              ]
+            ],
+            "matched_prohibited_markers": []
+          }
+        },
+        {
+          "method": "direct_diffusion_prompt",
+          "seed": 44,
+          "status": "completed",
+          "started_at": "2026-09-18T15:40:35.194279+00:00",
+          "duration_seconds": 12.841,
+          "output_file": "direct-prompt-seed-44.txt",
+          "output_sha256": "13667a48146d6cee90dd0aab1e2c178b2e56ea98195458d4bba906b24d3350bc",
+          "lexical_indicators": {
+            "retains_A": true,
+            "retains_B": true,
+            "retains_both": true,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": true,
+            "matched_A_groups": [
+              [
+                "counting sort"
+              ],
+              [
+                "frequency array",
+                "0-9999",
+                "bounded"
+              ]
+            ],
+            "matched_B_groups": [
+              [
+                "np."
+              ],
+              [
+                "bincount"
+              ],
+              [
+                "repeat"
+              ]
+            ],
+            "matched_prohibited_markers": []
+          }
+        }
+      ],
+      "endpoint_controls_passed": true,
+      "summary": {
+        "dual_midpoint_hybrid_count": 0,
+        "hard_midpoint_hybrid_count": 0,
+        "direct_prompt_hybrid_count": 3
+      }
+    },
+    {
+      "pair_id": "pair-fast-path-fallback",
+      "workload": "sorting",
+      "provenance": "experiments/idea-pairs.json from the September 15 pilot corpus",
+      "expected_combined_concept": "Use vectorized NumPy counting sort when bounded-integer assumptions hold and a heapq method as a safe general fallback.",
+      "status": "completed",
+      "prompt_alignment": {
+        "token_count": 114,
+        "requires_padding": false,
+        "prompt_a_sha256": "f131fdcf9038e18aa32f53caae3d7218f8e74ccb96a775a08598c00babbb4696",
+        "prompt_b_sha256": "01522d69b03ff0029f37859615f183881b549ec483795a1b24ef52e857ce5a7b",
+        "direct_prompt_sha256": "a4436b4bfc759c8f3866a6bde1c22f24a85941c1444c4e8c290eca27f7a11abb"
+      },
+      "embedding_shapes": {
+        "A": [
+          96,
+          2816
+        ],
+        "B": [
+          96,
+          2816
+        ]
+      },
+      "runs": [
+        {
+          "method": "dual_prompt_logit_mixing",
+          "weight": 0.0,
+          "seed": 42,
+          "status": "completed",
+          "started_at": "2026-09-18T15:40:54.430004+00:00",
+          "duration_seconds": 9.65,
+          "initial_output_file": "dual-weight-0p0-seed-42-initial.txt",
+          "initial_output_sha256": "4fff2720e2ba7387731331caa30af2d16fbe226af1b4d5cf509503181a0a0ac3",
+          "denoised_output_file": "dual-weight-0p0-seed-42-denoised.txt",
+          "denoised_output_sha256": "de72775591baeae0aa4c090a1735c37b66fc9bfa3972eefd81810f6394b1a732",
+          "trace_file": "dual-weight-0p0-seed-42-trace.json",
+          "trace_sha256": "9724e60bc50d8cec0c908389cf6027e362c78af8e9891a85a7a95787b31fca04",
+          "initial_lexical_indicators": {
+            "retains_A": false,
+            "retains_B": false,
+            "retains_both": false,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": false,
+            "matched_A_groups": [
+              [
+                "numpy"
+              ],
+              [],
+              []
+            ],
+            "matched_B_groups": [
+              [],
+              [],
+              [],
+              []
+            ],
+            "matched_prohibited_markers": []
+          },
+          "denoised_lexical_indicators": {
+            "retains_A": true,
+            "retains_B": false,
+            "retains_both": false,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": false,
+            "matched_A_groups": [
+              [
+                "numpy",
+                "np."
+              ],
+              [
+                "bincount"
+              ],
+              [
+                "repeat"
+              ]
+            ],
+            "matched_B_groups": [
+              [],
+              [],
+              [],
+              []
+            ],
+            "matched_prohibited_markers": []
+          }
+        },
+        {
+          "method": "dual_prompt_logit_mixing",
+          "weight": 0.0,
+          "seed": 43,
+          "status": "completed",
+          "started_at": "2026-09-18T15:41:04.087674+00:00",
+          "duration_seconds": 11.27,
+          "initial_output_file": "dual-weight-0p0-seed-43-initial.txt",
+          "initial_output_sha256": "4fff2720e2ba7387731331caa30af2d16fbe226af1b4d5cf509503181a0a0ac3",
+          "denoised_output_file": "dual-weight-0p0-seed-43-denoised.txt",
+          "denoised_output_sha256": "de72775591baeae0aa4c090a1735c37b66fc9bfa3972eefd81810f6394b1a732",
+          "trace_file": "dual-weight-0p0-seed-43-trace.json",
+          "trace_sha256": "bbf8cdaf2afac04dad8aef6b41e194afd35e0144a44c5702d93930c90e82df61",
+          "initial_lexical_indicators": {
+            "retains_A": false,
+            "retains_B": false,
+            "retains_both": false,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": false,
+            "matched_A_groups": [
+              [
+                "numpy"
+              ],
+              [],
+              []
+            ],
+            "matched_B_groups": [
+              [],
+              [],
+              [],
+              []
+            ],
+            "matched_prohibited_markers": []
+          },
+          "denoised_lexical_indicators": {
+            "retains_A": true,
+            "retains_B": false,
+            "retains_both": false,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": false,
+            "matched_A_groups": [
+              [
+                "numpy",
+                "np."
+              ],
+              [
+                "bincount"
+              ],
+              [
+                "repeat"
+              ]
+            ],
+            "matched_B_groups": [
+              [],
+              [],
+              [],
+              []
+            ],
+            "matched_prohibited_markers": []
+          }
+        },
+        {
+          "method": "dual_prompt_logit_mixing",
+          "weight": 0.0,
+          "seed": 44,
+          "status": "completed",
+          "started_at": "2026-09-18T15:41:15.365424+00:00",
+          "duration_seconds": 11.302,
+          "initial_output_file": "dual-weight-0p0-seed-44-initial.txt",
+          "initial_output_sha256": "4fff2720e2ba7387731331caa30af2d16fbe226af1b4d5cf509503181a0a0ac3",
+          "denoised_output_file": "dual-weight-0p0-seed-44-denoised.txt",
+          "denoised_output_sha256": "a18bf085e7e6eec61c82fed31576a4d89c30d6ae10d6b5af7ebd3aa174160ce6",
+          "trace_file": "dual-weight-0p0-seed-44-trace.json",
+          "trace_sha256": "ec2a380d9e24df4bfc91fb5569e4ad2d3b3becc78d7c688328825fabd3523372",
+          "initial_lexical_indicators": {
+            "retains_A": false,
+            "retains_B": false,
+            "retains_both": false,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": false,
+            "matched_A_groups": [
+              [
+                "numpy"
+              ],
+              [],
+              []
+            ],
+            "matched_B_groups": [
+              [],
+              [],
+              [],
+              []
+            ],
+            "matched_prohibited_markers": []
+          },
+          "denoised_lexical_indicators": {
+            "retains_A": true,
+            "retains_B": false,
+            "retains_both": false,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": false,
+            "matched_A_groups": [
+              [
+                "numpy",
+                "np."
+              ],
+              [
+                "bincount"
+              ],
+              [
+                "repeat"
+              ]
+            ],
+            "matched_B_groups": [
+              [],
+              [],
+              [],
+              []
+            ],
+            "matched_prohibited_markers": []
+          }
+        },
+        {
+          "method": "dual_prompt_logit_mixing",
+          "weight": 1.0,
+          "seed": 42,
+          "status": "completed",
+          "started_at": "2026-09-18T15:41:26.675376+00:00",
+          "duration_seconds": 14.577,
+          "initial_output_file": "dual-weight-1p0-seed-42-initial.txt",
+          "initial_output_sha256": "46ca58bb9667f8e6c0c25cc276146e6ec2202f52455a7b76841a7f623484f7fd",
+          "denoised_output_file": "dual-weight-1p0-seed-42-denoised.txt",
+          "denoised_output_sha256": "da073385726c7129bbbae78ce250b2368ad4293e69974b2b6ca62262fc2b9cb6",
+          "trace_file": "dual-weight-1p0-seed-42-trace.json",
+          "trace_sha256": "3967400836b4ad58c647adff39d9c32f6cdbc588d97530e24547574376b1056c",
+          "initial_lexical_indicators": {
+            "retains_A": false,
+            "retains_B": false,
+            "retains_both": false,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": false,
+            "matched_A_groups": [
+              [],
+              [],
+              []
+            ],
+            "matched_B_groups": [
+              [],
+              [
+                "heapify"
+              ],
+              [],
+              [
+                "fallback",
+                "if"
+              ]
+            ],
+            "matched_prohibited_markers": []
+          },
+          "denoised_lexical_indicators": {
+            "retains_A": false,
+            "retains_B": true,
+            "retains_both": false,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": false,
+            "matched_A_groups": [
+              [],
+              [],
+              [
+                "repeat"
+              ]
+            ],
+            "matched_B_groups": [
+              [
+                "heapq"
+              ],
+              [
+                "heapify"
+              ],
+              [
+                "heappop"
+              ],
+              [
+                "fallback",
+                "when",
+                "if"
+              ]
+            ],
+            "matched_prohibited_markers": []
+          }
+        },
+        {
+          "method": "dual_prompt_logit_mixing",
+          "weight": 1.0,
+          "seed": 43,
+          "status": "completed",
+          "started_at": "2026-09-18T15:41:41.260154+00:00",
+          "duration_seconds": 11.34,
+          "initial_output_file": "dual-weight-1p0-seed-43-initial.txt",
+          "initial_output_sha256": "46ca58bb9667f8e6c0c25cc276146e6ec2202f52455a7b76841a7f623484f7fd",
+          "denoised_output_file": "dual-weight-1p0-seed-43-denoised.txt",
+          "denoised_output_sha256": "81c3f7b43a56213739edc5ce80da3d6e4d48fcf853763a63ed5c43b20b32d638",
+          "trace_file": "dual-weight-1p0-seed-43-trace.json",
+          "trace_sha256": "be1110baab7c02b57ea6e13ac60a1755d26b4aeaaa90ddc8a2d59ab97b28ee8d",
+          "initial_lexical_indicators": {
+            "retains_A": false,
+            "retains_B": false,
+            "retains_both": false,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": false,
+            "matched_A_groups": [
+              [],
+              [],
+              []
+            ],
+            "matched_B_groups": [
+              [],
+              [
+                "heapify"
+              ],
+              [],
+              [
+                "fallback",
+                "if"
+              ]
+            ],
+            "matched_prohibited_markers": []
+          },
+          "denoised_lexical_indicators": {
+            "retains_A": false,
+            "retains_B": true,
+            "retains_both": false,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": false,
+            "matched_A_groups": [
+              [],
+              [],
+              [
+                "repeat"
+              ]
+            ],
+            "matched_B_groups": [
+              [
+                "heapq"
+              ],
+              [
+                "heapify"
+              ],
+              [
+                "heappop"
+              ],
+              [
+                "fallback",
+                "when",
+                "if"
+              ]
+            ],
+            "matched_prohibited_markers": []
+          }
+        },
+        {
+          "method": "dual_prompt_logit_mixing",
+          "weight": 1.0,
+          "seed": 44,
+          "status": "completed",
+          "started_at": "2026-09-18T15:41:52.607765+00:00",
+          "duration_seconds": 12.932,
+          "initial_output_file": "dual-weight-1p0-seed-44-initial.txt",
+          "initial_output_sha256": "46ca58bb9667f8e6c0c25cc276146e6ec2202f52455a7b76841a7f623484f7fd",
+          "denoised_output_file": "dual-weight-1p0-seed-44-denoised.txt",
+          "denoised_output_sha256": "79d9af1262e306dbac0e484124ddcfb5b4830d34463f3a11c50245f9315e35b5",
+          "trace_file": "dual-weight-1p0-seed-44-trace.json",
+          "trace_sha256": "1783f5ed58b5491fecfc8a07b90ca0cce50783d831a5509c08040d26962096c8",
+          "initial_lexical_indicators": {
+            "retains_A": false,
+            "retains_B": false,
+            "retains_both": false,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": false,
+            "matched_A_groups": [
+              [],
+              [],
+              []
+            ],
+            "matched_B_groups": [
+              [],
+              [
+                "heapify"
+              ],
+              [],
+              [
+                "fallback",
+                "if"
+              ]
+            ],
+            "matched_prohibited_markers": []
+          },
+          "denoised_lexical_indicators": {
+            "retains_A": false,
+            "retains_B": true,
+            "retains_both": false,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": false,
+            "matched_A_groups": [
+              [],
+              [],
+              [
+                "repeat"
+              ]
+            ],
+            "matched_B_groups": [
+              [
+                "heapq"
+              ],
+              [
+                "heapify"
+              ],
+              [
+                "heappop"
+              ],
+              [
+                "fallback",
+                "when",
+                "if"
+              ]
+            ],
+            "matched_prohibited_markers": []
+          }
+        },
+        {
+          "method": "dual_prompt_logit_mixing",
+          "weight": 0.5,
+          "seed": 42,
+          "status": "completed",
+          "started_at": "2026-09-18T15:42:05.548938+00:00",
+          "duration_seconds": 14.531,
+          "initial_output_file": "dual-weight-0p5-seed-42-initial.txt",
+          "initial_output_sha256": "ca8a08a60d5985236e5cf900d54742c55e537368d9095e84662723cd91405c27",
+          "denoised_output_file": "dual-weight-0p5-seed-42-denoised.txt",
+          "denoised_output_sha256": "4c6b42c3d44a95fc2f0cb4ee5cf8c17b8f266da511a5da60499dc86b100f1cd6",
+          "trace_file": "dual-weight-0p5-seed-42-trace.json",
+          "trace_sha256": "67daba9322dbe34ce0ba4ada609d97ff2b77adcf73a4bee24dafc3b85f64735b",
+          "initial_lexical_indicators": {
+            "retains_A": false,
+            "retains_B": false,
+            "retains_both": false,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": false,
+            "matched_A_groups": [
+              [],
+              [],
+              []
+            ],
+            "matched_B_groups": [
+              [],
+              [],
+              [],
+              []
+            ],
+            "matched_prohibited_markers": []
+          },
+          "denoised_lexical_indicators": {
+            "retains_A": true,
+            "retains_B": false,
+            "retains_both": false,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": false,
+            "matched_A_groups": [
+              [
+                "numpy",
+                "np."
+              ],
+              [
+                "bincount"
+              ],
+              [
+                "repeat"
+              ]
+            ],
+            "matched_B_groups": [
+              [],
+              [],
+              [],
+              []
+            ],
+            "matched_prohibited_markers": []
+          }
+        },
+        {
+          "method": "dual_prompt_logit_mixing",
+          "weight": 0.5,
+          "seed": 43,
+          "status": "completed",
+          "started_at": "2026-09-18T15:42:20.088139+00:00",
+          "duration_seconds": 14.522,
+          "initial_output_file": "dual-weight-0p5-seed-43-initial.txt",
+          "initial_output_sha256": "ca8a08a60d5985236e5cf900d54742c55e537368d9095e84662723cd91405c27",
+          "denoised_output_file": "dual-weight-0p5-seed-43-denoised.txt",
+          "denoised_output_sha256": "6b323b42c018935894778634eef31e5a19c34359e3c040796315afd10c1a7785",
+          "trace_file": "dual-weight-0p5-seed-43-trace.json",
+          "trace_sha256": "9a7df6e9dcab58b82d6400d5e8a9fef89f5ca65cb43b944c65e81add3f7a731e",
+          "initial_lexical_indicators": {
+            "retains_A": false,
+            "retains_B": false,
+            "retains_both": false,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": false,
+            "matched_A_groups": [
+              [],
+              [],
+              []
+            ],
+            "matched_B_groups": [
+              [],
+              [],
+              [],
+              []
+            ],
+            "matched_prohibited_markers": []
+          },
+          "denoised_lexical_indicators": {
+            "retains_A": false,
+            "retains_B": false,
+            "retains_both": false,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": false,
+            "matched_A_groups": [
+              [
+                "numpy",
+                "np."
+              ],
+              [],
+              [
+                "repeat"
+              ]
+            ],
+            "matched_B_groups": [
+              [],
+              [],
+              [],
+              []
+            ],
+            "matched_prohibited_markers": []
+          }
+        },
+        {
+          "method": "dual_prompt_logit_mixing",
+          "weight": 0.5,
+          "seed": 44,
+          "status": "completed",
+          "started_at": "2026-09-18T15:42:34.618522+00:00",
+          "duration_seconds": 14.509,
+          "initial_output_file": "dual-weight-0p5-seed-44-initial.txt",
+          "initial_output_sha256": "ca8a08a60d5985236e5cf900d54742c55e537368d9095e84662723cd91405c27",
+          "denoised_output_file": "dual-weight-0p5-seed-44-denoised.txt",
+          "denoised_output_sha256": "b15c640e2cdc6a77a959edc41636ecb465a8cb39aceb75dc33496508816253d0",
+          "trace_file": "dual-weight-0p5-seed-44-trace.json",
+          "trace_sha256": "828726904bba0414d47eb213e553a0b66cf325f3dfc259884a4bf1a089379819",
+          "initial_lexical_indicators": {
+            "retains_A": false,
+            "retains_B": false,
+            "retains_both": false,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": false,
+            "matched_A_groups": [
+              [],
+              [],
+              []
+            ],
+            "matched_B_groups": [
+              [],
+              [],
+              [],
+              []
+            ],
+            "matched_prohibited_markers": []
+          },
+          "denoised_lexical_indicators": {
+            "retains_A": false,
+            "retains_B": false,
+            "retains_both": false,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": false,
+            "matched_A_groups": [
+              [],
+              [],
+              []
+            ],
+            "matched_B_groups": [
+              [],
+              [],
+              [],
+              []
+            ],
+            "matched_prohibited_markers": []
+          }
+        },
+        {
+          "method": "aligned_hard_projection",
+          "weight": 0.5,
+          "seed": 42,
+          "status": "completed",
+          "started_at": "2026-09-18T15:42:49.135754+00:00",
+          "duration_seconds": 14.453,
+          "initial_output_file": "hard-midpoint-seed-42-initial.txt",
+          "initial_output_sha256": "ca8a08a60d5985236e5cf900d54742c55e537368d9095e84662723cd91405c27",
+          "denoised_output_file": "hard-midpoint-seed-42-denoised.txt",
+          "denoised_output_sha256": "faca478cedca8e23242ccab54e40617d3f0aeb10b4cf410752c3d46ff3a0eca5",
+          "initial_lexical_indicators": {
+            "retains_A": false,
+            "retains_B": false,
+            "retains_both": false,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": false,
+            "matched_A_groups": [
+              [],
+              [],
+              []
+            ],
+            "matched_B_groups": [
+              [],
+              [],
+              [],
+              []
+            ],
+            "matched_prohibited_markers": []
+          },
+          "denoised_lexical_indicators": {
+            "retains_A": false,
+            "retains_B": false,
+            "retains_both": false,
+            "uses_prohibited_operation": true,
+            "candidate_hybrid": false,
+            "matched_A_groups": [
+              [],
+              [],
+              []
+            ],
+            "matched_B_groups": [
+              [],
+              [],
+              [],
+              []
+            ],
+            "matched_prohibited_markers": [
+              "list.sort"
+            ]
+          }
+        },
+        {
+          "method": "aligned_hard_projection",
+          "weight": 0.5,
+          "seed": 43,
+          "status": "completed",
+          "started_at": "2026-09-18T15:43:03.596960+00:00",
+          "duration_seconds": 14.424,
+          "initial_output_file": "hard-midpoint-seed-43-initial.txt",
+          "initial_output_sha256": "ca8a08a60d5985236e5cf900d54742c55e537368d9095e84662723cd91405c27",
+          "denoised_output_file": "hard-midpoint-seed-43-denoised.txt",
+          "denoised_output_sha256": "39b9a9f7f229397d39ebebce8ac81cc70491f7b57b4804a38fbf42dd70305d8b",
+          "initial_lexical_indicators": {
+            "retains_A": false,
+            "retains_B": false,
+            "retains_both": false,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": false,
+            "matched_A_groups": [
+              [],
+              [],
+              []
+            ],
+            "matched_B_groups": [
+              [],
+              [],
+              [],
+              []
+            ],
+            "matched_prohibited_markers": []
+          },
+          "denoised_lexical_indicators": {
+            "retains_A": false,
+            "retains_B": false,
+            "retains_both": false,
+            "uses_prohibited_operation": true,
+            "candidate_hybrid": false,
+            "matched_A_groups": [
+              [],
+              [],
+              []
+            ],
+            "matched_B_groups": [
+              [],
+              [],
+              [],
+              []
+            ],
+            "matched_prohibited_markers": [
+              "sorted("
+            ]
+          }
+        },
+        {
+          "method": "aligned_hard_projection",
+          "weight": 0.5,
+          "seed": 44,
+          "status": "completed",
+          "started_at": "2026-09-18T15:43:18.029211+00:00",
+          "duration_seconds": 14.401,
+          "initial_output_file": "hard-midpoint-seed-44-initial.txt",
+          "initial_output_sha256": "ca8a08a60d5985236e5cf900d54742c55e537368d9095e84662723cd91405c27",
+          "denoised_output_file": "hard-midpoint-seed-44-denoised.txt",
+          "denoised_output_sha256": "5a29e18b808b970635548123d466f8ea0d29674e8362a214eede4ff39db52bca",
+          "initial_lexical_indicators": {
+            "retains_A": false,
+            "retains_B": false,
+            "retains_both": false,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": false,
+            "matched_A_groups": [
+              [],
+              [],
+              []
+            ],
+            "matched_B_groups": [
+              [],
+              [],
+              [],
+              []
+            ],
+            "matched_prohibited_markers": []
+          },
+          "denoised_lexical_indicators": {
+            "retains_A": false,
+            "retains_B": false,
+            "retains_both": false,
+            "uses_prohibited_operation": true,
+            "candidate_hybrid": false,
+            "matched_A_groups": [
+              [],
+              [],
+              []
+            ],
+            "matched_B_groups": [
+              [],
+              [],
+              [],
+              []
+            ],
+            "matched_prohibited_markers": [
+              "list.sort",
+              "sorted("
+            ]
+          }
+        },
+        {
+          "method": "direct_diffusion_prompt",
+          "seed": 42,
+          "status": "completed",
+          "started_at": "2026-09-18T15:43:32.431222+00:00",
+          "duration_seconds": 14.4,
+          "output_file": "direct-prompt-seed-42.txt",
+          "output_sha256": "6cfdbf776b5ebed907a925e0abb7dc287b4764be15a9a9ba9aa348b577828117",
+          "lexical_indicators": {
+            "retains_A": true,
+            "retains_B": true,
+            "retains_both": true,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": true,
+            "matched_A_groups": [
+              [
+                "np."
+              ],
+              [
+                "bincount"
+              ],
+              [
+                "repeat"
+              ]
+            ],
+            "matched_B_groups": [
+              [
+                "heapq"
+              ],
+              [
+                "heapify"
+              ],
+              [
+                "heappop"
+              ],
+              [
+                "otherwise",
+                "if"
+              ]
+            ],
+            "matched_prohibited_markers": []
+          }
+        },
+        {
+          "method": "direct_diffusion_prompt",
+          "seed": 43,
+          "status": "completed",
+          "started_at": "2026-09-18T15:43:46.831945+00:00",
+          "duration_seconds": 14.463,
+          "output_file": "direct-prompt-seed-43.txt",
+          "output_sha256": "d072fd735e259e4707d61bb9eb9ab97966683e875ebedbb8fe34925c55395f3b",
+          "lexical_indicators": {
+            "retains_A": true,
+            "retains_B": true,
+            "retains_both": true,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": true,
+            "matched_A_groups": [
+              [
+                "np."
+              ],
+              [
+                "bincount"
+              ],
+              [
+                "repeat"
+              ]
+            ],
+            "matched_B_groups": [
+              [
+                "heapq"
+              ],
+              [
+                "heapify"
+              ],
+              [
+                "heappop"
+              ],
+              [
+                "when",
+                "if"
+              ]
+            ],
+            "matched_prohibited_markers": []
+          }
+        },
+        {
+          "method": "direct_diffusion_prompt",
+          "seed": 44,
+          "status": "completed",
+          "started_at": "2026-09-18T15:44:01.296319+00:00",
+          "duration_seconds": 14.397,
+          "output_file": "direct-prompt-seed-44.txt",
+          "output_sha256": "79d72d47a3011c60d6ffab3d31a9b035d21845d33cd8400832086fe58779fa3d",
+          "lexical_indicators": {
+            "retains_A": true,
+            "retains_B": true,
+            "retains_both": true,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": true,
+            "matched_A_groups": [
+              [
+                "np."
+              ],
+              [
+                "bincount"
+              ],
+              [
+                "repeat"
+              ]
+            ],
+            "matched_B_groups": [
+              [
+                "heapq"
+              ],
+              [
+                "heapify"
+              ],
+              [
+                "heappop"
+              ],
+              [
+                "fallback",
+                "otherwise",
+                "if"
+              ]
+            ],
+            "matched_prohibited_markers": []
+          }
+        }
+      ],
+      "endpoint_controls_passed": true,
+      "summary": {
+        "dual_midpoint_hybrid_count": 0,
+        "hard_midpoint_hybrid_count": 0,
+        "direct_prompt_hybrid_count": 3
+      }
+    },
+    {
+      "pair_id": "pair-parallel-byte-histogram",
+      "workload": "byte-frequency-histogram",
+      "provenance": "Public synthetic non-sorting workload frozen before generation on September 18, 2026",
+      "expected_combined_concept": "Split the bytes into independent chunks, compute each chunk's 256-bin histogram with NumPy frombuffer and bincount, and sum the partial histograms.",
+      "status": "blocked_controls",
+      "prompt_alignment": {
+        "token_count": 126,
+        "requires_padding": false,
+        "prompt_a_sha256": "f4c1aa2d06d2df3df68a46847208c4aa7fe0ea743d15ef2fb209cb1d931f9b3f",
+        "prompt_b_sha256": "c847f5bc0f8e0ab140ef30828333549bb56b0c71db8dd3fa00f4ffa714ae7d70",
+        "direct_prompt_sha256": "c3be9a669edd737662b92751a2c7af37b20437142e1d7d0c39dd9e2651a09936"
+      },
+      "embedding_shapes": {
+        "A": [
+          96,
+          2816
+        ],
+        "B": [
+          96,
+          2816
+        ]
+      },
+      "runs": [
+        {
+          "method": "dual_prompt_logit_mixing",
+          "weight": 0.0,
+          "seed": 42,
+          "status": "completed",
+          "started_at": "2026-09-18T15:44:22.090459+00:00",
+          "duration_seconds": 14.557,
+          "initial_output_file": "dual-weight-0p0-seed-42-initial.txt",
+          "initial_output_sha256": "08aadde29cdbaaad95469d33905a3d5d4f68a9414fa7baa3fe781c2d10fbb764",
+          "denoised_output_file": "dual-weight-0p0-seed-42-denoised.txt",
+          "denoised_output_sha256": "967496728df2f0a9abc47df1069a80e7558d99b09132aa6a4341d0a30c0dc0ab",
+          "trace_file": "dual-weight-0p0-seed-42-trace.json",
+          "trace_sha256": "c3f6cdc01986fb93fdfc24e49c1e6409e3175dbd4f134106ac24eaf18673774c",
+          "initial_lexical_indicators": {
+            "retains_A": false,
+            "retains_B": false,
+            "retains_both": false,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": false,
+            "matched_A_groups": [
+              [],
+              [],
+              []
+            ],
+            "matched_B_groups": [
+              [],
+              [],
+              [],
+              []
+            ],
+            "matched_prohibited_markers": []
+          },
+          "denoised_lexical_indicators": {
+            "retains_A": true,
+            "retains_B": false,
+            "retains_both": false,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": false,
+            "matched_A_groups": [
+              [
+                "np."
+              ],
+              [
+                "frombuffer"
+              ],
+              [
+                "bincount"
+              ]
+            ],
+            "matched_B_groups": [
+              [],
+              [],
+              [
+                "histogram"
+              ],
+              []
+            ],
+            "matched_prohibited_markers": []
+          }
+        },
+        {
+          "method": "dual_prompt_logit_mixing",
+          "weight": 0.0,
+          "seed": 43,
+          "status": "completed",
+          "started_at": "2026-09-18T15:44:36.655211+00:00",
+          "duration_seconds": 14.555,
+          "initial_output_file": "dual-weight-0p0-seed-43-initial.txt",
+          "initial_output_sha256": "08aadde29cdbaaad95469d33905a3d5d4f68a9414fa7baa3fe781c2d10fbb764",
+          "denoised_output_file": "dual-weight-0p0-seed-43-denoised.txt",
+          "denoised_output_sha256": "9a316baf2d39689ccfb4432fabc449249d8b9ef0a05d2819e50cbbde3d0786ab",
+          "trace_file": "dual-weight-0p0-seed-43-trace.json",
+          "trace_sha256": "93cce6589e672281e0cc4d2c5642ee294eeb268bb41f87413358393e9f4ec86e",
+          "initial_lexical_indicators": {
+            "retains_A": false,
+            "retains_B": false,
+            "retains_both": false,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": false,
+            "matched_A_groups": [
+              [],
+              [],
+              []
+            ],
+            "matched_B_groups": [
+              [],
+              [],
+              [],
+              []
+            ],
+            "matched_prohibited_markers": []
+          },
+          "denoised_lexical_indicators": {
+            "retains_A": true,
+            "retains_B": false,
+            "retains_both": false,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": false,
+            "matched_A_groups": [
+              [
+                "np."
+              ],
+              [
+                "frombuffer"
+              ],
+              [
+                "bincount"
+              ]
+            ],
+            "matched_B_groups": [
+              [],
+              [],
+              [
+                "histogram"
+              ],
+              []
+            ],
+            "matched_prohibited_markers": []
+          }
+        },
+        {
+          "method": "dual_prompt_logit_mixing",
+          "weight": 0.0,
+          "seed": 44,
+          "status": "completed",
+          "started_at": "2026-09-18T15:44:51.218489+00:00",
+          "duration_seconds": 14.54,
+          "initial_output_file": "dual-weight-0p0-seed-44-initial.txt",
+          "initial_output_sha256": "08aadde29cdbaaad95469d33905a3d5d4f68a9414fa7baa3fe781c2d10fbb764",
+          "denoised_output_file": "dual-weight-0p0-seed-44-denoised.txt",
+          "denoised_output_sha256": "a0d43a0266d552e5ce79ff1ece97d5594651ea69dcd23df5ae6a589653e7fc59",
+          "trace_file": "dual-weight-0p0-seed-44-trace.json",
+          "trace_sha256": "4f1ac7e66991515b43db1ac2c6f914f781684508786b7edad1d1a09d5911f69a",
+          "initial_lexical_indicators": {
+            "retains_A": false,
+            "retains_B": false,
+            "retains_both": false,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": false,
+            "matched_A_groups": [
+              [],
+              [],
+              []
+            ],
+            "matched_B_groups": [
+              [],
+              [],
+              [],
+              []
+            ],
+            "matched_prohibited_markers": []
+          },
+          "denoised_lexical_indicators": {
+            "retains_A": true,
+            "retains_B": false,
+            "retains_both": false,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": false,
+            "matched_A_groups": [
+              [
+                "np."
+              ],
+              [
+                "frombuffer"
+              ],
+              [
+                "bincount"
+              ]
+            ],
+            "matched_B_groups": [
+              [],
+              [],
+              [
+                "histogram"
+              ],
+              []
+            ],
+            "matched_prohibited_markers": []
+          }
+        },
+        {
+          "method": "dual_prompt_logit_mixing",
+          "weight": 1.0,
+          "seed": 42,
+          "status": "completed",
+          "started_at": "2026-09-18T15:45:05.766654+00:00",
+          "duration_seconds": 14.515,
+          "initial_output_file": "dual-weight-1p0-seed-42-initial.txt",
+          "initial_output_sha256": "dcc63ec4c5d01857f9eb0175e6518379ba014c3fd9916952f3e78ab91ddae9fc",
+          "denoised_output_file": "dual-weight-1p0-seed-42-denoised.txt",
+          "denoised_output_sha256": "00f0f6a7aea745ab70a764fd65da4778b3a1b6fd420451c61234a9ce68d5fa31",
+          "trace_file": "dual-weight-1p0-seed-42-trace.json",
+          "trace_sha256": "8c38ec153bbc44cd1b4e86ac7f4e99df93aeaf687421aaf5636e6077b3a1e2f0",
+          "initial_lexical_indicators": {
+            "retains_A": false,
+            "retains_B": false,
+            "retains_both": false,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": false,
+            "matched_A_groups": [
+              [],
+              [],
+              []
+            ],
+            "matched_B_groups": [
+              [
+                "multiprocessing"
+              ],
+              [],
+              [],
+              []
+            ],
+            "matched_prohibited_markers": []
+          },
+          "denoised_lexical_indicators": {
+            "retains_A": false,
+            "retains_B": true,
+            "retains_both": false,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": false,
+            "matched_A_groups": [
+              [],
+              [],
+              []
+            ],
+            "matched_B_groups": [
+              [
+                "multiprocessing",
+                "workers"
+              ],
+              [
+                "chunk"
+              ],
+              [
+                "histogram"
+              ],
+              [
+                "sum"
+              ]
+            ],
+            "matched_prohibited_markers": []
+          }
+        },
+        {
+          "method": "dual_prompt_logit_mixing",
+          "weight": 1.0,
+          "seed": 43,
+          "status": "completed",
+          "started_at": "2026-09-18T15:45:20.290019+00:00",
+          "duration_seconds": 14.515,
+          "initial_output_file": "dual-weight-1p0-seed-43-initial.txt",
+          "initial_output_sha256": "dcc63ec4c5d01857f9eb0175e6518379ba014c3fd9916952f3e78ab91ddae9fc",
+          "denoised_output_file": "dual-weight-1p0-seed-43-denoised.txt",
+          "denoised_output_sha256": "e96a63f18697cc7a7793d94740f5e263d87131ef98e556ac2a949187464ffd98",
+          "trace_file": "dual-weight-1p0-seed-43-trace.json",
+          "trace_sha256": "ac020a7876469ec5977915c2e6a87912d77a2ada23db79b4765855a5b75518ec",
+          "initial_lexical_indicators": {
+            "retains_A": false,
+            "retains_B": false,
+            "retains_both": false,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": false,
+            "matched_A_groups": [
+              [],
+              [],
+              []
+            ],
+            "matched_B_groups": [
+              [
+                "multiprocessing"
+              ],
+              [],
+              [],
+              []
+            ],
+            "matched_prohibited_markers": []
+          },
+          "denoised_lexical_indicators": {
+            "retains_A": false,
+            "retains_B": false,
+            "retains_both": false,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": false,
+            "matched_A_groups": [
+              [],
+              [],
+              []
+            ],
+            "matched_B_groups": [
+              [
+                "multiprocessing",
+                "workers"
+              ],
+              [],
+              [
+                "histogram"
+              ],
+              [
+                "sum"
+              ]
+            ],
+            "matched_prohibited_markers": []
+          }
+        },
+        {
+          "method": "dual_prompt_logit_mixing",
+          "weight": 1.0,
+          "seed": 44,
+          "status": "completed",
+          "started_at": "2026-09-18T15:45:34.812845+00:00",
+          "duration_seconds": 14.511,
+          "initial_output_file": "dual-weight-1p0-seed-44-initial.txt",
+          "initial_output_sha256": "dcc63ec4c5d01857f9eb0175e6518379ba014c3fd9916952f3e78ab91ddae9fc",
+          "denoised_output_file": "dual-weight-1p0-seed-44-denoised.txt",
+          "denoised_output_sha256": "7281546cde29bb156cd66e59461931ef6aed46ddb1fed1515a2b6f4a01373dd2",
+          "trace_file": "dual-weight-1p0-seed-44-trace.json",
+          "trace_sha256": "4f2d90eb16a06a5528095518075fc908712a40a7c2d0f01f9461db2ad4134492",
+          "initial_lexical_indicators": {
+            "retains_A": false,
+            "retains_B": false,
+            "retains_both": false,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": false,
+            "matched_A_groups": [
+              [],
+              [],
+              []
+            ],
+            "matched_B_groups": [
+              [
+                "multiprocessing"
+              ],
+              [],
+              [],
+              []
+            ],
+            "matched_prohibited_markers": []
+          },
+          "denoised_lexical_indicators": {
+            "retains_A": false,
+            "retains_B": false,
+            "retains_both": false,
+            "uses_prohibited_operation": false,
+            "candidate_hybrid": false,
+            "matched_A_groups": [
+              [],
+              [],
+              []
+            ],
+            "matched_B_groups": [
+              [
+                "multiprocessing",
+                "workers"
+              ],
+              [],
+              [
+                "histogram"
+              ],
+              [
+                "sum"
+              ]
+            ],
+            "matched_prohibited_markers": []
+          }
+        }
+      ],
+      "endpoint_controls_passed": false
+    }
+  ],
+  "summary": {
+    "pair_count": 3,
+    "interpretable_pair_count": 2,
+    "blocked_pair_count": 1,
+    "dual_midpoint_hybrid_count": 0,
+    "hard_midpoint_hybrid_count": 0,
+    "direct_prompt_hybrid_count": 6,
+    "completed_run_count": 36
+  },
+  "completed_at": "2026-09-18T15:45:49.327502+00:00"
+}

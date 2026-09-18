@@ -1,0 +1,2 @@
+thought
+Implement `my_sort` using a heap-based general fallback that utilizes `heapq.heapify` to organize the input in-place and repeated `heapq.heappop` calls to extract elements when bounded-integer assumptions do not hold.

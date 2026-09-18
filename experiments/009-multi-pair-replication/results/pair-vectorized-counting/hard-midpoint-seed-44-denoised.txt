@@ -1,0 +1,2 @@
+thought
+Replace the manual `sort` loop implementation with Python's built-in `list.sort()` or `sorted()` function to leverage Timsort's highly optimized C implementation.

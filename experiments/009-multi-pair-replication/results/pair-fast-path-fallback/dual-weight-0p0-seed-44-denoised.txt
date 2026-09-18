@@ -1,0 +1,2 @@
+thought
+For `my_sort`, implement a vectorized NumPy counting sort path that checks for bounded nonnegative integers by using `np.bincount` to calculate frequencies and `np.repeat` to reconstruct the sorted array.

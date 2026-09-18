@@ -1,0 +1,2 @@
+thought
+Replace the manual bubble sort implementation with the built-in `list.sort()` or `sorted()` function to leverage Timsort's O(n log n) complexity.

@@ -1,0 +1,70 @@
+{
+  "weight": 0.5,
+  "seed": 42,
+  "steps": [
+    {
+      "step": 8,
+      "source_top_1_agreement_fraction": 0.96875,
+      "combined_top_1_equals_A_fraction": 0.9791666865348816,
+      "combined_top_1_equals_B_fraction": 0.96875,
+      "combined_top_1_equals_neither_fraction": 0.02083333395421505,
+      "accepted_token_count": 60
+    },
+    {
+      "step": 7,
+      "source_top_1_agreement_fraction": 0.71875,
+      "combined_top_1_equals_A_fraction": 0.78125,
+      "combined_top_1_equals_B_fraction": 0.84375,
+      "combined_top_1_equals_neither_fraction": 0.09375,
+      "accepted_token_count": 24
+    },
+    {
+      "step": 6,
+      "source_top_1_agreement_fraction": 0.65625,
+      "combined_top_1_equals_A_fraction": 0.84375,
+      "combined_top_1_equals_B_fraction": 0.6666666865348816,
+      "combined_top_1_equals_neither_fraction": 0.1458333432674408,
+      "accepted_token_count": 48
+    },
+    {
+      "step": 5,
+      "source_top_1_agreement_fraction": 0.6458333730697632,
+      "combined_top_1_equals_A_fraction": 0.8020833730697632,
+      "combined_top_1_equals_B_fraction": 0.6666666865348816,
+      "combined_top_1_equals_neither_fraction": 0.1770833432674408,
+      "accepted_token_count": 51
+    },
+    {
+      "step": 4,
+      "source_top_1_agreement_fraction": 0.7083333730697632,
+      "combined_top_1_equals_A_fraction": 0.8229166865348816,
+      "combined_top_1_equals_B_fraction": 0.78125,
+      "combined_top_1_equals_neither_fraction": 0.1041666716337204,
+      "accepted_token_count": 56
+    },
+    {
+      "step": 3,
+      "source_top_1_agreement_fraction": 0.75,
+      "combined_top_1_equals_A_fraction": 0.8541666865348816,
+      "combined_top_1_equals_B_fraction": 0.8125,
+      "combined_top_1_equals_neither_fraction": 0.0833333358168602,
+      "accepted_token_count": 66
+    },
+    {
+      "step": 2,
+      "source_top_1_agreement_fraction": 0.8125,
+      "combined_top_1_equals_A_fraction": 0.9270833730697632,
+      "combined_top_1_equals_B_fraction": 0.84375,
+      "combined_top_1_equals_neither_fraction": 0.0416666679084301,
+      "accepted_token_count": 73
+    },
+    {
+      "step": 1,
+      "source_top_1_agreement_fraction": 0.8125,
+      "combined_top_1_equals_A_fraction": 0.8958333730697632,
+      "combined_top_1_equals_B_fraction": 0.8958333730697632,
+      "combined_top_1_equals_neither_fraction": 0.02083333395421505,
+      "accepted_token_count": 80
+    }
+  ]
+}

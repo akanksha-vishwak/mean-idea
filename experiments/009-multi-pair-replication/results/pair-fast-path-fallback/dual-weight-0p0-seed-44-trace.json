@@ -1,0 +1,54 @@
+{
+  "weight": 0.0,
+  "seed": 44,
+  "steps": [
+    {
+      "step": 8,
+      "source_top_1_agreement_fraction": 0.90625,
+      "combined_top_1_equals_A_fraction": 1.0,
+      "combined_top_1_equals_B_fraction": 0.90625,
+      "combined_top_1_equals_neither_fraction": 0.0,
+      "accepted_token_count": 56
+    },
+    {
+      "step": 7,
+      "source_top_1_agreement_fraction": 0.78125,
+      "combined_top_1_equals_A_fraction": 1.0,
+      "combined_top_1_equals_B_fraction": 0.78125,
+      "combined_top_1_equals_neither_fraction": 0.0,
+      "accepted_token_count": 61
+    },
+    {
+      "step": 6,
+      "source_top_1_agreement_fraction": 0.9583333730697632,
+      "combined_top_1_equals_A_fraction": 1.0,
+      "combined_top_1_equals_B_fraction": 0.9583333730697632,
+      "combined_top_1_equals_neither_fraction": 0.0,
+      "accepted_token_count": 84
+    },
+    {
+      "step": 5,
+      "source_top_1_agreement_fraction": 0.9583333730697632,
+      "combined_top_1_equals_A_fraction": 1.0,
+      "combined_top_1_equals_B_fraction": 0.9583333730697632,
+      "combined_top_1_equals_neither_fraction": 0.0,
+      "accepted_token_count": 92
+    },
+    {
+      "step": 4,
+      "source_top_1_agreement_fraction": 0.9895833730697632,
+      "combined_top_1_equals_A_fraction": 1.0,
+      "combined_top_1_equals_B_fraction": 0.9895833730697632,
+      "combined_top_1_equals_neither_fraction": 0.0,
+      "accepted_token_count": 95
+    },
+    {
+      "step": 3,
+      "source_top_1_agreement_fraction": 1.0,
+      "combined_top_1_equals_A_fraction": 1.0,
+      "combined_top_1_equals_B_fraction": 1.0,
+      "combined_top_1_equals_neither_fraction": 0.0,
+      "accepted_token_count": 96
+    }
+  ]
+}

@@ -1,0 +1,2 @@
+thought
+Replace `sorted(list_name)` with `list_name.sort()` to perform the sorting in-place and avoid the overhead of creating a list copy.

@@ -1,0 +1,2 @@
+thought
+Implement `my_sort` by replacing manual loops with the built-in `list.sort()` method to leverage Timsort's highly optimized C implementation.

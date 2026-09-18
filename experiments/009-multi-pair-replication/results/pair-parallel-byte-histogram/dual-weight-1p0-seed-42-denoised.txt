@@ -1,0 +1,2 @@
+thought
+To improve performance, use `multiprocessing.Array` to share memory among the workers, allowing them to update partial histograms directly in a shared buffer to avoid the overhead of serializing and summing large lists from chunks.

@@ -1,0 +1,2 @@
+thought
+Optimize `my_sort` by implementing a specialized path for bounded- integers that uses `numpy.bincount` to count frequencies and `np.repeat` to reconstruct the sorted sequence, ensuring a high-performance alternative to the general-.

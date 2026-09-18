@@ -1,0 +1,2 @@
+thought
+To improve performance on large buffers, use `np.bincount` on a zero-copy `uint8` ` ` ` ` ` view created via `np.frombuffer` with `minlength=256` to ensure a fixed-size histogram without manual iteration.
