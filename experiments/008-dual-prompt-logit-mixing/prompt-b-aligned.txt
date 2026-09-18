@@ -1,0 +1,4 @@
+Task: Improve the performance of my_sort without using list.sort or sorted.
+Source technique: Numba JIT compilation.
+Implementation details: decorate the custom sorting loops with @njit so they compile to machine code and remove Python interpreter overhead. Retain the original custom sorting algorithm while compiling all of its loops directly.
+Required terms: Numba, @njit, machine code.

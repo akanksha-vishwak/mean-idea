@@ -1,0 +1,4 @@
+Task: Improve the performance of my_sort without using list.sort or sorted.
+Source technique: bounded counting sort.
+Implementation details: use a fixed array of 10000 frequency counters for integer values 0-9999, then reconstruct the sorted output from those counts.
+Required terms: counting sort, fixed frequency array, 0-9999.

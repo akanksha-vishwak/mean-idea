@@ -1,0 +1,40 @@
+{
+  "experiment_id": "008-dual-prompt-logit-mixing",
+  "status": "pilot",
+  "question": "Can jointly supplying both source prompts through weighted logits at every denoising step produce a coherent counting-sort plus Numba optimization idea?",
+  "inputs": {
+    "canvas": "tests/example/blank.txt",
+    "prompt_A": "experiments/008-dual-prompt-logit-mixing/prompt-a-aligned.txt",
+    "prompt_B": "experiments/008-dual-prompt-logit-mixing/prompt-b-aligned.txt"
+  },
+  "design": {
+    "logit_weights": [0.0, 0.25, 0.5, 0.75, 1.0],
+    "weight_meaning": "0.0 uses A-conditioned logits; 1.0 uses B-conditioned logits.",
+    "seeds": [42, 43, 44],
+    "denoising_steps": 8,
+    "canvas_length": 64,
+    "initialization": "Hard-project the arithmetic interpolation of the two validated final prompt-conditioned canvas states at the same weight.",
+    "per_step_mixing": "Run the shared current canvas under source prompt A and source prompt B as a two-row batch, linearly mix the processed logits, sample one shared update, and use the mixed logits for self-conditioning.",
+    "hard_projection_baseline": "Decode the aligned weight-0.5 final-state interpolation with the ordinary one-shot hard projection and no source prompt during denoising.",
+    "direct_diffusion_prompt_baseline": "Ask DiffusionGemma directly to combine bounded counting sort with Numba @njit, using the same generation instruction and seeds."
+  },
+  "control_gate": {
+    "prompt_alignment": "The complete A and B prompt sequences, including the shared generation instruction, must have exactly equal token counts and require no tokenizer padding.",
+    "A_endpoint": "Every weight-0.0 output must retain bounded counting or frequency sorting.",
+    "B_endpoint": "Every weight-1.0 output must retain Numba and JIT compilation.",
+    "failure_behavior": "If either endpoint gate fails, preserve the six controls and skip intermediate and direct-baseline runs."
+  },
+  "hybrid_success_rule": "An intermediate output must coherently retain bounded counting or frequency sorting and Numba/JIT compilation without list.sort or sorted.",
+  "interpretation": {
+    "hybrid_at_intermediate_weight": "Joint conditioning during refinement can compose information that one-shot projection could not; replicate on additional pairs.",
+    "valid_endpoints_without_hybrid": "Final-state initialization plus per-step linear logit mixing still lacks sequence-level semantic composition.",
+    "direct_prompt_wins": "The simpler text baseline should be preferred unless mixed logits add measurable novelty, diversity, or reliability.",
+    "endpoint_failure": "The implementation or dual-prompt batching is not controlled well enough to interpret intermediate outputs."
+  },
+  "important_limitations": [
+    "This mixes final output logits, not internal hidden activations or KV-cache tensors.",
+    "The equal-token aligned prompts are new controls and are not assumed equivalent to Experiment 004 prompts.",
+    "Linear logit interpolation corresponds to a product-like combination of token preferences and may suppress alternatives favored by only one parent.",
+    "This remains one validated prompt pair and an exploratory pilot."
+  ]
+}
