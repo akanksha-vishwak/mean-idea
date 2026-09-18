@@ -1,0 +1,647 @@
+{
+  "experiment_id": "010-histogram-endpoint-specificity",
+  "status": "completed",
+  "started_at": "2026-09-18T16:01:49.833863+00:00",
+  "repository_revision": "ef4087432827231f9be40afc867ca5979785571a",
+  "model": {
+    "id": "google/diffusiongemma-26B-A4B-it",
+    "revision": "f7f5b7f5fa82ffc52addd066915886d497f5517b"
+  },
+  "runtime": {
+    "python": "3.12.3",
+    "torch": "2.9.1+cu128",
+    "cuda_available": true,
+    "cuda_version": "12.8",
+    "cuda_device": "NVIDIA GeForce RTX 5090"
+  },
+  "settings": {
+    "canvas_length": 96,
+    "denoising_steps": 8,
+    "seeds": [
+      42,
+      43,
+      44
+    ],
+    "generation_prompt": "Generate one concise optimization idea for the stated Python task. Preserve the specific algorithmic and implementation details represented in the supplied canvas. Return only the optimization idea.",
+    "conditions": [
+      "original B reproduction",
+      "strengthened A endpoint",
+      "strengthened B endpoint"
+    ]
+  },
+  "inputs": {
+    "original_pairs_path": "experiments/009-multi-pair-replication/pairs.json",
+    "original_pairs_sha256": "5a229fe46987e18bcef76a35ec789758652246d31c6b5cc1d9d560d1ebb21d3f",
+    "reference_output_dir": "experiments/009-multi-pair-replication/results/pair-parallel-byte-histogram",
+    "prompt_a_path": "experiments/010-histogram-endpoint-specificity/prompt-a-strengthened.txt",
+    "prompt_a_sha256": "e26f37955c5cec56c27996c5750889b57f7f1d249ef9bf55ccc5f8ce888f68ef",
+    "prompt_a_canonical_sha256": "db0a4cb11aa1f89574c07f493f38223c32f1b9a9df18c3ddbf432ed207ba071a",
+    "prompt_b_path": "experiments/010-histogram-endpoint-specificity/prompt-b-strengthened.txt",
+    "prompt_b_sha256": "fb5f365a9d3c777c95b183dbfbf8b5b135ded20cd6bdca519391009d0d50b5b3",
+    "prompt_b_canonical_sha256": "c4167f20eaeee051397192b1a5e9dec66650164c23b3efd43894f591420dac5b",
+    "experiment_009_runner_path": "experiments/009-multi-pair-replication/run.py",
+    "experiment_009_runner_sha256": "4546877cb6c9b6f4959ba2295112ef366ddbe36cfa872b3beff04978b67e7199"
+  },
+  "original_b_reproduction_runs": [
+    {
+      "method": "dual_prompt_logit_mixing",
+      "weight": 1.0,
+      "seed": 42,
+      "status": "completed",
+      "started_at": "2026-09-18T16:01:57.262914+00:00",
+      "duration_seconds": 15.01,
+      "initial_output_file": "dual-weight-1p0-seed-42-initial.txt",
+      "initial_output_sha256": "dcc63ec4c5d01857f9eb0175e6518379ba014c3fd9916952f3e78ab91ddae9fc",
+      "denoised_output_file": "dual-weight-1p0-seed-42-denoised.txt",
+      "denoised_output_sha256": "00f0f6a7aea745ab70a764fd65da4778b3a1b6fd420451c61234a9ce68d5fa31",
+      "trace_file": "dual-weight-1p0-seed-42-trace.json",
+      "trace_sha256": "8c38ec153bbc44cd1b4e86ac7f4e99df93aeaf687421aaf5636e6077b3a1e2f0",
+      "initial_lexical_indicators": {
+        "retains_A": false,
+        "retains_B": false,
+        "retains_both": false,
+        "uses_prohibited_operation": false,
+        "candidate_hybrid": false,
+        "matched_A_groups": [
+          [],
+          [],
+          []
+        ],
+        "matched_B_groups": [
+          [
+            "multiprocessing"
+          ],
+          [],
+          [],
+          []
+        ],
+        "matched_prohibited_markers": []
+      },
+      "denoised_lexical_indicators": {
+        "retains_A": false,
+        "retains_B": true,
+        "retains_both": false,
+        "uses_prohibited_operation": true,
+        "candidate_hybrid": false,
+        "matched_A_groups": [
+          [],
+          [],
+          []
+        ],
+        "matched_B_groups": [
+          [
+            "multiprocessing",
+            "workers"
+          ],
+          [
+            "chunk"
+          ],
+          [
+            "histogram"
+          ],
+          [
+            "sum"
+          ]
+        ],
+        "matched_prohibited_markers": [
+          "positive shared-state strategy"
+        ]
+      },
+      "reference_output_file": "experiments/009-multi-pair-replication/results/pair-parallel-byte-histogram/dual-weight-1p0-seed-42-denoised.txt",
+      "reference_canonical_sha256": "8acb3da5e0b9ae4918c7a4faffe6e49af807d1e185604e785140e24659e9894d",
+      "canonical_reproduction_match": true
+    },
+    {
+      "method": "dual_prompt_logit_mixing",
+      "weight": 1.0,
+      "seed": 43,
+      "status": "completed",
+      "started_at": "2026-09-18T16:02:12.279839+00:00",
+      "duration_seconds": 14.552,
+      "initial_output_file": "dual-weight-1p0-seed-43-initial.txt",
+      "initial_output_sha256": "dcc63ec4c5d01857f9eb0175e6518379ba014c3fd9916952f3e78ab91ddae9fc",
+      "denoised_output_file": "dual-weight-1p0-seed-43-denoised.txt",
+      "denoised_output_sha256": "e96a63f18697cc7a7793d94740f5e263d87131ef98e556ac2a949187464ffd98",
+      "trace_file": "dual-weight-1p0-seed-43-trace.json",
+      "trace_sha256": "ac020a7876469ec5977915c2e6a87912d77a2ada23db79b4765855a5b75518ec",
+      "initial_lexical_indicators": {
+        "retains_A": false,
+        "retains_B": false,
+        "retains_both": false,
+        "uses_prohibited_operation": false,
+        "candidate_hybrid": false,
+        "matched_A_groups": [
+          [],
+          [],
+          []
+        ],
+        "matched_B_groups": [
+          [
+            "multiprocessing"
+          ],
+          [],
+          [],
+          []
+        ],
+        "matched_prohibited_markers": []
+      },
+      "denoised_lexical_indicators": {
+        "retains_A": false,
+        "retains_B": false,
+        "retains_both": false,
+        "uses_prohibited_operation": true,
+        "candidate_hybrid": false,
+        "matched_A_groups": [
+          [],
+          [],
+          []
+        ],
+        "matched_B_groups": [
+          [
+            "multiprocessing",
+            "workers"
+          ],
+          [],
+          [
+            "histogram"
+          ],
+          [
+            "sum"
+          ]
+        ],
+        "matched_prohibited_markers": [
+          "positive shared-state strategy"
+        ]
+      },
+      "reference_output_file": "experiments/009-multi-pair-replication/results/pair-parallel-byte-histogram/dual-weight-1p0-seed-43-denoised.txt",
+      "reference_canonical_sha256": "358156901fee36ece1a738456c8d5c9f70fb78b8515d7b96ce3475aa1674f7c1",
+      "canonical_reproduction_match": true
+    },
+    {
+      "method": "dual_prompt_logit_mixing",
+      "weight": 1.0,
+      "seed": 44,
+      "status": "completed",
+      "started_at": "2026-09-18T16:02:26.839325+00:00",
+      "duration_seconds": 14.493,
+      "initial_output_file": "dual-weight-1p0-seed-44-initial.txt",
+      "initial_output_sha256": "dcc63ec4c5d01857f9eb0175e6518379ba014c3fd9916952f3e78ab91ddae9fc",
+      "denoised_output_file": "dual-weight-1p0-seed-44-denoised.txt",
+      "denoised_output_sha256": "7281546cde29bb156cd66e59461931ef6aed46ddb1fed1515a2b6f4a01373dd2",
+      "trace_file": "dual-weight-1p0-seed-44-trace.json",
+      "trace_sha256": "4f2d90eb16a06a5528095518075fc908712a40a7c2d0f01f9461db2ad4134492",
+      "initial_lexical_indicators": {
+        "retains_A": false,
+        "retains_B": false,
+        "retains_both": false,
+        "uses_prohibited_operation": false,
+        "candidate_hybrid": false,
+        "matched_A_groups": [
+          [],
+          [],
+          []
+        ],
+        "matched_B_groups": [
+          [
+            "multiprocessing"
+          ],
+          [],
+          [],
+          []
+        ],
+        "matched_prohibited_markers": []
+      },
+      "denoised_lexical_indicators": {
+        "retains_A": false,
+        "retains_B": false,
+        "retains_both": false,
+        "uses_prohibited_operation": true,
+        "candidate_hybrid": false,
+        "matched_A_groups": [
+          [],
+          [],
+          []
+        ],
+        "matched_B_groups": [
+          [
+            "multiprocessing",
+            "workers"
+          ],
+          [],
+          [
+            "histogram"
+          ],
+          [
+            "sum"
+          ]
+        ],
+        "matched_prohibited_markers": [
+          "positive shared-state strategy"
+        ]
+      },
+      "reference_output_file": "experiments/009-multi-pair-replication/results/pair-parallel-byte-histogram/dual-weight-1p0-seed-44-denoised.txt",
+      "reference_canonical_sha256": "252dc8386dcf3d303ba36233fc2745d9fe2f321d70f4a72af2925492460448dc",
+      "canonical_reproduction_match": true
+    }
+  ],
+  "strengthened_endpoint_runs": [
+    {
+      "method": "dual_prompt_logit_mixing",
+      "weight": 0.0,
+      "seed": 42,
+      "status": "completed",
+      "started_at": "2026-09-18T16:02:47.753738+00:00",
+      "duration_seconds": 14.399,
+      "initial_output_file": "dual-weight-0p0-seed-42-initial.txt",
+      "initial_output_sha256": "f662f1f628bf70db4faabe40a0f6569be43ab5aa8281b15e1dcda2924093d5ea",
+      "denoised_output_file": "dual-weight-0p0-seed-42-denoised.txt",
+      "denoised_output_sha256": "0daf5548da7ecb6aff7e51872af15c84fac50ad5848f018278fec2e667281ec9",
+      "trace_file": "dual-weight-0p0-seed-42-trace.json",
+      "trace_sha256": "e15f78c09081320d2e5be7db42900f2319abccdc399a297759e0ebf767d10e5c",
+      "initial_lexical_indicators": {
+        "retains_A": false,
+        "retains_B": false,
+        "retains_both": false,
+        "uses_prohibited_operation": false,
+        "candidate_hybrid": false,
+        "matched_A_groups": [
+          [],
+          [],
+          []
+        ],
+        "matched_B_groups": [
+          [],
+          [],
+          [],
+          [],
+          [],
+          []
+        ],
+        "matched_prohibited_markers": []
+      },
+      "denoised_lexical_indicators": {
+        "retains_A": false,
+        "retains_B": false,
+        "retains_both": false,
+        "uses_prohibited_operation": false,
+        "candidate_hybrid": false,
+        "matched_A_groups": [
+          [
+            "np."
+          ],
+          [
+            "frombuffer"
+          ],
+          []
+        ],
+        "matched_B_groups": [
+          [],
+          [],
+          [],
+          [],
+          [],
+          []
+        ],
+        "matched_prohibited_markers": []
+      }
+    },
+    {
+      "method": "dual_prompt_logit_mixing",
+      "weight": 0.0,
+      "seed": 43,
+      "status": "completed",
+      "started_at": "2026-09-18T16:03:02.161694+00:00",
+      "duration_seconds": 14.471,
+      "initial_output_file": "dual-weight-0p0-seed-43-initial.txt",
+      "initial_output_sha256": "f662f1f628bf70db4faabe40a0f6569be43ab5aa8281b15e1dcda2924093d5ea",
+      "denoised_output_file": "dual-weight-0p0-seed-43-denoised.txt",
+      "denoised_output_sha256": "85c8bbbd0cf6422946aeae35847353b8fb1a1f9338c8bea3418f3dbbefdf01eb",
+      "trace_file": "dual-weight-0p0-seed-43-trace.json",
+      "trace_sha256": "d10c99a7db08b430718f1235d1753044177ec779feedffe11a04069e48dd61d5",
+      "initial_lexical_indicators": {
+        "retains_A": false,
+        "retains_B": false,
+        "retains_both": false,
+        "uses_prohibited_operation": false,
+        "candidate_hybrid": false,
+        "matched_A_groups": [
+          [],
+          [],
+          []
+        ],
+        "matched_B_groups": [
+          [],
+          [],
+          [],
+          [],
+          [],
+          []
+        ],
+        "matched_prohibited_markers": []
+      },
+      "denoised_lexical_indicators": {
+        "retains_A": false,
+        "retains_B": false,
+        "retains_both": false,
+        "uses_prohibited_operation": false,
+        "candidate_hybrid": false,
+        "matched_A_groups": [
+          [],
+          [],
+          []
+        ],
+        "matched_B_groups": [
+          [],
+          [],
+          [],
+          [],
+          [],
+          []
+        ],
+        "matched_prohibited_markers": []
+      }
+    },
+    {
+      "method": "dual_prompt_logit_mixing",
+      "weight": 0.0,
+      "seed": 44,
+      "status": "completed",
+      "started_at": "2026-09-18T16:03:16.641286+00:00",
+      "duration_seconds": 14.577,
+      "initial_output_file": "dual-weight-0p0-seed-44-initial.txt",
+      "initial_output_sha256": "f662f1f628bf70db4faabe40a0f6569be43ab5aa8281b15e1dcda2924093d5ea",
+      "denoised_output_file": "dual-weight-0p0-seed-44-denoised.txt",
+      "denoised_output_sha256": "2065977ac2251e0a12e5f876322da096814682ffe9681549519cd3f98fc605b4",
+      "trace_file": "dual-weight-0p0-seed-44-trace.json",
+      "trace_sha256": "214cafda736e51afa9b73d9377b9f4fe8af88a37dae92c901e89f0325d7f495d",
+      "initial_lexical_indicators": {
+        "retains_A": false,
+        "retains_B": false,
+        "retains_both": false,
+        "uses_prohibited_operation": false,
+        "candidate_hybrid": false,
+        "matched_A_groups": [
+          [],
+          [],
+          []
+        ],
+        "matched_B_groups": [
+          [],
+          [],
+          [],
+          [],
+          [],
+          []
+        ],
+        "matched_prohibited_markers": []
+      },
+      "denoised_lexical_indicators": {
+        "retains_A": true,
+        "retains_B": false,
+        "retains_both": false,
+        "uses_prohibited_operation": false,
+        "candidate_hybrid": false,
+        "matched_A_groups": [
+          [
+            "numpy",
+            "np."
+          ],
+          [
+            "frombuffer"
+          ],
+          [
+            "bincount"
+          ]
+        ],
+        "matched_B_groups": [
+          [],
+          [],
+          [],
+          [
+            "histogram"
+          ],
+          [],
+          []
+        ],
+        "matched_prohibited_markers": []
+      }
+    },
+    {
+      "method": "dual_prompt_logit_mixing",
+      "weight": 1.0,
+      "seed": 42,
+      "status": "completed",
+      "started_at": "2026-09-18T16:03:31.225284+00:00",
+      "duration_seconds": 14.626,
+      "initial_output_file": "dual-weight-1p0-seed-42-initial.txt",
+      "initial_output_sha256": "25941413c10dab801c806ff332dd0997ba58653eff468268fb403d7531ccd84b",
+      "denoised_output_file": "dual-weight-1p0-seed-42-denoised.txt",
+      "denoised_output_sha256": "2832a71740aaed66112482d2944469b2b56cd97e12dcd6c8b3a8322a20dc6d6d",
+      "trace_file": "dual-weight-1p0-seed-42-trace.json",
+      "trace_sha256": "d1f23bc080955db5107e883bb33c9d1740f5c1d01c7d4b57a6582b8f3588dcac",
+      "initial_lexical_indicators": {
+        "retains_A": false,
+        "retains_B": false,
+        "retains_both": false,
+        "uses_prohibited_operation": false,
+        "candidate_hybrid": false,
+        "matched_A_groups": [
+          [],
+          [],
+          []
+        ],
+        "matched_B_groups": [
+          [],
+          [],
+          [],
+          [],
+          [],
+          []
+        ],
+        "matched_prohibited_markers": []
+      },
+      "denoised_lexical_indicators": {
+        "retains_A": false,
+        "retains_B": false,
+        "retains_both": false,
+        "uses_prohibited_operation": false,
+        "candidate_hybrid": false,
+        "matched_A_groups": [
+          [
+            "numpy"
+          ],
+          [],
+          []
+        ],
+        "matched_B_groups": [
+          [],
+          [
+            "chunk"
+          ],
+          [
+            "private",
+            "partial"
+          ],
+          [
+            "histogram"
+          ],
+          [
+            "parent"
+          ],
+          [
+            "sum"
+          ]
+        ],
+        "matched_prohibited_markers": []
+      }
+    },
+    {
+      "method": "dual_prompt_logit_mixing",
+      "weight": 1.0,
+      "seed": 43,
+      "status": "completed",
+      "started_at": "2026-09-18T16:03:45.859075+00:00",
+      "duration_seconds": 14.606,
+      "initial_output_file": "dual-weight-1p0-seed-43-initial.txt",
+      "initial_output_sha256": "25941413c10dab801c806ff332dd0997ba58653eff468268fb403d7531ccd84b",
+      "denoised_output_file": "dual-weight-1p0-seed-43-denoised.txt",
+      "denoised_output_sha256": "6a7b2840a6cddfa99e60e7535ee6385a23b855fe3091872381cc12f3ed70f7e7",
+      "trace_file": "dual-weight-1p0-seed-43-trace.json",
+      "trace_sha256": "e4c0d265531347d65e0f476ad8ea7a8b6ddf376d3cc74061d45180fcd4b23e7d",
+      "initial_lexical_indicators": {
+        "retains_A": false,
+        "retains_B": false,
+        "retains_both": false,
+        "uses_prohibited_operation": false,
+        "candidate_hybrid": false,
+        "matched_A_groups": [
+          [],
+          [],
+          []
+        ],
+        "matched_B_groups": [
+          [],
+          [],
+          [],
+          [],
+          [],
+          []
+        ],
+        "matched_prohibited_markers": []
+      },
+      "denoised_lexical_indicators": {
+        "retains_A": false,
+        "retains_B": false,
+        "retains_both": false,
+        "uses_prohibited_operation": false,
+        "candidate_hybrid": false,
+        "matched_A_groups": [
+          [
+            "numpy"
+          ],
+          [],
+          [
+            "bincount"
+          ]
+        ],
+        "matched_B_groups": [
+          [],
+          [
+            "chunk"
+          ],
+          [
+            "private",
+            "partial"
+          ],
+          [
+            "histogram"
+          ],
+          [
+            "parent"
+          ],
+          [
+            "sum"
+          ]
+        ],
+        "matched_prohibited_markers": []
+      }
+    },
+    {
+      "method": "dual_prompt_logit_mixing",
+      "weight": 1.0,
+      "seed": 44,
+      "status": "completed",
+      "started_at": "2026-09-18T16:04:00.471882+00:00",
+      "duration_seconds": 14.6,
+      "initial_output_file": "dual-weight-1p0-seed-44-initial.txt",
+      "initial_output_sha256": "25941413c10dab801c806ff332dd0997ba58653eff468268fb403d7531ccd84b",
+      "denoised_output_file": "dual-weight-1p0-seed-44-denoised.txt",
+      "denoised_output_sha256": "65e38c5ce6eed37541a9dde340e9599c3ca92a955c3e12e342da666ce9d5ca3f",
+      "trace_file": "dual-weight-1p0-seed-44-trace.json",
+      "trace_sha256": "7b424b560fc3322af5d34fb0a115f9498f8e9b124792eeb6d71fa78d18c8d5c0",
+      "initial_lexical_indicators": {
+        "retains_A": false,
+        "retains_B": false,
+        "retains_both": false,
+        "uses_prohibited_operation": false,
+        "candidate_hybrid": false,
+        "matched_A_groups": [
+          [],
+          [],
+          []
+        ],
+        "matched_B_groups": [
+          [],
+          [],
+          [],
+          [],
+          [],
+          []
+        ],
+        "matched_prohibited_markers": []
+      },
+      "denoised_lexical_indicators": {
+        "retains_A": false,
+        "retains_B": false,
+        "retains_both": false,
+        "uses_prohibited_operation": false,
+        "candidate_hybrid": false,
+        "matched_A_groups": [
+          [
+            "numpy"
+          ],
+          [],
+          []
+        ],
+        "matched_B_groups": [
+          [],
+          [
+            "chunk"
+          ],
+          [
+            "private",
+            "partial"
+          ],
+          [
+            "histogram"
+          ],
+          [
+            "parent"
+          ],
+          [
+            "sum"
+          ]
+        ],
+        "matched_prohibited_markers": []
+      }
+    }
+  ],
+  "original_prompt_token_count": 126,
+  "reproduction_controls_passed": true,
+  "strengthened_prompt_token_count": 153,
+  "strengthened_prompts_require_padding": false,
+  "strengthened_A_endpoint_passed": false,
+  "strengthened_B_endpoint_passed": false,
+  "completed_at": "2026-09-18T16:04:15.072592+00:00",
+  "completed_run_count": 9
+}

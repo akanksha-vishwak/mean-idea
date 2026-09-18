@@ -1,0 +1,2 @@
+thought
+To optimize performance, use `numpy.b` and `numpy.histogram` within each worker to generate the private partial histograms from disjoint chunks, then utilize `numpy.sum(axis=0)` in the parent process to perform the parent sum via vectorized addition.

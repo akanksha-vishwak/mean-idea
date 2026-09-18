@@ -1,0 +1,2 @@
+thought
+Improve performance using `numpy.bincount` or `numpy.histogram` within each worker to generate private partial histograms from disjoint chunks, then perform the parent sum using vectorized array addition to minimize Python overhead.
