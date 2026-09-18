@@ -1,0 +1,2 @@
+thought
+Replace the inner loop's manual swap logic or reduce the number of attribute lookups by caching frequently accessed elements in local variables.

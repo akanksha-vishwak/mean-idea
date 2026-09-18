@@ -1,0 +1,2 @@
+thought
+Implement `my_sort` using a Numba-compiled `@njit` function that performs a bounded counting sort by initializing a fixed-size frequency array for integers 0-9999 and reconstructing the sorted output by iterating through the frequency counts to eliminate Python interpreter overhead.

@@ -1,0 +1,2 @@
+thought
+To improve the performance of `my_sort`, decorate the function with `@njit` to compile the custom sorting loops directly into **machine code**, thereby eliminating Python interpreter overhead.

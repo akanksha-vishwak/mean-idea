@@ -1,0 +1,2 @@
+thought
+Implement the inner loop by using a local variable to reduce the number of attribute lookups during the sorting process.

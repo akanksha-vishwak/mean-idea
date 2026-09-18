@@ -1,0 +1,2 @@
+thought
+To improve the performance of `my_sort`, decorate the function with **Numba**'@njit** to compile the the sorting loops directly into **machine code**, eliminating Python interpreter overhead while maintaining the original algorithm.

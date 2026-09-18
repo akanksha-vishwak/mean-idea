@@ -1,0 +1,2 @@
+thought
+Implement `my_sort` using a Numba-compiled `@njit` function that initializes a fixed-size frequency array of size 10,000 to count occurrences of integers 0-9999, followed by a manual pass to reconstruct the sorted array, thereby eliminating

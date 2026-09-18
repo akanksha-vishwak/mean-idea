@@ -1,0 +1,2 @@
+thought
+Implement a **counting sort** using a **fixed frequency array** of size 1000 integers to count occurrences of values **0-9999**, then reconstruct the sorted list by iterating through the array and appending each index based on its stored count.

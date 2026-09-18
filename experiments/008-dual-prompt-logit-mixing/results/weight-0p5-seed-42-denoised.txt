@@ -1,0 +1,2 @@
+thought
+Optimize `my_sort` by implementing a ** ** sort** using a **fixed** array** of ** ** the- ** ** ** to ** ** the the the the the the the the the the the the

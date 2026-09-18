@@ -1,0 +1,70 @@
+{
+  "weight": 0.0,
+  "seed": 44,
+  "steps": [
+    {
+      "step": 8,
+      "source_top_1_agreement_fraction": 0.9375,
+      "combined_top_1_equals_A_fraction": 1.0,
+      "combined_top_1_equals_B_fraction": 0.9375,
+      "combined_top_1_equals_neither_fraction": 0.0,
+      "accepted_token_count": 20
+    },
+    {
+      "step": 7,
+      "source_top_1_agreement_fraction": 0.359375,
+      "combined_top_1_equals_A_fraction": 1.0,
+      "combined_top_1_equals_B_fraction": 0.359375,
+      "combined_top_1_equals_neither_fraction": 0.0,
+      "accepted_token_count": 7
+    },
+    {
+      "step": 6,
+      "source_top_1_agreement_fraction": 0.578125,
+      "combined_top_1_equals_A_fraction": 1.0,
+      "combined_top_1_equals_B_fraction": 0.578125,
+      "combined_top_1_equals_neither_fraction": 0.0,
+      "accepted_token_count": 13
+    },
+    {
+      "step": 5,
+      "source_top_1_agreement_fraction": 0.53125,
+      "combined_top_1_equals_A_fraction": 1.0,
+      "combined_top_1_equals_B_fraction": 0.53125,
+      "combined_top_1_equals_neither_fraction": 0.0,
+      "accepted_token_count": 15
+    },
+    {
+      "step": 4,
+      "source_top_1_agreement_fraction": 0.796875,
+      "combined_top_1_equals_A_fraction": 1.0,
+      "combined_top_1_equals_B_fraction": 0.796875,
+      "combined_top_1_equals_neither_fraction": 0.0,
+      "accepted_token_count": 33
+    },
+    {
+      "step": 3,
+      "source_top_1_agreement_fraction": 0.84375,
+      "combined_top_1_equals_A_fraction": 1.0,
+      "combined_top_1_equals_B_fraction": 0.84375,
+      "combined_top_1_equals_neither_fraction": 0.0,
+      "accepted_token_count": 33
+    },
+    {
+      "step": 2,
+      "source_top_1_agreement_fraction": 0.8125,
+      "combined_top_1_equals_A_fraction": 1.0,
+      "combined_top_1_equals_B_fraction": 0.8125,
+      "combined_top_1_equals_neither_fraction": 0.0,
+      "accepted_token_count": 53
+    },
+    {
+      "step": 1,
+      "source_top_1_agreement_fraction": 0.984375,
+      "combined_top_1_equals_A_fraction": 1.0,
+      "combined_top_1_equals_B_fraction": 0.984375,
+      "combined_top_1_equals_neither_fraction": 0.0,
+      "accepted_token_count": 61
+    }
+  ]
+}

@@ -1,0 +1,2 @@
+thought
+Implement `my_sort` using **counting sort** by initializing a **fixed frequency array** of 10,000 counters to track occurrences of integers **0-9999**, then reconstructing the sorted list by iterating through the array and appending each index based on its counts.

@@ -1,0 +1,46 @@
+{
+  "weight": 1.0,
+  "seed": 43,
+  "steps": [
+    {
+      "step": 8,
+      "source_top_1_agreement_fraction": 0.796875,
+      "combined_top_1_equals_A_fraction": 0.796875,
+      "combined_top_1_equals_B_fraction": 1.0,
+      "combined_top_1_equals_neither_fraction": 0.0,
+      "accepted_token_count": 37
+    },
+    {
+      "step": 7,
+      "source_top_1_agreement_fraction": 0.84375,
+      "combined_top_1_equals_A_fraction": 0.84375,
+      "combined_top_1_equals_B_fraction": 1.0,
+      "combined_top_1_equals_neither_fraction": 0.0,
+      "accepted_token_count": 37
+    },
+    {
+      "step": 6,
+      "source_top_1_agreement_fraction": 0.859375,
+      "combined_top_1_equals_A_fraction": 0.859375,
+      "combined_top_1_equals_B_fraction": 1.0,
+      "combined_top_1_equals_neither_fraction": 0.0,
+      "accepted_token_count": 38
+    },
+    {
+      "step": 5,
+      "source_top_1_agreement_fraction": 0.859375,
+      "combined_top_1_equals_A_fraction": 0.859375,
+      "combined_top_1_equals_B_fraction": 1.0,
+      "combined_top_1_equals_neither_fraction": 0.0,
+      "accepted_token_count": 55
+    },
+    {
+      "step": 4,
+      "source_top_1_agreement_fraction": 0.984375,
+      "combined_top_1_equals_A_fraction": 0.984375,
+      "combined_top_1_equals_B_fraction": 1.0,
+      "combined_top_1_equals_neither_fraction": 0.0,
+      "accepted_token_count": 64
+    }
+  ]
+}
