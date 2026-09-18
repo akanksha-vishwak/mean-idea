@@ -1,0 +1,35 @@
+{
+  "experiment_id": "007-stochastic-projection",
+  "status": "pilot",
+  "question": "Can a stochastic top-20 projection retain and coordinate parent alternatives better than independent hard top-1 projection at the arithmetic midpoint?",
+  "inputs": {
+    "candidate_scores": "experiments/006-top-candidate-projection/results/results.json",
+    "weights": [0.0, 0.5, 1.0],
+    "top_k": 20
+  },
+  "design": {
+    "temperatures": [0.5, 1.0, 2.0],
+    "endpoint_seeds": [42, 43, 44],
+    "midpoint_seeds": [42, 43, 44, 45, 46],
+    "denoising_steps": 8,
+    "sampling": "Independently sample one token per position from the top-20 LM-head scores after temperature scaling.",
+    "randomness": "Use a dedicated CPU generator for projection sampling and reset the model RNG to the same recorded seed before denoising."
+  },
+  "control_gate": {
+    "A_endpoint": "All three weight-0.0 outputs for a temperature must retain bounded counting or frequency sorting.",
+    "B_endpoint": "All three weight-1.0 outputs for a temperature must retain Numba and JIT compilation.",
+    "midpoint_rule": "Run the five midpoint seeds only for temperatures passing both endpoint gates.",
+    "failure_behavior": "Record all endpoint outputs and stop without midpoint runs if no temperature passes."
+  },
+  "hybrid_success_rule": "A midpoint output must coherently retain bounded counting or frequency sorting and Numba/JIT compilation without list.sort or sorted.",
+  "interpretation": {
+    "endpoint_pass_and_hybrid": "Soft projection can exploit alternatives discarded by hard top-1 and merits repeated multi-pair evaluation.",
+    "endpoint_pass_without_hybrid": "Independent sampling preserves sources but does not coordinate them; test sequence-aware or per-denoising-step logit mixing.",
+    "endpoint_failure": "Independent stochastic projection is too destructive even before midpoint interpretation and should not be tuned on midpoint results."
+  },
+  "important_limitations": [
+    "Temperatures are fixed before seeing midpoint outputs and are selected only by endpoint controls.",
+    "Independent token sampling does not model dependencies among multi-token concepts.",
+    "This remains one prompt pair, one model revision, and an exploratory pilot."
+  ]
+}
