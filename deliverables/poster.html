@@ -1,0 +1,48 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Can AI Average Two Ideas?</title>
+<style>
+:root{--navy:#102A43;--blue:#2563EB;--purple:#7C3AED;--cyan:#06B6D4;--light:#F8FAFC;--mid:#64748B;--dark:#0F172A;}
+*{box-sizing:border-box} body{margin:0;font-family:"Segoe UI",Arial,sans-serif;color:var(--dark);background:#fff;line-height:1.48}
+header{background:linear-gradient(120deg,var(--navy),var(--blue) 58%,var(--purple));color:white;padding:2.2rem 4vw}
+h1{font-size:2.35rem;margin:.1rem 0} h2{color:var(--navy);font-size:1.55rem;border-bottom:3px solid #dbeafe;padding-bottom:.35rem}
+h3{color:var(--purple)} main{max-width:1180px;margin:auto;padding:1.4rem 3vw 3rem}
+.lede{font-size:1.18rem;max-width:900px} .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
+.card{border:1px solid #dbe3ef;border-radius:14px;padding:1rem 1.15rem;background:#fff;box-shadow:0 3px 14px #0f172a0b}
+.callout{border-left:7px solid var(--purple);background:#f5f3ff;padding:1rem 1.2rem;border-radius:8px;margin:1rem 0}
+.result{font-size:1.45rem;font-weight:700;color:var(--navy)} .small{font-size:.84rem;color:var(--mid)}
+img.plot{width:100%;height:auto;border:1px solid #e2e8f0;border-radius:10px;background:white}
+table{width:100%;border-collapse:collapse;font-size:.9rem} th,td{border:1px solid #dbe3ef;padding:.55rem;vertical-align:top} th{background:#eaf2ff;text-align:left}
+code{font-family:Consolas,monospace;font-size:.86em;overflow-wrap:anywhere} blockquote{margin:.7rem 0;padding:.8rem 1rem;border-left:5px solid var(--cyan);background:#f0fdfa}
+.flow{display:flex;gap:.6rem;align-items:stretch;flex-wrap:wrap;margin:1rem 0} .flow div{flex:1;min-width:145px;background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;padding:.8rem;text-align:center;font-weight:600}
+.arrow{align-self:center;font-size:1.5rem;color:var(--purple)} footer{padding:1rem 4vw;background:#eef2ff;color:var(--mid)}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+
+@page{size:landscape;margin:0.35in} body{background:#eef2ff} .poster{width:16in;min-height:8.8in;margin:auto;background:white;padding:.35in .45in}
+.poster h1{font-size:30pt;color:white} .poster h2{font-size:18pt;margin:.25rem 0} .poster p,.poster li{font-size:10.5pt}
+.poster header{margin:-.35in -.45in .25in;padding:.25in .4in} .poster-grid{display:grid;grid-template-columns:1.08fr 1.2fr 1.08fr;gap:.16in}
+.poster .card{padding:.12in;border-radius:8px;box-shadow:none} .poster img{max-height:2.15in;object-fit:contain} .poster .result{font-size:20pt}
+@media print{body{background:white} .poster{margin:0;width:auto;min-height:auto}}
+</style></head><body><article class="poster"><header><h1>Can AI Average Two Optimization Ideas?</h1>
+<p class="lede">A controlled pilot study of DiffusionGemma representations for Project Darwin idea synthesis</p></header>
+<div class="poster-grid"><div>
+<section class="card"><h2>Research question</h2><p>Can a diffusion language model combine two code-optimization ideas by averaging or mixing its internal prompt-conditioned representations?</p>
+<p><strong>Success:</strong> a coherent idea that measurably retains both named parents.</p></section>
+<section class="card"><h2>Why it matters</h2><p>Project Darwin explores program improvements. A useful numerical “idea space” could support controlled search for new optimizations—if nearby numerical points decode to related, valid ideas.</p></section>
+<section class="card"><h2>Method</h2><div class="flow"><div>Parent A prompt</div><span class="arrow">+</span><div>Parent B prompt</div><span class="arrow">→</span><div>Mix states / logits</div><span class="arrow">→</span><div>Project + denoise</div></div>
+<p>Controls first: endpoints had to reproduce each parent. Then we tested weights, geometry, top-token alternatives, stochastic projection, per-step logit mixing, multiple pairs, and prompt specificity.</p></section>
+<section class="card"><h2>Evidence standard</h2><p>Every number on this poster is calculated at build time from Experiments 001–012 raw JSON fields. Raw output text is read directly.</p></section>
+</div><div>
+<section class="card"><h2>Strongest result</h2><p class="result">0/42 numerical hybrids vs 17/18 direct-prompt hybrids</p>
+<img class="plot" src="assets/controlled-aggregate.png" alt="Across endpoint-valid sorting, matrix, graph, and image pairs, zero of 42 numerical outputs were hybrids while 17 of 18 direct prompts were strict hybrids."></section>
+<section class="card"><h2>The interpolation coordinate was not smooth</h2><img class="plot" src="assets/exp004-weight-regions.png" alt="Experiment 004 weight sweep showing Parent A, unrelated, and Parent B regions with no hybrids.">
+<p>Experiment 004: endpoints passed, but 0/27 intermediate runs were hybrids.</p></section>
+<section class="card"><h2>Why? A projection bottleneck</h2><img class="plot" src="assets/exp006-topk-availability.png" alt="At the midpoint, both endpoint alternatives are absent together at top-1 but widely available within top-20.">
+<p>The continuous midpoint retained alternatives below rank 1, while independent hard token selection produced a semantically broken patchwork.</p></section>
+</div><div>
+<section class="card"><h2>What we ruled out</h2><img class="plot" src="assets/exp005-geometry.png" alt="Positive cosine and strong norm retention show that vector cancellation does not explain the failure.">
+<p>No negative position cosines and 87.8% norm retention make simple vector cancellation an unlikely explanation.</p></section>
+<section class="card"><h2>What succeeded</h2><ul><li>DiffusionGemma decoded validated endpoints.</li><li>Explicit prompts restored missing implementation details.</li><li>Direct diffusion instructions composed both parents 17/18 strict times across endpoint-valid pairs.</li><li>Raw manifests captured model, settings, seeds, runtime, and hashes.</li></ul></section>
+<section class="card"><h2>Limitations</h2><ul><li>Exploratory/pilot—not confirmatory.</li><li>One model revision and public synthetic tasks.</li><li>Lexical rules are necessary but not a full human evaluation.</li><li>Internal-layer injection, KV-cache mixing, learned sequence-aware mixing, and preregistered confirmation are our later future-work ideas, not Sergiy’s explicit asks.</li></ul></section>
+<section class="card"><h2>Conclusion</h2><p>The tested final-state interpolation, hard projection, and linear output-logit mixing did not create a useful semantic bridge across sorting, matrix multiplication, sparse graph BFS, and image normalization. Bayesian optimization over this coordinate is not justified. Do not integrate this numerical mixer into Darwin yet; keep the successful direct-prompt baseline.</p>
+<p><strong>Our later future work:</strong> freeze a confirmatory protocol and test technically distinct sequence-aware mechanisms.</p><p class="small">Experiment 011: 3/4 endpoint-valid pairs (matrix, graph, image); regex blocked. Experiment 012 then tested every passing pair.</p></section>
+</div></div><p class="small">Pilot evidence generated September 17–18, 2026. Build date: September 18, 2026. Full provenance: technical-report.html.</p></article></body></html>

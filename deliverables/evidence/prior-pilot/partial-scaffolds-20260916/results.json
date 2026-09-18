@@ -1,0 +1,157 @@
+{
+  "experiment_id": "partial-scaffolds-20260916",
+  "created_at": "2026-09-16T21:30:52.990405+00:00",
+  "model_id": "google/diffusiongemma-26B-A4B-it",
+  "protocol_version": 9,
+  "pair_id": "pair-vectorized-counting",
+  "left_id": "bounded-counting-sort",
+  "right_id": "numpy-counting-sort",
+  "canvas_length": 64,
+  "mix_weight": 0.5,
+  "step_budgets": [
+    1,
+    2,
+    4,
+    6,
+    8
+  ],
+  "repeats": 3,
+  "runs": [
+    {
+      "steps": 1,
+      "repeat": 1,
+      "status": "completed",
+      "started_at": "2026-09-16T21:30:52.990477+00:00",
+      "duration_seconds": 10.101,
+      "output_file": "steps1-repeat1.txt",
+      "text": "thought\nUse `numpy.sort()` to sort the the beginning of the array and `list.sort()` to sort the the."
+    },
+    {
+      "steps": 1,
+      "repeat": 2,
+      "status": "completed",
+      "started_at": "2026-09-16T21:31:03.094229+00:00",
+      "duration_seconds": 10.646,
+      "output_file": "steps1-repeat2.txt",
+      "text": "thought\nUse `numpy.sort()` to sort the the beginning of the array and `list.sort()` to sort the the."
+    },
+    {
+      "steps": 1,
+      "repeat": 3,
+      "status": "completed",
+      "started_at": "2026-09-16T21:31:13.743625+00:00",
+      "duration_seconds": 10.751,
+      "output_file": "steps1-repeat3.txt",
+      "text": "thought\nUse `numpy.sort()` to sort the the beginning of the array and `list.sort()` to sort the the."
+    },
+    {
+      "steps": 2,
+      "repeat": 1,
+      "status": "completed",
+      "started_at": "2026-09-16T21:31:24.497696+00:00",
+      "duration_seconds": 11.98,
+      "output_file": "steps2-repeat1.txt",
+      "text": "thought\nUse `list.sort()` for in-place sorting instead of a new `sorted()` to"
+    },
+    {
+      "steps": 2,
+      "repeat": 2,
+      "status": "completed",
+      "started_at": "2026-09-16T21:31:36.479932+00:00",
+      "duration_seconds": 11.974,
+      "output_file": "steps2-repeat2.txt",
+      "text": "thought\nUse `list.sort()` for in-place sorting instead of ofsorted `sorted()` to"
+    },
+    {
+      "steps": 2,
+      "repeat": 3,
+      "status": "completed",
+      "started_at": "2026-09-16T21:31:48.454958+00:00",
+      "duration_seconds": 11.982,
+      "output_file": "steps2-repeat3.txt",
+      "text": "thought\nUse `list.sort()` for in-place sorting of the overhead of `sorted()` to to"
+    },
+    {
+      "steps": 4,
+      "repeat": 1,
+      "status": "completed",
+      "started_at": "2026-09-16T21:32:00.439242+00:00",
+      "duration_seconds": 15.045,
+      "output_file": "steps4-repeat1.txt",
+      "text": "thought\nUse `list.sort()` for in-place sorting instead of `sorted()` to avoid memory overhead."
+    },
+    {
+      "steps": 4,
+      "repeat": 2,
+      "status": "completed",
+      "started_at": "2026-09-16T21:32:15.486274+00:00",
+      "duration_seconds": 15.363,
+      "output_file": "steps4-repeat2.txt",
+      "text": "thought\nUse `list.sort()` for in-place sorting instead of `sorted()` to reduce memory overhead."
+    },
+    {
+      "steps": 4,
+      "repeat": 3,
+      "status": "completed",
+      "started_at": "2026-09-16T21:32:30.851539+00:00",
+      "duration_seconds": 15.05,
+      "output_file": "steps4-repeat3.txt",
+      "text": "thought\nUse `list.sort()` for in-place sorting instead of `sorted()` to avoid memory overhead."
+    },
+    {
+      "steps": 6,
+      "repeat": 1,
+      "status": "completed",
+      "started_at": "2026-09-16T21:32:45.904313+00:00",
+      "duration_seconds": 18.431,
+      "output_file": "steps6-repeat1.txt",
+      "text": "thought\nUse `list.sort()` for in-place sorting instead of `sorted()` to reduce memory overhead."
+    },
+    {
+      "steps": 6,
+      "repeat": 2,
+      "status": "completed",
+      "started_at": "2026-09-16T21:33:04.337553+00:00",
+      "duration_seconds": 18.43,
+      "output_file": "steps6-repeat2.txt",
+      "text": "thought\nUse `list.sort()` for in-place sorting instead of `sorted()` to reduce memory overhead."
+    },
+    {
+      "steps": 6,
+      "repeat": 3,
+      "status": "completed",
+      "started_at": "2026-09-16T21:33:22.770013+00:00",
+      "duration_seconds": 18.118,
+      "output_file": "steps6-repeat3.txt",
+      "text": "thought\nUse `list.sort()` for in-place sorting instead of `sorted()` to reduce memory overhead."
+    },
+    {
+      "steps": 8,
+      "repeat": 1,
+      "status": "completed",
+      "started_at": "2026-09-16T21:33:40.890629+00:00",
+      "duration_seconds": 16.586,
+      "output_file": "steps8-repeat1.txt",
+      "text": "thought\nUse `list.sort()` for in-place sorting instead of `sorted()` to avoid memory overhead."
+    },
+    {
+      "steps": 8,
+      "repeat": 2,
+      "status": "completed",
+      "started_at": "2026-09-16T21:33:57.479336+00:00",
+      "duration_seconds": 18.427,
+      "output_file": "steps8-repeat2.txt",
+      "text": "thought\nUse `list.sort()` for in-place sorting to avoid the memory overhead of creating a new list."
+    },
+    {
+      "steps": 8,
+      "repeat": 3,
+      "status": "completed",
+      "started_at": "2026-09-16T21:34:15.908217+00:00",
+      "duration_seconds": 20.278,
+      "output_file": "steps8-repeat3.txt",
+      "text": "thought\nUse `list.sort()` for in-place sorting to avoid the memory overhead of `sorted()`."
+    }
+  ],
+  "completed_at": "2026-09-16T21:34:36.189611+00:00"
+}

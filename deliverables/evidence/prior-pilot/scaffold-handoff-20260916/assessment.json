@@ -1,0 +1,33 @@
+{
+  "experiment_id": "scaffold-handoff-20260916",
+  "assessment_date": "2026-09-16",
+  "pair_id": "pair-vectorized-counting",
+  "design": {
+    "source_steps": [
+      2,
+      4,
+      6,
+      8
+    ],
+    "source_repeat": 1,
+    "conditions": [
+      "scaffold-only",
+      "parents-and-scaffold"
+    ],
+    "autoregressive_model": "gpt-5.6-sol",
+    "total_completions": 8
+  },
+  "scaffold_only": {
+    "parent_a_recovered": "0/4",
+    "parent_b_recovered": "0/4",
+    "observed_behavior": "All four completions inferred an in-place heapsort from the bad list.sort/sorted scaffold. None recovered bounded counting sort, bincount, or repeat."
+  },
+  "parents_and_scaffold": {
+    "both_parents_recovered": "4/4",
+    "observed_behavior": "All four completions produced a bounded NumPy counting sort using bincount and repeat.",
+    "comparison": "The existing parents-only GPT baseline already produced the same successful combination in 3/3 runs. The scaffold did not add a technique or improve reliability."
+  },
+  "scaffold_effect": "The scaffold supplied irrelevant in-place and memory-overhead framing. One completion explicitly attributed that framing to a parent even though it came from the failed scaffold.",
+  "conclusion": "The handoff can produce a good answer only when GPT is also shown both parent ideas. The saved diffusion scaffold alone contains insufficient parent information, and adding it to the parents provides no demonstrated benefit over parents-only prompting.",
+  "decision": "Do not use these partial diffusion outputs as scaffolds in a Darwin synthesis stage."
+}

@@ -1,0 +1,30 @@
+{
+  "experiment_id": "partial-scaffolds-20260916",
+  "assessment_date": "2026-09-16",
+  "pair_id": "pair-vectorized-counting",
+  "design": {
+    "left_parent": "Bounded-range counting sort using a fixed-size frequency array.",
+    "right_parent": "NumPy counting sort using bincount and repeat.",
+    "mix_weight": 0.5,
+    "denoising_steps": [
+      1,
+      2,
+      4,
+      6,
+      8
+    ],
+    "repeats_per_step": 3,
+    "total_generations": 15
+  },
+  "findings": [
+    "All three one-step outputs had already abandoned both parent techniques and proposed NumPy sort plus prohibited list.sort.",
+    "All outputs from two through eight steps converged on prohibited list.sort or sorted suggestions.",
+    "No partial output mentioned counting sort, a bounded integer range, a frequency array, bincount, or repeat.",
+    "Additional denoising improved grammatical completeness but did not restore either parent concept."
+  ],
+  "parent_concepts_found": 0,
+  "useful_partial_scaffolds_found": 0,
+  "conclusion": "Stopping denoising early does not rescue the 0.5 arithmetic interpolation for this pair. The semantic collapse occurs before or during initial token projection, not gradually during later denoising.",
+  "handoff_decision": "Do not treat these partial outputs as useful scaffolds for an autoregressive completion test. A model given the parent prompts could still produce a good combination, but that would measure the autoregressive model rather than information preserved by the interpolated scaffold.",
+  "next_recommended_test": "Analyze the mixed continuous hidden state and its initial vocabulary projection, or change the mixing/injection method before denoising."
+}
