@@ -1,0 +1,2 @@
+thought
+Replace manual `for` loops with vectorized NumPy operations or list comprehensions to leverage C-level execution speed.

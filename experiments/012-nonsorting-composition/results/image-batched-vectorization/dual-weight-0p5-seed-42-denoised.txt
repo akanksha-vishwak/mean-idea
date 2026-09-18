@@ -1,0 +1,2 @@
+thought
+Utilize memory-mapped files to load the image collection, allowing you to process the in in ** ** ** ****** and **** memory**** ** ** ** **

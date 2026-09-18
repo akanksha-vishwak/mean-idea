@@ -1,0 +1,2 @@
+thought
+Replace the memory-intensive list comprehension with a generator expression to process elements lazily and reduce the peak memory overhead.

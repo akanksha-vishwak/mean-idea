@@ -1,0 +1,2 @@
+thought
+To optimize BFS on a large sparse graph, use `collections.deque` for $O(1)$ pop operations and pre-allocate the adjacency list to avoid redundant dictionary lookups.

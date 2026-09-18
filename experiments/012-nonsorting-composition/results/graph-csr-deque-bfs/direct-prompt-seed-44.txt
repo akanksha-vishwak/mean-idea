@@ -1,0 +1,2 @@
+thought
+Implement BFS by managing the frontier with a `collections.deque` for $O(1)$ `popleft` and `append` operations, while performing neighbor discovery by slicing CSR `indptr` and `indices` arrays to traverse contiguous memory slices for maximum cache efficiency.

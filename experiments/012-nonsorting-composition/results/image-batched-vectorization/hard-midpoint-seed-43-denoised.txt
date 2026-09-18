@@ -1,0 +1,2 @@
+thought
+Use a memory-efficient generator expression instead of a list comprehension when processing the large data loop to reduce memory overhead.

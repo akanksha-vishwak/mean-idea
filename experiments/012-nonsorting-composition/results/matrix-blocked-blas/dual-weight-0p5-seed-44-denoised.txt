@@ -1,0 +1,2 @@
+thought
+Replace the nested Python triple loops with the `np.matmul` function or the `@` operator to leverage optimized BLAS kernels that perform high-performance matrix multiplication with internal Python loops loops.

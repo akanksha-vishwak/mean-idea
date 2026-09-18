@@ -1,0 +1,2 @@
+thought
+To optimize BFS on a large sparse graph, use `collections.deque` for the queue to ensure $O(1)$ pop operations compared to $O(n)$ for a list.

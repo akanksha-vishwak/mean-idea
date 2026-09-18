@@ -1,0 +1,2 @@
+thought
+Replace manual `for` loops with vectorized NumPy array operations or list comprehensions to leverage underlying C-level execution and reduce Python interpreter overhead.

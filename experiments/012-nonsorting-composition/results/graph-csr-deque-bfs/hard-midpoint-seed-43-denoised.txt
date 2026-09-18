@@ -1,0 +1,2 @@
+thought
+To optimize BFS on a large sparse graph, replace `collections.deque` with a fixed-size array and use a pointer for track pops from the front overhead.

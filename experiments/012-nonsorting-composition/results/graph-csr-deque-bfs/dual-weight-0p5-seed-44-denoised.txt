@@ -1,0 +1,2 @@
+thought
+To optimize BFS over a large sparse graph, use `collections.deque` for the frontier queue to ensure constant-time operations, utilizing ` ``` to retrieve vertices and ` `` to to the neighbors without the overhead overhead list list..

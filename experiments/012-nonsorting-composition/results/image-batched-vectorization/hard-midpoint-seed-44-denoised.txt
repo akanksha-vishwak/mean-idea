@@ -1,0 +1,2 @@
+thought
+Use a memory-efficient generator expression instead of list comprehension when the result is iterated only once to reduce memory overhead.

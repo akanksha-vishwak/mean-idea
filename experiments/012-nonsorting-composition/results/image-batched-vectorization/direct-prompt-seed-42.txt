@@ -1,0 +1,2 @@
+thought
+Implement a memory-bounded pipeline that processes the image collection in fixed-size batches using NumPy float32 broadcasting to eliminate pixel loops, while ensuring output order preservation and explicitly releasing temporary arrays between batches to cap peak memory usage.

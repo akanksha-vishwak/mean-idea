@@ -1,0 +1,2 @@
+thought
+Implement a BFS that utilizes a `collections.deque` to manage the frontier via `popleft` and `append` operations, while accelerating neighbor discovery by accessing contiguous slices of a CSR-encoded adjacency array using `indptr` indices to maximize cache locality and minimize pointer overhead.

@@ -1,0 +1,2 @@
+thought
+To optimize large dense matrix multiplication, implement a blocked tiling algorithm that partitions input matrices into sub-matrices sized to fit within the L1/L2 cache, then use `np.matmul` to compute and accumulate these individual block products to leverage BLAS-optimized kernels while minimizing cache misses.
