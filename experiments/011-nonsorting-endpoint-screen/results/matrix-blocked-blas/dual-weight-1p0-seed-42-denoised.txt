@@ -1,0 +1,2 @@
+thought
+To improve cache locality, use Numba's JIT compilation to implement the blocked multiplication logic, ensuring the nested loops process tiles that fit entirely within the L1/L2 cache to accumulate exactly into the output matrix while minimizing Python overhead.

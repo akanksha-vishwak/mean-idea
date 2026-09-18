@@ -1,0 +1,2 @@
+thought
+To improve performance, use Numba's JIT compilation to wrap the BFS loop, allowing the traversal of **contiguous neighbors** within the **indices** and **indptr** arrays to execute at machine-speed while eliminating Python overhead and maximizing cache efficiency during theCSR** slice access.

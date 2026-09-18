@@ -1,0 +1,2 @@
+thought
+To optimize normalization, stack the image collection into a single 4D NumPy array, cast to float32, and use broadcasting to subtract channel-wise means and divide by standard deviation arrays, ensuring no pixel loops are used.

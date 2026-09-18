@@ -1,0 +1,2 @@
+thought
+Use a generator expression with the `mmap.find()` method on the **mapped bytes** to perform de-duplicated pattern matching, ensuring a **read-only** scan that maintains **no full-file copy** by yielding indices lazily.

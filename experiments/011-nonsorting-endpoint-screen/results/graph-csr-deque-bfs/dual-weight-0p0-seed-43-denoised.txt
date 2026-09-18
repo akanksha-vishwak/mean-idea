@@ -1,0 +1,2 @@
+thought
+To optimize BFS over a large sparse graph, use `collections.deque` as the BFS queue to ensure `popleft` and `append` operations run in constant time, avoiding the $O(n)$ cost of shifting elements associated with standard lists.

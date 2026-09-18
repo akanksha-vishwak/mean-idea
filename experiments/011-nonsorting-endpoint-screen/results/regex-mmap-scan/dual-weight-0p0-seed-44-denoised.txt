@@ -1,0 +1,2 @@
+thought
+To optimize performance for large log files, process the file in binary chunks using a memory map (`mmap`) to allow `finditer` to scan the `bytes pattern` directly from kernel memory without loading the entire file into RAM.

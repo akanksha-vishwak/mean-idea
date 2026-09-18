@@ -1,0 +1,2 @@
+thought
+Utilize a `multiprocessing.Pool` with a generator to process fixed batch sizes in parallel, ensuring temporary arrays are released memory between batches to preserve order.

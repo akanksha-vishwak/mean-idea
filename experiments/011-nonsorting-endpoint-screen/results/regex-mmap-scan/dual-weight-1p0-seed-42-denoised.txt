@@ -1,0 +1,2 @@
+thought
+Use the buffer provided by the `mmap.find()` method on the **mapped bytes** to perform de-serialized searching, ensuring high-speed access with **no full-file copy**.

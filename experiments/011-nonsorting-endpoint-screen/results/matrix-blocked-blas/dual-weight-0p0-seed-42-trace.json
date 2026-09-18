@@ -1,0 +1,38 @@
+{
+  "weight": 0.0,
+  "seed": 42,
+  "steps": [
+    {
+      "step": 8,
+      "source_top_1_agreement_fraction": 0.8541666865348816,
+      "combined_top_1_equals_A_fraction": 1.0,
+      "combined_top_1_equals_B_fraction": 0.8541666865348816,
+      "combined_top_1_equals_neither_fraction": 0.0,
+      "accepted_token_count": 76
+    },
+    {
+      "step": 7,
+      "source_top_1_agreement_fraction": 0.8541666865348816,
+      "combined_top_1_equals_A_fraction": 1.0,
+      "combined_top_1_equals_B_fraction": 0.8541666865348816,
+      "combined_top_1_equals_neither_fraction": 0.0,
+      "accepted_token_count": 84
+    },
+    {
+      "step": 6,
+      "source_top_1_agreement_fraction": 0.9270833730697632,
+      "combined_top_1_equals_A_fraction": 1.0,
+      "combined_top_1_equals_B_fraction": 0.9270833730697632,
+      "combined_top_1_equals_neither_fraction": 0.0,
+      "accepted_token_count": 89
+    },
+    {
+      "step": 5,
+      "source_top_1_agreement_fraction": 1.0,
+      "combined_top_1_equals_A_fraction": 1.0,
+      "combined_top_1_equals_B_fraction": 1.0,
+      "combined_top_1_equals_neither_fraction": 0.0,
+      "accepted_token_count": 96
+    }
+  ]
+}

@@ -1,0 +1,2 @@
+thought
+To improve cache locality, use Numba's `@njit` decorator to compile the blocked multiplication, ensuring the nested loops process tiles within the L1/L2 cache to accumulate exactly without Python overhead.

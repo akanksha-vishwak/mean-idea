@@ -1,0 +1,2 @@
+thought
+Replace the Python triple element loops with the `np.matmul` function or the `@` operator to delegate the computation to highly optimized BLAS-backed NumPy kernels.

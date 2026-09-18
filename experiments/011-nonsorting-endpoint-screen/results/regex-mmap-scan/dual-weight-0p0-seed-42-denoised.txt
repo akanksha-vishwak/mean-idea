@@ -1,0 +1,2 @@
+thought
+To optimize performance for large log files, process the file in binary chunks using a memory-mapped file to **reuse** `finditer` on the compiled **bytes pattern** without loading the entire file into RAM.
