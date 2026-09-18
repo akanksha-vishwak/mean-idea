@@ -1,0 +1,50 @@
+{
+  "experiment_id": "009-multi-pair-replication",
+  "status": "pilot",
+  "frozen_on": "2026-09-18",
+  "question": "Do the midpoint failure of final-state and per-step linear-logit mixing, and the success of direct textual combination, replicate across additional idea pairs and a non-sorting workload?",
+  "inputs": {
+    "canvas": "tests/example/blank.txt",
+    "pairs": "experiments/009-multi-pair-replication/pairs.json"
+  },
+  "design": {
+    "pair_ids": [
+      "pair-vectorized-counting",
+      "pair-fast-path-fallback",
+      "pair-parallel-byte-histogram"
+    ],
+    "methods": [
+      "dual-prompt endpoint at weight 0.0",
+      "dual-prompt endpoint at weight 1.0",
+      "dual-prompt linear-logit midpoint at weight 0.5",
+      "final-state hard-projection midpoint at weight 0.5",
+      "direct DiffusionGemma textual combination"
+    ],
+    "seeds": [42, 43, 44],
+    "denoising_steps": 8,
+    "canvas_length": 96,
+    "selection_rule": "The two sorting pairs come from the versioned September 15 corpus. The byte-histogram pair is frozen here before generation and is not replaceable based on its result."
+  },
+  "control_gate": {
+    "prompt_alignment": "Each pair's complete A and B prompt sequences must have exactly equal token counts and require no tokenizer padding.",
+    "endpoint_requirement": "All three A outputs and all three B outputs must retain their predefined source concepts.",
+    "failure_behavior": "Preserve failed endpoint outputs and skip that pair's midpoint and direct-prompt conditions."
+  },
+  "primary_outcomes": {
+    "numerical_hybrid_rate": "Fraction of valid hard-projection and dual-logit midpoint outputs retaining both predefined parent concepts without prohibited operations.",
+    "direct_prompt_hybrid_rate": "Fraction of direct textual-combination outputs retaining both predefined parent concepts without prohibited operations.",
+    "pair_level_replication": "Number of endpoint-valid pairs where numerical midpoint methods produce no hybrids and direct prompting produces at least one hybrid."
+  },
+  "interpretation": {
+    "replicated_failure": "If at least two endpoint-valid pairs, including the non-sorting pair, show zero numerical hybrids while direct prompting succeeds, report a bounded cross-pair pilot replication.",
+    "mixed_result": "Report which pair structures or workloads differ; do not pool them into a universal claim.",
+    "endpoint_failure": "Treat the pair as uninterpretable for numerical mixing and retain it as evidence about prompt controllability.",
+    "numerical_success": "Preserve the successful output and run a separately frozen repeat before changing the conclusion."
+  },
+  "limitations": [
+    "This remains exploratory pilot evidence rather than a preregistered confirmatory study.",
+    "Only final prompt-conditioned canvas states and linearly mixed output logits are tested.",
+    "Lexical indicators are automated gates, not substitutes for blinded human judgments.",
+    "The non-sorting workload is a public synthetic task, not private Darwin data."
+  ]
+}

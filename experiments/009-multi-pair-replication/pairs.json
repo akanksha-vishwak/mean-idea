@@ -1,0 +1,67 @@
+{
+  "version": 1,
+  "frozen_on": "2026-09-18",
+  "pairs": [
+    {
+      "id": "pair-vectorized-counting",
+      "workload": "sorting",
+      "provenance": "experiments/idea-pairs.json from the September 15 pilot corpus",
+      "expected_combined_concept": "Exploit the bounded integer range with a vectorized counting sort implemented using NumPy bincount and repeat.",
+      "source_prompt_a": "Task: Improve the performance of my_sort without using list.sort or sorted.\nSource technique: bounded counting sort.\nImplementation details: exploit integer values limited to 0-9999 with a fixed frequency array, then reconstruct the sorted output from those counts.\nRequired terms: counting sort, fixed frequency array, 0-9999.",
+      "source_prompt_b": "Task: Improve the performance of my_sort without using list.sort or sorted.\nSource technique: vectorized NumPy counting sort.\nImplementation details: use np.bincount to count bounded integer values and np.repeat to reconstruct the sorted output in native array operations.\nRequired terms: NumPy, bincount, repeat.\nPreserve every named operation exactly.",
+      "direct_prompt": "Combine these two optimization techniques into one coherent idea for my_sort: (A) exploit integer values limited to 0-9999 with bounded counting sort and a fixed frequency array; (B) implement the counting and reconstruction with NumPy np.bincount and np.repeat. Explicitly retain both techniques. Do not use list.sort or sorted.",
+      "concept_a_groups": [
+        ["counting sort", "counting-sort"],
+        ["fixed frequency", "frequency array", "0-9999", "10000", "bounded"]
+      ],
+      "concept_b_groups": [
+        ["numpy", "np."],
+        ["bincount"],
+        ["repeat"]
+      ],
+      "prohibited_markers": ["list.sort", "sorted("]
+    },
+    {
+      "id": "pair-fast-path-fallback",
+      "workload": "sorting",
+      "provenance": "experiments/idea-pairs.json from the September 15 pilot corpus",
+      "expected_combined_concept": "Use vectorized NumPy counting sort when bounded-integer assumptions hold and a heapq method as a safe general fallback.",
+      "source_prompt_a": "Task: Improve the performance of my_sort without using list.sort or sorted.\nSource technique: vectorized NumPy counting sort.\nImplementation details: use np.bincount and np.repeat when the input contains bounded nonnegative integers, providing a fast specialized path.\nRequired terms: NumPy, bincount, repeat.\nPreserve every named operation exactly.",
+      "source_prompt_b": "Task: Improve the performance of my_sort without using list.sort or sorted.\nSource technique: heap-based general fallback.\nImplementation details: use heapq.heapify followed by repeated heapq.heappop when bounded-integer assumptions do not hold, providing a safe general path.\nRequired terms: heapq, heapify, heappop, fallback.",
+      "direct_prompt": "Combine these two optimization techniques into one coherent idea for my_sort: (A) use NumPy np.bincount and np.repeat as a fast path for bounded nonnegative integers; (B) use heapq.heapify and heapq.heappop as the general fallback when those assumptions fail. Explicitly retain both paths. Do not use list.sort or sorted.",
+      "concept_a_groups": [
+        ["numpy", "np."],
+        ["bincount"],
+        ["repeat"]
+      ],
+      "concept_b_groups": [
+        ["heapq"],
+        ["heapify"],
+        ["heappop"],
+        ["fallback", "otherwise", "when", "if"]
+      ],
+      "prohibited_markers": ["list.sort", "sorted("]
+    },
+    {
+      "id": "pair-parallel-byte-histogram",
+      "workload": "byte-frequency-histogram",
+      "provenance": "Public synthetic non-sorting workload frozen before generation on September 18, 2026",
+      "expected_combined_concept": "Split the bytes into independent chunks, compute each chunk's 256-bin histogram with NumPy frombuffer and bincount, and sum the partial histograms.",
+      "source_prompt_a": "Task: Improve a Python function that computes a 256-bin byte-frequency histogram for a large bytes object.\nSource technique: vectorized NumPy histogram.\nImplementation details: create a zero-copy uint8 view with np.frombuffer and count byte values with np.bincount using minlength=256.\nRequired terms: NumPy, frombuffer, bincount, 256.",
+      "source_prompt_b": "Task: Improve a Python function that computes a 256-bin byte-frequency histogram for a large bytes object.\nSource technique: parallel chunk processing.\nImplementation details: split the bytes into independent chunks, process chunks with multiprocessing workers, and sum the partial 256-bin histograms.\nRequired terms: multiprocessing, chunks, partial histograms, sum.\nPreserve every named operation and all required terms.",
+      "direct_prompt": "Combine these two optimization techniques into one coherent idea for computing a 256-bin byte-frequency histogram from a large bytes object: (A) use a zero-copy NumPy np.frombuffer uint8 view and np.bincount with minlength=256; (B) split the bytes into independent chunks processed by multiprocessing workers and sum their partial histograms. Explicitly retain both techniques.",
+      "concept_a_groups": [
+        ["numpy", "np."],
+        ["frombuffer"],
+        ["bincount"]
+      ],
+      "concept_b_groups": [
+        ["multiprocessing", "process pool", "workers"],
+        ["chunk"],
+        ["histogram"],
+        ["sum", "merge", "reduce", "combine"]
+      ],
+      "prohibited_markers": []
+    }
+  ]
+}
