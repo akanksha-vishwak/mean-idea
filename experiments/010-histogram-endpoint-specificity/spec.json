@@ -1,0 +1,41 @@
+{
+  "experiment_id": "010-histogram-endpoint-specificity",
+  "status": "pilot",
+  "frozen_on": "2026-09-18",
+  "question": "Can explicit process-ownership wording recover the frozen multiprocessing chunk-and-sum byte-histogram endpoint reliably enough for a controlled non-sorting midpoint experiment?",
+  "inputs": {
+    "original_pair": "experiments/009-multi-pair-replication/pairs.json#pair-parallel-byte-histogram",
+    "reference_outputs": "experiments/009-multi-pair-replication/results/pair-parallel-byte-histogram",
+    "strengthened_prompt_a": "experiments/010-histogram-endpoint-specificity/prompt-a-strengthened.txt",
+    "strengthened_prompt_b": "experiments/010-histogram-endpoint-specificity/prompt-b-strengthened.txt",
+    "canvas": "tests/example/blank.txt"
+  },
+  "design": {
+    "conditions": [
+      "original B endpoint deterministic reproduction",
+      "strengthened NumPy A endpoint",
+      "strengthened multiprocessing B endpoint"
+    ],
+    "seeds": [42, 43, 44],
+    "denoising_steps": 8,
+    "canvas_length": 96,
+    "strengthened_prompt_token_count": 153,
+    "strengthening_rule": "Name multiprocessing.Pool.map, disjoint chunks, private worker histograms, and parent-side elementwise summation; explicitly exclude multiprocessing.Array, shared memory, and worker writes to shared state."
+  },
+  "control_gates": {
+    "reproduction": "Every original-B output must canonically equal the corresponding committed Experiment 009 output.",
+    "prompt_alignment": "The complete strengthened A and B sequences must contain exactly 153 tokens each and require no padding.",
+    "A_endpoint": "All three outputs must retain NumPy, frombuffer, and bincount.",
+    "B_endpoint": "All three outputs must retain multiprocessing or Pool.map, chunks, private or partial histograms, and parent-side summation without proposing a shared-memory update strategy."
+  },
+  "interpretation": {
+    "both_endpoints_pass": "Use these exact prompts in a separately frozen non-sorting midpoint and direct-prompt comparison.",
+    "B_endpoint_fails": "The model cannot reliably preserve the intended multiprocessing technique under this interface; report the workload as blocked and do not interpret a midpoint.",
+    "reproduction_fails": "Stop because the model path or environment no longer reproduces Experiment 009."
+  },
+  "limitations": [
+    "This diagnoses endpoint controllability and does not test composition.",
+    "The prompt is more explicit than the original and may reduce output diversity.",
+    "Automated lexical gates will be checked against the raw text during assessment."
+  ]
+}

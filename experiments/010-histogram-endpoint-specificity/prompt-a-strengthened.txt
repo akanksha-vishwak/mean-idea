@@ -1,0 +1,5 @@
+Task: Improve a Python function that computes a 256-bin byte-frequency histogram for a large bytes object.
+Source technique: vectorized NumPy histogram.
+Implementation details: create a zero-copy uint8 view with np.frombuffer, then compute a local histogram with np.bincount using minlength=256. Do not copy the buffer or iterate over individual bytes in Python.
+Required terms: NumPy, frombuffer, bincount, minlength=256, zero-copy.
+Keep the exact implementation.

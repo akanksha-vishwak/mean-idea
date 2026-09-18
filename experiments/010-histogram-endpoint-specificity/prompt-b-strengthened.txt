@@ -1,0 +1,4 @@
+Task: Improve a Python function that computes a 256-bin byte-frequency histogram for a large bytes object.
+Source technique: parallel independent chunk aggregation.
+Implementation details: split the bytes into disjoint chunks and use multiprocessing.Pool.map so each worker returns its own private 256-bin histogram. In the parent process, sum the returned histograms elementwise. Do not use multiprocessing.Array, shared memory, or worker writes to shared state.
+Required terms: multiprocessing.Pool, disjoint chunks, private partial histograms, parent sum.
