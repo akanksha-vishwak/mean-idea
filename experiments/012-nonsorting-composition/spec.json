@@ -1,0 +1,41 @@
+{
+  "experiment_id": "012-nonsorting-composition",
+  "status": "pilot",
+  "frozen_on": "2026-09-18",
+  "question": "Do final-state hard projection and per-step linear-logit midpoint failures replicate on endpoint-valid non-sorting optimization pairs, relative to direct textual combination?",
+  "reference": {
+    "endpoint_manifest": "experiments/011-nonsorting-endpoint-screen/results/results.json",
+    "required_passing_pair_ids": [
+      "matrix-blocked-blas",
+      "graph-csr-deque-bfs",
+      "image-batched-vectorization"
+    ]
+  },
+  "design": {
+    "methods": [
+      "per-step dual-prompt linear-logit midpoint at weight 0.5",
+      "final-state hard-projection midpoint at weight 0.5",
+      "direct DiffusionGemma textual combination"
+    ],
+    "seeds": [42, 43, 44],
+    "denoising_steps": 8,
+    "canvas_length": 96,
+    "total_generations": 27,
+    "selection_rule": "Use every and only Experiment 011 pair that passed all six frozen endpoint controls."
+  },
+  "primary_outcomes": {
+    "numerical_hybrid_rate": "Fraction of hard and dual-logit midpoint outputs retaining both predefined source concepts.",
+    "direct_prompt_hybrid_rate": "Fraction of direct textual-combination outputs retaining both predefined source concepts.",
+    "cross_workload_replication": "Whether numerical methods produce no hybrids while direct prompting succeeds across multiple non-sorting workloads."
+  },
+  "interpretation": {
+    "numerical_failure_direct_success": "Report a bounded cross-workload pilot replication of the sorting result.",
+    "numerical_success": "Preserve the output and narrow the conclusion to pair-dependent composition.",
+    "direct_failure": "Report that the pair itself remains difficult to compose despite valid endpoints."
+  },
+  "limitations": [
+    "This remains exploratory pilot evidence.",
+    "Only final prompt-conditioned states and linear output-logit mixing are tested.",
+    "The endpoint-valid workloads are public synthetic tasks rather than complete Darwin programs."
+  ]
+}

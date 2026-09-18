@@ -1,0 +1,9 @@
+{
+  "version": 1,
+  "frozen_on": "2026-09-18",
+  "prompts": {
+    "matrix-blocked-blas": "Combine these two techniques into one coherent optimization idea for multiplying large dense NumPy matrices: (A) use NumPy np.matmul backed by BLAS instead of Python element loops; (B) split the matrices into cache-sized tiles and accumulate compatible block products to improve cache locality. Explicitly retain both BLAS-backed matmul and blocked tiling.",
+    "graph-csr-deque-bfs": "Combine these two techniques into one coherent optimization idea for breadth-first search on a large sparse graph: (A) maintain the BFS frontier with collections.deque, popleft, and append; (B) store adjacency in CSR indices and indptr arrays and traverse contiguous neighbor slices. Explicitly retain both the deque queue and CSR representation.",
+    "image-batched-vectorization": "Combine these two techniques into one coherent optimization idea for normalizing a large RGB image collection: (A) use NumPy float32 broadcasting instead of Python pixel loops; (B) process fixed-size batches, preserve output order, and release temporary arrays between batches to cap memory. Explicitly retain both vectorization and bounded batching."
+  }
+}
