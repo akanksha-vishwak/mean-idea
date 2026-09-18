@@ -1,0 +1,35 @@
+{
+  "experiment_id": "004-controlled-prompt-weight-sweep",
+  "status": "pilot",
+  "question": "Does a controlled arithmetic interpolation between a bounded counting-sort prompt state and a Numba-compilation prompt state produce a repeatable idea that preserves both techniques?",
+  "inputs": {
+    "canvas": "tests/example/blank.txt",
+    "prompt_A": "experiments/004-controlled-prompt-weight-sweep/prompt-a-counting.txt",
+    "prompt_B": "experiments/004-controlled-prompt-weight-sweep/prompt-b-numba.txt"
+  },
+  "design": {
+    "weights": [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
+    "weight_meaning": "0.0 is all A; 1.0 is all B.",
+    "seeds": [42, 43, 44],
+    "denoising_steps": 8,
+    "canvas_length": 64,
+    "mixing": "Global arithmetic interpolation of corresponding final prompt-conditioned canvas-state positions."
+  },
+  "control_gate": {
+    "A_endpoint": "Every weight-0.0 repeat must retain counting sort or bounded frequency counting.",
+    "B_endpoint": "Every weight-1.0 repeat must retain Numba or JIT compilation.",
+    "failure_behavior": "If either endpoint fails, save all endpoint outputs, mark the experiment blocked_controls, and do not spend GPU time on intermediate weights."
+  },
+  "hybrid_success_rule": "An intermediate output must retain bounded counting/frequency sorting and Numba/JIT compilation in one coherent idea without list.sort or sorted.",
+  "interpretation": {
+    "smooth_transition_with_hybrids": "The coordinate may support controlled semantic composition and merits denser confirmation.",
+    "abrupt_transition_without_hybrids": "The coordinate behaves like separate categorical basins rather than a semantic bridge.",
+    "generic_middle_region": "Intermediate states leave both source concepts and project toward unrelated model priors.",
+    "endpoint_failure": "The source controls are unreliable, so intermediate interpolation is not interpretable."
+  },
+  "important_limitations": [
+    "This is a prompt-conditioned final-canvas-state interpolation, not prompt-token averaging or internal-layer injection.",
+    "Lexical indicators are a conservative automatic gate and do not replace human review.",
+    "This remains an exploratory pilot; confirmatory repetitions and pair selection will be frozen later."
+  ]
+}

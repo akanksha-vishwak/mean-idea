@@ -1,0 +1,5 @@
+Task: Improve the Python function my_sort without using list.sort or sorted.
+Candidate optimization idea:
+Use Numba `@njit` to compile the custom sorting loops into machine code and eliminate Python interpreter overhead.
+Your answer must explicitly retain Numba or `@njit` and must not replace the custom algorithm with a built-in sorting operation.
+Return one concise optimization idea.

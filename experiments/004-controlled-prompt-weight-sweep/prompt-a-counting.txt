@@ -1,0 +1,6 @@
+Task: Improve the Python function my_sort without using list.sort or sorted.
+Candidate optimization idea:
+Use a pure-Python counting sort specialized for integer values from 0 through 9999.
+Count frequencies in a fixed-size Python list, then reconstruct values in numerical order.
+Your answer must retain the bounded-range counting-sort technique and must not replace it with NumPy or a comparison sort.
+Return one concise optimization idea.
