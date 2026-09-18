@@ -1,0 +1,6 @@
+Task: Improve the Python function my_sort without using list.sort or sorted.
+Candidate optimization idea:
+Use NumPy `np.bincount` to count bounded integer frequencies and `np.repeat` to reconstruct the sorted output.
+Your answer must explicitly retain all three implementation terms: NumPy, `np.bincount`, and `np.repeat`.
+Do not replace them with a generic frequency-array implementation.
+Return one concise optimization idea.

@@ -1,0 +1,50 @@
+{
+  "experiment_id": "003-prompt-specificity-diagnostic",
+  "status": "pilot",
+  "question": "Does Source B specificity disappear in the initial vocabulary projection, during diffusion denoising, or because the final decoder does not directly receive the source prompt?",
+  "source_B_required_terms": [
+    "NumPy",
+    "np.bincount",
+    "np.repeat"
+  ],
+  "inputs": {
+    "canvas": "tests/example/blank.txt",
+    "baseline_prompt": "experiments/003-prompt-specificity-diagnostic/prompt-b-baseline.txt",
+    "explicit_prompt": "experiments/003-prompt-specificity-diagnostic/prompt-b-explicit.txt"
+  },
+  "conditions": [
+    {
+      "family": "baseline-source-only",
+      "steps": [0, 1, 2, 4, 8],
+      "source_prompt": "baseline",
+      "decoder_prompt": null,
+      "purpose": "Reproduce the failed Experiment 002 B control while locating when specificity disappears."
+    },
+    {
+      "family": "explicit-source-only",
+      "steps": [0, 1, 2, 4, 8],
+      "source_prompt": "explicit",
+      "decoder_prompt": null,
+      "purpose": "Test whether stronger source wording preserves the named implementation details."
+    },
+    {
+      "family": "explicit-decoder-visible",
+      "steps": [8],
+      "source_prompt": "explicit",
+      "decoder_prompt": "explicit",
+      "purpose": "Positive diagnostic control: test whether the trained model can retain Source B when the decoder sees the prompt directly."
+    }
+  ],
+  "interpretation": {
+    "missing_at_step_0": "Information is absent after continuous-state-to-token projection, before iterative denoising.",
+    "present_at_step_0_then_missing": "Denoising removes the Source B details.",
+    "restored_by_explicit_source_prompt": "Prompt specificity is a major control variable.",
+    "restored_only_when_decoder_sees_prompt": "The source-conditioned canvas state does not reliably carry B through projection, although direct prompt conditioning can generate it.",
+    "missing_even_when_decoder_sees_prompt": "The prompt/model combination itself is an inadequate positive control."
+  },
+  "important_limitations": [
+    "This diagnoses one Source B prompt and does not test A+B interpolation.",
+    "The explicit prompt intentionally makes the required terms easy to identify; it is a positive control, not a novelty test.",
+    "The original entropy-weighted mean of two identical B states is mathematically the same B state."
+  ]
+}
