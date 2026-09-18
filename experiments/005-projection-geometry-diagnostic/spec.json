@@ -1,0 +1,39 @@
+{
+  "experiment_id": "005-projection-geometry-diagnostic",
+  "status": "pilot",
+  "question": "Is the off-source midpoint observed in Experiment 004 already present when the continuous interpolated state is independently projected to vocabulary tokens, or is it created during diffusion denoising?",
+  "inputs": {
+    "canvas": "tests/example/blank.txt",
+    "prompt_A": "experiments/004-controlled-prompt-weight-sweep/prompt-a-counting.txt",
+    "prompt_B": "experiments/004-controlled-prompt-weight-sweep/prompt-b-numba.txt"
+  },
+  "design": {
+    "weights": [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
+    "projection_steps": 0,
+    "projection_repeats": 1,
+    "projection_repeat_reason": "Highest-scoring vocabulary projection is deterministic and does not sample.",
+    "denoised_control_source": "experiments/004-controlled-prompt-weight-sweep/results",
+    "denoised_control_steps": 8,
+    "denoised_control_seeds": [42, 43, 44],
+    "mixing": "Global arithmetic interpolation of corresponding final prompt-conditioned canvas-state positions."
+  },
+  "measurements": [
+    "Global and position-wise parent cosine similarity.",
+    "Parent, mixed-state, and endpoint-distance norms.",
+    "Exact projected token IDs and decoded zero-step text at every weight.",
+    "Per-position projected-token agreement with each endpoint.",
+    "Hash-verified references to all Experiment 004 eight-step controls."
+  ],
+  "interpretation": {
+    "off_source_at_projection": "If the midpoint has already lost both techniques at zero steps, independent vocabulary projection is an early information bottleneck.",
+    "source_information_before_denoising": "If zero-step text or tokens retain both techniques but eight-step outputs do not, later denoising causes the collapse.",
+    "geometric_cancellation": "Very low midpoint norm or opposing parent directions would support destructive vector cancellation.",
+    "no_geometric_cancellation": "A normal midpoint norm with positive parent cosine would rule out simple cancellation and implicate nonlinear projection or model decoding."
+  },
+  "important_limitations": [
+    "This diagnoses final prompt-conditioned canvas states only.",
+    "Decoded zero-step text is an imperfect view of token-level information, so token IDs and endpoint overlap are also retained.",
+    "Experiment 004 controls are reused rather than rerun to avoid unnecessary GPU cost.",
+    "This remains exploratory evidence from one prompt pair and one model revision."
+  ]
+}
