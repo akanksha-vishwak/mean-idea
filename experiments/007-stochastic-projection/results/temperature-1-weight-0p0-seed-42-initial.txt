@@ -1,0 +1,2 @@
+thought
+Implement a counting-sort counting sort a a fixed- list of  10000 to frequencies of each of  999999, the the the the the the

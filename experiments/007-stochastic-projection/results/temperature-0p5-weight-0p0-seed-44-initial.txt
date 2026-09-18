@@ -1,0 +1,2 @@
+thought
+Implement a counting-sort counting by a a fixed-size of  10000 to frequencies integers integers 00999999 the the the the the the

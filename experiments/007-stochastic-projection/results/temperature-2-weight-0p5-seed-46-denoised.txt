@@ -1,0 +1,2 @@
+thought
+Implement a counting-sort-based frequency array to replace the nested inner loops if the input range consists of small integers.

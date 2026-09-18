@@ -1,0 +1,2 @@
+thought
+Utilize the Numba `@njit` decorator to compile the manual loops and logic into machine code, significantly reducing Python interpreter overhead.

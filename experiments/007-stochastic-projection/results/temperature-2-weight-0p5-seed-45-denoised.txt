@@ -1,0 +1,2 @@
+thought
+Implement an in-place swap using binary search to reduce the number of comparisons performed in the inner loop.

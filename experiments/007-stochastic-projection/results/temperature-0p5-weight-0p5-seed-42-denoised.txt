@@ -1,0 +1,2 @@
+thought
+Implement a counting-sort-based frequency array to reduce the number of comparisons and swaps by tracking occurrences of each element before the main loop.

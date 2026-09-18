@@ -1,0 +1,2 @@
+thought
+Implement a counting-sort-based frequency array to reduce the number of redundant comparisons and swaps.

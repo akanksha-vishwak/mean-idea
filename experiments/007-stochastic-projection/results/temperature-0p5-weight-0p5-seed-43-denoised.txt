@@ -1,0 +1,2 @@
+thought
+Implement an in-place insertion sort using shifts to reduce the number of swaps and memory overhead.

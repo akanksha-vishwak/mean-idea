@@ -1,0 +1,2 @@
+thought
+Implement an in-place partitioning strategy using a pivot-based sorting algorithm (like Quicksort) to reduce memory overhead and avoid the cost of creating sub-lists.

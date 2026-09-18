@@ -1,0 +1,2 @@
+thought
+Implement a counting-sort approach by using a fixed-size array of 10000 to track frequencies of integers 0-9999, then reconstructing the list from the counts to achieve $O(n)$ time complexity.

@@ -1,0 +1,2 @@
+thought
+Decorate the function with `@numba.jit` to compile the manual loops and swap logic into machine code, significantly reducing interpreter overhead.

@@ -1,0 +1,2 @@
+thought
+Implement an insertion-sort using a temporary variable to store the element being inserted and shift elements right instead of repeated swapping to reduce the number of assignments.

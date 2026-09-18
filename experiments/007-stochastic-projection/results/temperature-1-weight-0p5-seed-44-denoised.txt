@@ -1,0 +1,2 @@
+thought
+Implement an in-place insertion sortbased logic to reduce the number of swaps by shifting elements only and performing a single insertion at the end of the inner loop.

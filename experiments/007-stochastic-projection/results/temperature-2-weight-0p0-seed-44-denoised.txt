@@ -1,0 +1,2 @@
+thought
+Implement a counting-based approach by using a fixed-size array of 10000 to store frequencies of integers 0-9999, avoiding redundant comparisons and nested loops.

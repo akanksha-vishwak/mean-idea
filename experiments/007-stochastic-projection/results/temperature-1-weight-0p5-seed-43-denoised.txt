@@ -1,0 +1,2 @@
+thought
+Implement a quick-sort using an in-place partition scheme instead of list slicing to reduce memory overhead and object creation.

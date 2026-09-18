@@ -1,0 +1,2 @@
+thought
+Implement the merge-sort using an iterative approach to avoid the recursion depth depth limits and the overhead of recursive function calls.

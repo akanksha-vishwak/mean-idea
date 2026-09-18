@@ -1,0 +1,2 @@
+thought
+Implement a counting-sort-based frequency array to reduce time complexity from $O(n \log n)$ to $O(n + k)$ for integer inputs.

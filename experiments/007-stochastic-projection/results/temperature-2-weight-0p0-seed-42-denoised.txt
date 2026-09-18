@@ -1,0 +1,2 @@
+thought
+Implement a counting-sort approach by using a fixed-size array of 10000 to store frequencies of integers 0-9999, then reconstruct the sorted list by iterating through the counts.

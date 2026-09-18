@@ -1,0 +1,2 @@
+thought
+Implement the merge-sort using an auxiliary array to reduce the number of list allocations and use index slicing to avoid the overhead of list slicing during the merge process.

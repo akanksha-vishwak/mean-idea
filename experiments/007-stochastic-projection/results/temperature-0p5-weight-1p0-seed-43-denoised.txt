@@ -1,0 +1,2 @@
+thought
+Decorate the function with `@njit` from the Numba library to compile the logic into machine code, bypassing Python interpreter overhead.

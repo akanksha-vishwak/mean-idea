@@ -1,0 +1,2 @@
+thought
+Apply the `numba.njit` decorator to compile the sorting loops into machine code, significantly reducing the overhead of the Python interpreter.

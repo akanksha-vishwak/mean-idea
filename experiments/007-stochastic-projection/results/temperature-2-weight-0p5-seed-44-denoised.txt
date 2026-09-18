@@ -1,0 +1,2 @@
+thought
+Implement a quick-sort algorithm using a median-of-three pivot selection to avoid $O(n^2)$ worst-case time complexity and reduce recursion depth.

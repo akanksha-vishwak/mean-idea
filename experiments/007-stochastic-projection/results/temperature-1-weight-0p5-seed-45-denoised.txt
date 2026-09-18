@@ -1,0 +1,2 @@
+thought
+Implement a merge-sort using a single auxiliary array to swap elements back and forth during the merge process, reducing the overhead of repeated list allocations.
