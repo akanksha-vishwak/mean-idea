@@ -1,0 +1,42 @@
+{
+  "experiment_id": "011-nonsorting-endpoint-screen",
+  "status": "pilot",
+  "frozen_on": "2026-09-18",
+  "question": "Which jointly frozen public non-sorting optimization pairs have two reliable source endpoints under the same prompt-conditioned DiffusionGemma interface?",
+  "inputs": {
+    "pairs": "experiments/011-nonsorting-endpoint-screen/pairs.json",
+    "canvas": "tests/example/blank.txt"
+  },
+  "design": {
+    "pair_ids": [
+      "matrix-blocked-blas",
+      "regex-mmap-scan",
+      "graph-csr-deque-bfs",
+      "image-batched-vectorization"
+    ],
+    "seeds": [42, 43, 44],
+    "denoising_steps": 8,
+    "canvas_length": 96,
+    "conditions_per_pair": [
+      "A endpoint at weight 0.0",
+      "B endpoint at weight 1.0"
+    ],
+    "total_generations": 24,
+    "selection_rule": "Screen all four frozen pairs. A pair is eligible for a later composition experiment only if all three A and all three B outputs pass their predefined lexical endpoint gates."
+  },
+  "control_gates": {
+    "prompt_alignment": "A and B complete prompt sequences must have the exact frozen token count recorded for their pair and require no padding.",
+    "endpoint_pass": "All six outputs for the pair must retain the predefined named source technique.",
+    "failure_behavior": "Preserve every failed endpoint and exclude that pair from midpoint interpretation without replacing it."
+  },
+  "follow_up": {
+    "two_or_more_pairs_pass": "Freeze one midpoint and direct-prompt comparison over every passing pair.",
+    "one_pair_passes": "Run a bounded single non-sorting replication and report the limited scope.",
+    "no_pairs_pass": "Stop non-sorting interpolation tests and report endpoint controllability as the blocker."
+  },
+  "limitations": [
+    "This experiment tests endpoint controllability only, not composition.",
+    "The workloads are public synthetic tasks rather than private Darwin programs.",
+    "Automated gates require later raw-text review and do not replace blinded evaluation."
+  ]
+}

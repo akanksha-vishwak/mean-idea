@@ -1,0 +1,84 @@
+{
+  "version": 1,
+  "frozen_on": "2026-09-18",
+  "common_generation_prompt": "Generate one concise optimization idea for the stated Python task. Preserve the specific algorithmic and implementation details represented in the supplied canvas. Return only the optimization idea.",
+  "pairs": [
+    {
+      "id": "matrix-blocked-blas",
+      "workload": "dense-matrix-multiplication",
+      "expected_combined_concept": "Use cache-sized matrix tiles and invoke BLAS-backed NumPy matmul for each compatible block product.",
+      "prompt_token_count": 109,
+      "source_prompt_a": "Task: Improve a Python function that multiplies two large dense NumPy matrices.\nSource technique: BLAS-backed vectorization.\nImplementation details: replace Python triple loops with np.matmul or the @ operator so optimized BLAS kernels compute the matrix product.\nRequired terms: NumPy, np.matmul, BLAS, no Python element loops.",
+      "source_prompt_b": "Task: Improve a Python function that multiplies two large dense NumPy matrices.\nSource technique: cache-aware blocked matrix multiplication.\nImplementation details: split both matrices into cache-sized tiles, multiply compatible blocks, and accumulate block products into the output to improve cache locality.\nRequired terms: blocked multiplication, tiles, cache locality, accumulate exactly.",
+      "concept_a_groups": [
+        ["numpy", "np."],
+        ["matmul", "matrix multiplication"],
+        ["blas"]
+      ],
+      "concept_b_groups": [
+        ["block", "tile"],
+        ["cache"],
+        ["accumul", "sum"]
+      ],
+      "prohibited_markers": []
+    },
+    {
+      "id": "regex-mmap-scan",
+      "workload": "large-log-pattern-search",
+      "expected_combined_concept": "Compile a bytes regex once and use finditer directly over a read-only memory-mapped log file.",
+      "prompt_token_count": 122,
+      "source_prompt_a": "Task: Improve a Python function that finds every match of a fixed pattern in a large log file.\nSource technique: compiled regular expression.\nImplementation details: compile the bytes pattern once with re.compile and reuse finditer so the pattern is not recompiled for every search.\nRequired terms: re.compile, bytes pattern, finditer, reuse.\nKeep the exact implementation and every required term.",
+      "source_prompt_b": "Task: Improve a Python function that finds every match of a fixed pattern in a large log file.\nSource technique: memory-mapped file scanning.\nImplementation details: open the file read-only with mmap.mmap and search the mapped bytes directly without reading or copying the entire file into memory.\nRequired terms: mmap, read-only, mapped bytes, no full-file copy.",
+      "concept_a_groups": [
+        ["re.compile"],
+        ["finditer"],
+        ["pattern"]
+      ],
+      "concept_b_groups": [
+        ["mmap"],
+        ["mapped", "memory-map"],
+        ["bytes", "file"]
+      ],
+      "prohibited_markers": []
+    },
+    {
+      "id": "graph-csr-deque-bfs",
+      "workload": "sparse-graph-breadth-first-search",
+      "expected_combined_concept": "Traverse compact CSR adjacency slices while maintaining the BFS frontier with deque and popleft.",
+      "prompt_token_count": 109,
+      "source_prompt_a": "Task: Improve breadth-first search over a large sparse graph in Python.\nSource technique: constant-time BFS queue.\nImplementation details: store the frontier in collections.deque, remove vertices with popleft, and append newly discovered vertices without shifting a list.\nRequired terms: collections.deque, popleft, append, BFS queue.",
+      "source_prompt_b": "Task: Improve breadth-first search over a large sparse graph in Python.\nSource technique: compact CSR adjacency representation.\nImplementation details: store graph neighbors in contiguous indices and indptr arrays, then traverse each vertex's CSR slice for cache-efficient sparse access.\nRequired terms: CSR, indices, indptr, contiguous neighbors exactly.",
+      "concept_a_groups": [
+        ["deque"],
+        ["popleft"],
+        ["bfs", "frontier", "queue"]
+      ],
+      "concept_b_groups": [
+        ["csr"],
+        ["indices"],
+        ["indptr"],
+        ["contiguous", "slice"]
+      ],
+      "prohibited_markers": []
+    },
+    {
+      "id": "image-batched-vectorization",
+      "workload": "rgb-image-normalization",
+      "expected_combined_concept": "Normalize each bounded image batch with NumPy float32 broadcasting, then release temporary arrays before the next batch.",
+      "prompt_token_count": 114,
+      "source_prompt_a": "Task: Improve a Python function that normalizes a large collection of RGB images.\nSource technique: NumPy broadcasting and vectorization.\nImplementation details: stack image arrays, cast to float32, and normalize channels with broadcast mean and standard-deviation arrays instead of Python pixel loops.\nRequired terms: NumPy, broadcasting, float32, no pixel loops exactly.",
+      "source_prompt_b": "Task: Improve a Python function that normalizes a large collection of RGB images.\nSource technique: bounded batch processing.\nImplementation details: process a fixed number of images per batch, emit each completed batch in order, and release temporary arrays before loading the next batch to cap peak memory.\nRequired terms: batches, fixed batch size, release memory, preserve order.",
+      "concept_a_groups": [
+        ["numpy", "np."],
+        ["broadcast"],
+        ["float32"]
+      ],
+      "concept_b_groups": [
+        ["batch"],
+        ["memory", "temporary"],
+        ["order", "sequence"]
+      ],
+      "prohibited_markers": []
+    }
+  ]
+}
